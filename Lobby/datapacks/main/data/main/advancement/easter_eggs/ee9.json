@@ -1,0 +1,27 @@
+{
+    "parent": "main:easter_eggs/ee7",
+    "display": {
+        "title": {
+            "text": "Cave drop",
+            "color": "white",
+            "bold": true
+        },
+        "description": {
+            "text": "Take the dropper from the top of the Spiral to the bottom",
+            "color": "white",
+            "bold": false
+        },
+        "icon": {
+            "id": "minecraft:pointed_dripstone"
+       },
+        "frame": "challenge",
+        "show_toast": true,
+        "announce_to_chat": false,
+        "hidden": true
+    },
+    "criteria": {
+        "0": {
+            "trigger": "minecraft:impossible"
+        }
+    }
+}

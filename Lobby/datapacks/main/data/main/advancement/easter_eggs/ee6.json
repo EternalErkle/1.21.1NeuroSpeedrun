@@ -1,0 +1,27 @@
+{
+  "parent": "main:easter_eggs/ee4",
+  "display": {
+      "title": {
+          "text": "The End?",
+          "color": "white",
+          "bold": true
+      },
+      "description": {
+          "text": "Find the hidden End Dimension!",
+          "color": "white",
+          "bold": false
+      },
+      "icon": {
+          "id": "minecraft:end_stone"
+       },
+      "frame": "challenge",
+      "show_toast": true,
+      "announce_to_chat": false,
+      "hidden": true
+  },
+  "criteria": {
+      "0": {
+          "trigger": "minecraft:impossible"
+      }
+  }
+}

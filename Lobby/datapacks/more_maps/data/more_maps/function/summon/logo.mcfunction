@@ -1,0 +1,43 @@
+summon minecraft:glow_item_frame ~ ~ ~ {Item: {components: {"minecraft:map_id": 1000}, count: 1, id: "minecraft:filled_map"}, Invisible: 1b, Fixed: 1b}
+summon minecraft:glow_item_frame ~ ~ ~ {Item: {components: {"minecraft:map_id": 1001}, count: 1, id: "minecraft:filled_map"}, Invisible: 1b, Fixed: 1b}
+summon minecraft:glow_item_frame ~ ~ ~ {Item: {components: {"minecraft:map_id": 1002}, count: 1, id: "minecraft:filled_map"}, Invisible: 1b, Fixed: 1b}
+summon minecraft:glow_item_frame ~ ~ ~ {Item: {components: {"minecraft:map_id": 1003}, count: 1, id: "minecraft:filled_map"}, Invisible: 1b, Fixed: 1b}
+summon minecraft:glow_item_frame ~ ~ ~ {Item: {components: {"minecraft:map_id": 1004}, count: 1, id: "minecraft:filled_map"}, Invisible: 1b, Fixed: 1b}
+summon minecraft:glow_item_frame ~ ~ ~ {Item: {components: {"minecraft:map_id": 1005}, count: 1, id: "minecraft:filled_map"}, Invisible: 1b, Fixed: 1b}
+summon minecraft:glow_item_frame ~ ~ ~ {Item: {components: {"minecraft:map_id": 1006}, count: 1, id: "minecraft:filled_map"}, Invisible: 1b, Fixed: 1b}
+summon minecraft:glow_item_frame ~ ~ ~ {Item: {components: {"minecraft:map_id": 1007}, count: 1, id: "minecraft:filled_map"}, Invisible: 1b, Fixed: 1b}
+summon minecraft:glow_item_frame ~ ~ ~ {Item: {components: {"minecraft:map_id": 1008}, count: 1, id: "minecraft:filled_map"}, Invisible: 1b, Fixed: 1b}
+summon minecraft:glow_item_frame ~ ~ ~ {Item: {components: {"minecraft:map_id": 1009}, count: 1, id: "minecraft:filled_map"}, Invisible: 1b, Fixed: 1b}
+
+summon minecraft:glow_item_frame ~ ~ ~ {Item: {components: {"minecraft:map_id": 1010}, count: 1, id: "minecraft:filled_map"}, Invisible: 1b, Fixed: 1b}
+summon minecraft:glow_item_frame ~ ~ ~ {Item: {components: {"minecraft:map_id": 1011}, count: 1, id: "minecraft:filled_map"}, Invisible: 1b, Fixed: 1b}
+summon minecraft:glow_item_frame ~ ~ ~ {Item: {components: {"minecraft:map_id": 1012}, count: 1, id: "minecraft:filled_map"}, Invisible: 1b, Fixed: 1b}
+summon minecraft:glow_item_frame ~ ~ ~ {Item: {components: {"minecraft:map_id": 1013}, count: 1, id: "minecraft:filled_map"}, Invisible: 1b, Fixed: 1b}
+summon minecraft:glow_item_frame ~ ~ ~ {Item: {components: {"minecraft:map_id": 1014}, count: 1, id: "minecraft:filled_map"}, Invisible: 1b, Fixed: 1b}
+summon minecraft:glow_item_frame ~ ~ ~ {Item: {components: {"minecraft:map_id": 1015}, count: 1, id: "minecraft:filled_map"}, Invisible: 1b, Fixed: 1b}
+summon minecraft:glow_item_frame ~ ~ ~ {Item: {components: {"minecraft:map_id": 1016}, count: 1, id: "minecraft:filled_map"}, Invisible: 1b, Fixed: 1b}
+summon minecraft:glow_item_frame ~ ~ ~ {Item: {components: {"minecraft:map_id": 1017}, count: 1, id: "minecraft:filled_map"}, Invisible: 1b, Fixed: 1b}
+summon minecraft:glow_item_frame ~ ~ ~ {Item: {components: {"minecraft:map_id": 1018}, count: 1, id: "minecraft:filled_map"}, Invisible: 1b, Fixed: 1b}
+summon minecraft:glow_item_frame ~ ~ ~ {Item: {components: {"minecraft:map_id": 1019}, count: 1, id: "minecraft:filled_map"}, Invisible: 1b, Fixed: 1b}
+
+summon minecraft:glow_item_frame ~ ~ ~ {Item: {components: {"minecraft:map_id": 1020}, count: 1, id: "minecraft:filled_map"}, Invisible: 1b, Fixed: 1b}
+summon minecraft:glow_item_frame ~ ~ ~ {Item: {components: {"minecraft:map_id": 1021}, count: 1, id: "minecraft:filled_map"}, Invisible: 1b, Fixed: 1b}
+summon minecraft:glow_item_frame ~ ~ ~ {Item: {components: {"minecraft:map_id": 1022}, count: 1, id: "minecraft:filled_map"}, Invisible: 1b, Fixed: 1b}
+summon minecraft:glow_item_frame ~ ~ ~ {Item: {components: {"minecraft:map_id": 1023}, count: 1, id: "minecraft:filled_map"}, Invisible: 1b, Fixed: 1b}
+summon minecraft:glow_item_frame ~ ~ ~ {Item: {components: {"minecraft:map_id": 1024}, count: 1, id: "minecraft:filled_map"}, Invisible: 1b, Fixed: 1b}
+summon minecraft:glow_item_frame ~ ~ ~ {Item: {components: {"minecraft:map_id": 1025}, count: 1, id: "minecraft:filled_map"}, Invisible: 1b, Fixed: 1b}
+summon minecraft:glow_item_frame ~ ~ ~ {Item: {components: {"minecraft:map_id": 1026}, count: 1, id: "minecraft:filled_map"}, Invisible: 1b, Fixed: 1b}
+summon minecraft:glow_item_frame ~ ~ ~ {Item: {components: {"minecraft:map_id": 1027}, count: 1, id: "minecraft:filled_map"}, Invisible: 1b, Fixed: 1b}
+summon minecraft:glow_item_frame ~ ~ ~ {Item: {components: {"minecraft:map_id": 1028}, count: 1, id: "minecraft:filled_map"}, Invisible: 1b, Fixed: 1b}
+summon minecraft:glow_item_frame ~ ~ ~ {Item: {components: {"minecraft:map_id": 1029}, count: 1, id: "minecraft:filled_map"}, Invisible: 1b, Fixed: 1b}
+
+summon minecraft:glow_item_frame ~ ~ ~ {Item: {components: {"minecraft:map_id": 1030}, count: 1, id: "minecraft:filled_map"}, Invisible: 1b, Fixed: 1b}
+summon minecraft:glow_item_frame ~ ~ ~ {Item: {components: {"minecraft:map_id": 1031}, count: 1, id: "minecraft:filled_map"}, Invisible: 1b, Fixed: 1b}
+summon minecraft:glow_item_frame ~ ~ ~ {Item: {components: {"minecraft:map_id": 1032}, count: 1, id: "minecraft:filled_map"}, Invisible: 1b, Fixed: 1b}
+summon minecraft:glow_item_frame ~ ~ ~ {Item: {components: {"minecraft:map_id": 1033}, count: 1, id: "minecraft:filled_map"}, Invisible: 1b, Fixed: 1b}
+summon minecraft:glow_item_frame ~ ~ ~ {Item: {components: {"minecraft:map_id": 1034}, count: 1, id: "minecraft:filled_map"}, Invisible: 1b, Fixed: 1b}
+summon minecraft:glow_item_frame ~ ~ ~ {Item: {components: {"minecraft:map_id": 1035}, count: 1, id: "minecraft:filled_map"}, Invisible: 1b, Fixed: 1b}
+summon minecraft:glow_item_frame ~ ~ ~ {Item: {components: {"minecraft:map_id": 1036}, count: 1, id: "minecraft:filled_map"}, Invisible: 1b, Fixed: 1b}
+summon minecraft:glow_item_frame ~ ~ ~ {Item: {components: {"minecraft:map_id": 1037}, count: 1, id: "minecraft:filled_map"}, Invisible: 1b, Fixed: 1b}
+summon minecraft:glow_item_frame ~ ~ ~ {Item: {components: {"minecraft:map_id": 1038}, count: 1, id: "minecraft:filled_map"}, Invisible: 1b, Fixed: 1b}
+summon minecraft:glow_item_frame ~ ~ ~ {Item: {components: {"minecraft:map_id": 1039}, count: 1, id: "minecraft:filled_map"}, Invisible: 1b, Fixed: 1b}
