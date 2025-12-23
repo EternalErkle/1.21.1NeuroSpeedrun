@@ -146,7 +146,7 @@ Events:
     actions:
       default:
         - "console_command: team join Players @a"
-        
+        - "force_respawn: true"
         - "set_death_message: ''"
         - "to_all: title: 0;60;0; &a☠ &l%player% HAS DIED &a☠;&c&lWORLD RESET"
         - 'console_command: papi parse %player% "%javascript_data_set_time,global_death_protection%"' 
@@ -160,27 +160,27 @@ Events:
         - 'console_command: papi parse %player% "%javascript_data_add,run_number,1%"'
         
         # 3. 10s RESET COUNTDOWN (with player name)
-        - "to_all: title: 0;21;0; &e10;&c&l%player% DIED - RESETTING IN..."
+        - "to_all: title: 0;30;0; &e10;&c&l%player% DIED - RESETTING IN..."
         - "wait: 1"
-        - "to_all: title: 0;21;0; &e9;&c&l%player% DIED - RESETTING IN..."
+        - "to_all: title: 0;30;0; &e9;&c&l%player% DIED - RESETTING IN..."
         - "wait: 1"
-        - "to_all: title: 0;21;0; &e8;&c&l%player% DIED - RESETTING IN..."
+        - "to_all: title: 0;30;0; &e8;&c&l%player% DIED - RESETTING IN..."
         - "wait: 1"
-        - "to_all: title: 0;21;0; &e7;&c&l%player% DIED - RESETTING IN..."
+        - "to_all: title: 0;30;0; &e7;&c&l%player% DIED - RESETTING IN..."
         - "wait: 1"
-        - "to_all: title: 0;21;0; &e6;&c&l%player% DIED - RESETTING IN..."
+        - "to_all: title: 0;30;0; &e6;&c&l%player% DIED - RESETTING IN..."
         - "wait: 1"
-        - "to_all: title: 0;21;0; &e5;&c&l%player% DIED - RESETTING IN..."
+        - "to_all: title: 0;30;0; &e5;&c&l%player% DIED - RESETTING IN..."
         - "wait: 1"
-        - "to_all: title: 0;21;0; &e4;&c&l%player% DIED - RESETTING IN..."
+        - "to_all: title: 0;30;0; &e4;&c&l%player% DIED - RESETTING IN..."
         - "wait: 1"
-        - "to_all: title: 0;21;0; &e3;&c&l%player% DIED - RESETTING IN..."
+        - "to_all: title: 0;30;0; &e3;&c&l%player% DIED - RESETTING IN..."
         - "to_all: playsound: BLOCK_NOTE_BLOCK_BIT;10;1.2"
         - "wait: 1"
-        - "to_all: title: 0;21;0; &e2;&c&l%player% DIED - RESETTING IN..."
+        - "to_all: title: 0;30;0; &e2;&c&l%player% DIED - RESETTING IN..."
         - "to_all: playsound: BLOCK_NOTE_BLOCK_BIT;10;1.4"
         - "wait: 1"
-        - "to_all: title: 0;21;0; &e1;&c&l%player% DIED - RESETTING IN..."
+        - "to_all: title: 0;30;0; &e1;&c&l%player% DIED - RESETTING IN..."
         - "to_all: playsound: BLOCK_NOTE_BLOCK_BIT;10;1.6"
         - "wait: 1"
 
@@ -300,6 +300,27 @@ Events:
         #create null time object
        - 'console_command: papi parse %player% "%javascript_data_set,zero_time,0%"' 
   
+  # bring_to_world_overworld:
+  #   type: player_world_change
+  #   conditions:
+  #     - "%world_to% equals world"
+  #   actions:
+  #     default:
+  #       - "console_command: mv teleport %player Lobby --unsafe"
+  #       - "console_command: mv teleport %player world_overworld --unsafe"
+
+  enforce_world_restriction:
+    type: repetitive
+    # 20 ticks = 1 second. Checks frequently without lagging the server.
+    repetitive_time: 20
+    conditions:
+      - "%player_world% == world"
+    actions:
+      default:
+        - "console_command: mv teleport %player% Lobby --unsafe"
+        - "wait: 10"
+        - "console_command: mv teleport %player% world_overworld --unsafe"
+
   command_best:
     type: player_command
     conditions:
@@ -324,6 +345,60 @@ Events:
       default:
         - "cancel_event: true"
         - "message: &fThere have been &e&l%javascript_data_get,run_number% &fruns."
+  
+  command_resetbesttime:
+    type: player_command
+    conditions:
+      - "%main_command% equalsIgnoreCase /reset"
+      - "%arg_1% equalsIgnoreCase besttime"
+    actions:
+      default:
+        - "cancel_event: true"
+        - "console_command: papi parse %player% '%javascript_data_set,best_time,0%'"
+        - "message: &fBest speedrun time has been reset."
+    
+  command_resetruncount:
+    type: player_command
+    conditions:
+      - "%main_command% equalsIgnoreCase /reset"
+      - "%arg_1% equalsIgnoreCase runcount"
+    actions:
+      default:
+        - "cancel_event: true"
+        - "console_command: papi parse %player% '%javascript_data_set,run_number,0%'"
+        - "message: &fRun counter has been reset."
+
+  command_resetruncount:
+    type: player_command
+    conditions:
+      - "%main_command% equalsIgnoreCase /reset"
+      - "%arg_1% equalsIgnoreCase hard"
+    actions:
+      default:
+        - "cancel_event: true"
+        - "console_command: papi parse %player% '%javascript_data_set,best_time,0%'"
+        - "message: &fBest speedrun time has been reset."
+
+        - "console_command: papi parse %player% '%javascript_data_set,run_number,0%'"
+        - "message: &fRun counter has been reset."
+
+        - "console_command: papi parse %player% '%javascript_data_set,new_world_time,0%'"
+        - "message: &fWorld time has been reset."
+
+      
+  command_reset:
+    type: player_command
+    conditions:
+      - "%main_command% equalsIgnoreCase /reset"
+      - "%args_length% == 0"
+    actions:
+      default:
+        - "cancel_event: true"
+        - "console_command: papi parse %player% '%javascript_data_set,best_time,0%'"
+        - "message: &fBest speedrun time has been reset."
+
+        - "console_command: papi parse %player% '%javascript_data_set,run_number,0%'"
+        - "message: &fRun counter has been reset."
 
 
   #need a command to reset the best time.

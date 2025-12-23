@@ -1,5 +1,18 @@
 aliases: [reset]
 
 patterns:
-  - pattern: 'besttime|runcount'
-  - description: reset the best time [besttime] or run count [runcount]
+  - pattern: 'runcount'
+    description: reset the run counter.
+    actions: []
+
+  - pattern: 'besttime'
+    description: reset the best time.
+    actions: []
+  
+  - pattern: 'hard'
+    description: reset everything.
+    actions: []
+
+  - pattern: ''
+    description: reset all run-related values.
+    actions: []
