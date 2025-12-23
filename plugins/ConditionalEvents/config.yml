@@ -52,7 +52,12 @@ Messages:
   commandInterruptCorrect: '&aActions of event &7%event% &ainterrupted.'
   commandInterruptCorrectPlayer: '&aActions of event &7%event% &ainterrupted for player &7%player%&a.'
 Events: 
-  variables:
+  #note to self; run the following commands before pushing to repository. replace %player% with player username
+  # papi parse %player% %javascript_data_set,new_world_time,0%
+  # papi parse %player% %javascript_data_set,best_time,0%
+  # papi parse %player% %javascript_data_set,run_number,1%
+  #
+  #
 
   break_blocks:
     type: block_break
@@ -63,6 +68,75 @@ Events:
       default:
         - 'cancel_event: true'
 
+  win_reset:
+    type: player_world_change
+    conditions:
+      - "%world_from% equals world_the_end"
+      - '%javascript_data_within_time,win_reset,20% == false' #this is so multiple ppl dont trigger it at once.
+      - '%javascript_data_within_time,global_death_protection,20% == false' #this is so multiple ppl dont trigger it at once.
+      
+    actions:
+      default:
+        - 'console_command: papi parse %player% "%javascript_data_set_time,world_time%"'  #make it so this event only calls for the FIRST player who enters.
+        - 'console_command: papi parse %player% "%javascript_data_set_time,global_death_protection%"' 
+        - 'console_command: papi parse %player% "%javascript_data_set_time,win_reset%"' 
+        
+          #update the best_time
+        - 'console_command: papi parse %player% "%javascript_data_compare_best%"'  
+        - "to_all: title: 20;100;20; &6&lVICTORY!;&fThe Dragon has been defeated!"
+        - "wait: 3"
+
+      #display best time on screen
+        - "to_all: title: 20;100;20; &6&lBEST TIME: &f%javascript_data_get_duration,zero_time,best_time%; "
+        - "wait: 4"
+      #move to lobby
+        - "to_all: message: &a&lWORLD RESET! &7Attempt &e#%javascript_data_get,run_number% &7lasted &f%javascript_data_get_duration,new_world_time,world_time%."
+        - 'console_command: papi parse %player% "%javascript_data_add,run_number,1%"'
+        - "to_all: title: 5;100;5; &b&lMOVING TO ISLAND...;&7Please wait"
+        - 'wait: 4'
+        - 'to_all: clear_inventory'
+        - 'to_all: heal: 20'
+        - 'to_all: give_potion_effect: SATURATION;20;1' 
+        - "console_command: mv teleport @a Lobby --unsafe"
+        - "console_command: advancement revoke @a everything"
+    
+        # 2. DELETE OLD WORLDS
+        - "wait: 1"
+        - "console_command: minecraft:kill @e[type=!player,type=!armor_stand,type=!item_frame,type=!painting]"        
+        - "console_command: time set 0"
+        - "to_all: title: 5;100;5; &b&lGENERATING...;&7Please wait on the island"
+        - "wait: 5"
+        - "console_command: mv regen world_overworld --seed %random_1_999999%"
+        - "console_command: mv regen world_nether --seed %random_1_999999%"
+        - "console_command: mv regen world_the_end --seed %random_1_999999%"
+                
+        - "wait: 1" # Regen is slow; give it time to finish
+        # 6. RETURN COUNTDOWN
+        - "to_all: title: 0;21;0; &b3;&3&lTELEPORTING...;&bAttempt #%ce_variable_attempts%"
+        - "wait: 1"
+        - "to_all: title: 0;21;0; &b2;&3&lTELEPORTING...;&bAttempt #%ce_variable_attempts%"
+        - "wait: 1"
+        - "to_all: title: 0;21;0; &b1;&3&lTELEPORTING...;&bAttempt #%ce_variable_attempts%"
+        - "wait: 1"
+
+        
+        # 7. FINAL RETURN & SET SURVIVAL
+        - "console_command: mv teleport @a world_overworld --unsafe"
+        - 'to_all: clear_inventory'
+        - 'to_all: heal: 20'
+        - "console_command: advancement revoke @a everything"
+        - "console_command: gamemode survival @a"
+        - 'console_command: papi parse %player% "%javascript_data_set_time,new_world_time%"' 
+        - "console_command: effect clear @a"
+        - "console_command: effect give @a minecraft:glowing infinite 1 true"
+        - 'to_all: give_potion_effect: SATURATION;3;1' 
+
+        - "console_command: experience set @a 0 levels"
+        - "console_command: papi parse %player% %javascript_data_clear_enderchests%"
+
+        - "to_all: title: 20;80;20; &a&lGOOD LUCK!;&7Beginning &6&lAttempt &e#%javascript_data_get,run_number%"
+        - "to_all: playsound: ENTITY_PLAYER_LEVELUP;10;1"
+
  # WHEN THE ENDER DRAGON IS BEAT, RESET THE RUN COUNT TO ZERO USING:
   # papi parse %player% %javascript_data_set,run_number,0%
   death_reset:
@@ -71,16 +145,18 @@ Events:
       - '%player_world% equals world_overworld or %player_world% equals world_nether or %player_world% equals world_the_end'
     actions:
       default:
+        - "console_command: team join Players @a"
+        
         - "set_death_message: ''"
         - "to_all: title: 0;60;0; &a☠ &l%player% HAS DIED &a☠;&c&lWORLD RESET"
         - 'console_command: papi parse %player% "%javascript_data_set_time,global_death_protection%"' 
         - 'console_command: papi parse %player% "%javascript_data_set_time,world_time%"' 
         - "wait: 1"
-        - "to_all: console_command: gamemode survival %player%"
+        - "console_command: gamemode survival %player%"
         - "wait: 3"
 
         - "to_all: message: &c&lWORLD RESET! &7Attempt &e#%javascript_data_get,run_number% &7lasted &f%javascript_data_get_duration,new_world_time,world_time%."
-       
+        - "to_all: message: &7Cause of run failure: &c%cause%&7."
         - 'console_command: papi parse %player% "%javascript_data_add,run_number,1%"'
         
         # 3. 10s RESET COUNTDOWN (with player name)
@@ -112,8 +188,8 @@ Events:
         - 'to_all: clear_inventory'
         - 'to_all: heal: 20'
         - 'to_all: give_potion_effect: SATURATION;20;1' 
-        - "to_all: console_command: mv teleport %player% Lobby --unsafe"
-  
+        - "to_all: console_command: mv teleport @a Lobby --unsafe"
+        - "console_command: advancement revoke @a everything"
     
         # 2. DELETE OLD WORLDS
         - "wait: 1"
@@ -136,14 +212,23 @@ Events:
         - "wait: 1"
         
         # 7. FINAL RETURN & SET SURVIVAL
-        - "to_all: console_command: mv teleport %player% world_overworld --unsafe"
-        - "console_command: gamemode survival %player%"
+        - "to_all: console_command: mv teleport @a world_overworld --unsafe"
+        - 'to_all: clear_inventory'
+        - 'to_all: heal: 20'
+        - "console_command: advancement revoke @a everything"
+        - "console_command: gamemode survival @a"
         - 'console_command: papi parse %player% "%javascript_data_set_time,new_world_time%"' 
+        - "console_command: effect clear @a"
+        - "console_command: effect give @a minecraft:glowing infinite 1 true"
+        - 'to_all: give_potion_effect: SATURATION;3;1' 
 
+        - "console_command: experience set @a 0 levels"
+        - "console_command: papi parse %player% %javascript_data_clear_enderchests%"
 
         - "to_all: title: 20;80;20; &a&lGOOD LUCK!;&7Beginning &6&lAttempt &e#%javascript_data_get,run_number%"
         - "to_all: playsound: ENTITY_PLAYER_LEVELUP;10;1"
 
+  
   stop_damage_post_death:
     type: player_damage
     conditions:
@@ -153,6 +238,7 @@ Events:
       default:
         - 'cancel_event: true'
         
+
   stop_damage_lobby:
     type: player_damage
     conditions:
@@ -172,97 +258,45 @@ Events:
 
   move_to_world:
     type: player_join
-    conditions: '%player_world% equals Lobby or %player_world equals world' 
+    conditions: 
+      - '%player_world% equals Lobby or %player_world% equals world' 
     actions:
       default:
-        - "console_command: mv tp %player% world_overworld --unsafe"
+        - 'if: %javascript_data_within_time,global_death_protection,20% == true execute: console_command: mv tp %player% Lobby --unsafe'
+        - 'if: %javascript_data_within_time,global_death_protection,20% == true execute: stop: true'
+
+        - "if: %player_world% equals Lobby execute: console_command: mv tp %player% world_overworld --unsafe"
+        - "if: %player_world% equals world execute: console_command: mv tp %player% world_overworld --unsafe"
+        
+        - "console_command: team join Players @a"
+        - "console_command: effect give @a minecraft:glowing infinite 1 true"
+        - "title: 20;80;20;&6&lAttempt &e#%javascript_data_get,run_number%;   "
+
 
   server_on:
     type: server_start
     actions:
       default:
-       - "console_command: mv modify world_overworld set difficulty hardcore"
-       - "console_command: mv modify world_nether set difficulty hardcore"
-       - "console_command: mv modify world_the_end set difficulty hardcore"
        - "console_command: gamerule sendCommandFeedback false"
        - "console_command: gamerule showDeathMessages false"
        - "set_death_message: no"
+       - "console_command: gamerule doImmediateRespawn true"
+       - "console_command: team add Players"
+       - "console_command: team modify Players color green"
 
-  event1:
+
+  start_timer_first_time:
     type: player_join
-    conditions:
-      - '%player% == Ajneb'
+    conditions: 
+       - '%javascript_data_get,new_world_time% == "0" or %javascript_data_get,new_world_time% == 0'
     actions:
       default:
-        - 'to_all: message: &e&l[ALERT] &f&lAjneb joined the game!'
-  event2:
-    type: block_interact
-    one_time: true
-    conditions:
-      - '%block_x% == 20'
-      - '%block_y% == 60'
-      - '%block_z% == 20'
-      - '%block_world% == Lobby'
-      - '%block% == STONE_BUTTON'
-      - '%action_type% == RIGHT_CLICK'
-      - '%player_has_permission_conditionalevents.event.event2% == no execute actions2'
-    actions:
-      default:
-        - 'message: &aYou''ve received $500!'
-        - 'console_command: eco give %player% 500'
-        - 'playsound: ENTITY_PLAYER_LEVELUP;10;2'
-      actions2:
-        - 'message: &cYou need to have a rank to use this button.'
-      one_time:
-        - 'message: &cYou can claim this reward just once!'
-  event3:
-    type: player_attack
-    conditions:
-      - '%victim% == PLAYER'
-      - '%item% == DIAMOND_SWORD'
-      - '%item_name% == Super Sword'
-      - '%random_1_10% >= 8'
-    actions:
-      default:
-        - 'message: &aYour diamond sword poison effect was activated! &6%target:player_name% &ais now poisoned!'
-        - 'to_target: give_potion_effect: POISON;120;1'
-        - 'to_target: message: &cYou were poisoned by &e%player%&c!'
-  # event4:
-  #   type: block_break
-  #   ignore_with_permission: conditionalevents.ignore.event4
-  #   conditions:
-  #     - '%block_world% == spawn'
-  #   actions:
-  #     default:
-  #       - 'cancel_event: true'
-  #       - 'message: &cYou can''t break blocks on this world.'
-  #       - 'playsound: BLOCK_NOTE_BLOCK_PLING;10;0.1'
-  event5:
-    type: player_command
-    ignore_with_permission: conditionalevents.ignore.event5
-    conditions:
-      - '%main_command% equalsIgnoreCase //calc or %main_command% equalsIgnoreCase //solve or %main_command% equalsIgnoreCase //eval'
-    actions:
-      default:
-        - 'cancel_event: true'
-        - 'kick: &cWhat are you trying to do?'
-  event6:
-    type: repetitive
-    repetitive_time: 10
-    conditions:
-      - '%player_world% == plotworld'
-      - '%player_gamemode% != CREATIVE'
-    actions:
-      default:
-        - 'gamemode: CREATIVE'
-        - 'actionbar: &6Changing gamemode to creative.;100'
-  event7:
-    type: player_command
-    conditions:
-      - '%main_command% == /hello'
-    actions:
-      default:
-        - 'cancel_event: true'
-        - "message: &7You said hello to nearby players!"
-        - 'to_range: 10;false: message: &e%player% &7says you hello!'
+        - 'console_command: papi parse %player% "%javascript_data_set_time,new_world_time%"' 
 
+  create_null_objects:
+    type: player_join
+    actions:
+      default:
+        #create null time object
+       - 'console_command: papi parse %player% "%javascript_data_set,zero_time,0%"' 
+  
