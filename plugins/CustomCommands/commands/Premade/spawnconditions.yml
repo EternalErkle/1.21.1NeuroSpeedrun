@@ -1,0 +1,38 @@
+# ----------------------------------------------------------------------------------------------------
+# Configuration file for CustomCommands
+# More information can be found in the documentation
+# ----------------------------------------------------------------------------------------------------
+
+# Aliases for the command
+# Our command can be used with /spawnconditions, /gotospawnconditions and /lobbyconditions
+aliases: [spawnconditions, gotospawnconditions, lobbyconditions]
+
+# Patterns for the command
+patterns:
+
+  - pattern: ''  # here, we don't need arguments for the command, so we set only one empty pattern
+    description: go to the spawn, but only from 3 to 5 PM.
+    conditions:
+      conditions:
+        - type: TIME_IN_DAY
+          start:
+            hour: 15
+            minute: 00
+          end:
+            hour: 17
+            minute: 00
+      error_message: >
+        &cYou can only use this command from 3 to 5 PM.
+    worlds:
+      whitelist: [world]  # our command can only be used in the default world
+      blacklist: []
+    cooldown: 15 SECOND
+    actions:
+      - type: TELEPORT
+        location: world,0,64,0
+      - type: NOTIFY
+        notify:
+          message: '&aYou are now at spawn, in the authorized time range.'
+          sound: ENTITY_PLAYER_LEVELUP
+          actionbar: '&7Thanks for using the /spawn command.'
+          actionbar_duration: 3 SECOND

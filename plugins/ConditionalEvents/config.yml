@@ -300,3 +300,21 @@ Events:
         #create null time object
        - 'console_command: papi parse %player% "%javascript_data_set,zero_time,0%"' 
   
+  command_best:
+    type: player_command
+    conditions:
+      - "%main_command% equalsIgnoreCase /best"
+      - "%javascript_data_get_duration,zero_time,best_time% equals 0s execute actions1"
+      - "%javascript_data_get_duration,zero_time,best_time% !equals 0s execute actions2"
+      
+    actions:
+      default:
+      actions1:
+        - "cancel_event: true"
+        - "message: &fThere is no current best time!"
+      actions2:
+        - "cancel_event: true"
+        - "message: &fThe current best time is: &6&l%javascript_data_get_duration,zero_time,best_time%" 
+
+
+  #need a command to reset the best time.
