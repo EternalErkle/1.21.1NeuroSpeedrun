@@ -1,0 +1,27 @@
+{
+    "parent": "main:easter_eggs/ee8",
+    "display": {
+        "title": {
+            "text": "Taking the backdoor",
+            "color": "white",
+            "bold": true
+        },
+        "description": {
+            "text": "Why bother with all this parkour?",
+            "color": "white",
+            "bold": false
+        },
+        "icon": {
+            "id": "minecraft:iron_door"
+       },
+        "frame": "challenge",
+        "show_toast": true,
+        "announce_to_chat": false,
+        "hidden": true
+    },
+    "criteria": {
+        "0": {
+            "trigger": "minecraft:impossible"
+        }
+    }
+}

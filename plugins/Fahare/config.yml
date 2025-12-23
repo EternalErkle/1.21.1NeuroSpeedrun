@@ -1,0 +1,26 @@
+# Whether to save and backup worlds before resetting.
+# When disabled, worlds will be permanently deleted upon reset (much faster).
+backup: true
+
+# Whether resets should happen automatically upon the death of all players.
+# When disabled, you may instead run `/fahare reset` to manually reset the world.
+auto-reset: false
+
+# Whether to trigger a reset upon *any* death.
+# When disabled, automatic resets will trigger only when all players are dead.
+# This setting is ignored if `auto-reset` is disabled.
+any-death: true
+
+# How many lives a player should have before they are considered dead.
+lives: 1
+
+worlds:
+ - world
+ - world_nether
+ - world_the_end
+
+
+messages:
+  regenerated-overworld: ""
+  regenerated-nether: ""
+  regenerated-the_end: ""

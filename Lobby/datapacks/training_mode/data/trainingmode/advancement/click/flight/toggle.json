@@ -1,0 +1,16 @@
+{
+    "criteria": {
+      "use_item": {
+        "trigger": "minecraft:using_item",
+        "conditions": {
+          "item": {
+            "predicates": {
+              "minecraft:custom_data": { "tm:flight_toggle": true }
+            }
+          }
+        }
+      }
+    },
+    "rewards": { "function": "trainingmode:flight/toggle" }
+  }
+  

@@ -1,0 +1,27 @@
+{
+    "parent": "time:s/b_rank",
+    "display": {
+        "title": {
+            "text": "A rank",
+            "color": "red",
+            "bold": true
+        },
+        "description": {
+            "text": "Executing flawless moves, making the parkour seem like a dance!",
+            "color": "white",
+            "bold": false
+        },
+        "icon": {
+            "id": "minecraft:diamond"
+        },
+        "frame": "goal",
+        "show_toast": false,
+        "announce_to_chat": false,
+        "hidden": true
+    },
+    "criteria": {
+        "main": {
+            "trigger": "minecraft:impossible"
+        }
+    }
+}

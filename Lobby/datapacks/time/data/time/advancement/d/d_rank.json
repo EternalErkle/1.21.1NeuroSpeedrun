@@ -1,0 +1,27 @@
+{
+    "parent": "time:root",
+    "display": {
+        "title": {
+            "text": "D rank",
+            "color": "light_purple",
+            "bold": true
+        },
+        "description": {
+            "text": "Tripping over hurdles, yet refusing to give up!",
+            "color": "white",
+            "bold": false
+        },
+        "icon": {
+            "id": "minecraft:copper_ingot"
+        },
+        "frame": "goal",
+        "show_toast": true,
+        "announce_to_chat": false,
+        "hidden": true
+    },
+    "criteria": {
+        "main": {
+            "trigger": "minecraft:impossible"
+        }
+    }
+}

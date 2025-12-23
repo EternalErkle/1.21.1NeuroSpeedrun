@@ -1,0 +1,37 @@
+{
+    "parent": "main:easter_eggs/ee6",
+    "display": {
+        "title": {
+            "text": "Secret snake",
+            "color": "white",
+            "bold": true
+        },
+        "description": {
+            "text": "Discover the secret snake parkour!",
+            "color": "white",
+            "bold": false
+        },
+        "icon": {
+            "id": "minecraft:player_head",
+            "components": {
+                "minecraft:profile": {
+                  "properties": [
+                    {
+                      "name": "textures",
+                      "value": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTFiNGIyMDE4OWQ5MDJiYzZjM2ZhYmUyM2Q5ZjU3ODY5N2Y1NDRjZjQxNTMxNzc4NzM3NDExODM5M2RhNCJ9fX0="
+                    }
+                  ]
+                }
+              }
+       },
+        "frame": "challenge",
+        "show_toast": true,
+        "announce_to_chat": false,
+        "hidden": true
+    },
+    "criteria": {
+        "0": {
+            "trigger": "minecraft:impossible"
+        }
+    }
+}

@@ -1,0 +1,2 @@
+scoreboard players add @s house_timer 1
+execute if score @s house_timer matches 1000.. positioned 44 144 14 unless entity @a[gamemode=!spectator,distance=..25] run function main:easter_eggs/house/reset

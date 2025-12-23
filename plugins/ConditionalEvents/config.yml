@@ -1,0 +1,268 @@
+Config:
+  update_notification: true
+  data_save_time: 5
+  debug_actions: true
+  experimental:
+    variable_replacement: false
+  register_commands:
+    - "hello"
+  to_condition_groups:
+    group1:
+      - "%player_has_permission_conditionalevents.somepermission% == yes"
+Messages:
+  prefix: '&4[&bConditionalEvents&4] '
+  commandReload: '&aConfig Reloaded.'
+  commandNoPermissions: '&cYou don''t have permissions to use this command.'
+  commandResetError: '&cUse &7/ce reset <player> <event>/all'
+  eventDoesNotExists: '&cThat event doesn''t exists on the config.'
+  eventDataReset: '&aData reset for player &e%player% &aon event &e%event%&a!'
+  eventDataResetAll: '&aAll data reset for player &e%player%&a!'
+  eventDataResetForAllPlayers: '&aData reset for &eall players &aon event &e%event%&a!'
+  eventDataResetAllForAllPlayers: '&aAll player data reset.'
+  eventEnableError: '&cUse &7/ce enable <event>'
+  eventDisableError: '&cUse &7/ce disable <event>'
+  eventEnabled: '&aEvent &7%event% &aenabled.'
+  eventDisabled: '&aEvent &7%event% &adisabled.'
+  commandDebugError: '&cUse &7/ce debug <event>'
+  debugEnabled: '&aDebug now enabled for event &7%event%&a!'
+  debugDisabled: '&aDebug disabled for event &7%event%&a!'
+  debugEnabledPlayer: '&aDebug now enabled for event &7%event% &aand player &7%player%&a!'
+  debugDisabledPlayer: '&aDebug disabled for event &7%event% &aand player &7%player%&a!'
+  onlyPlayerCommand: "&cThis command can be only used by a player."
+  playerDoesNotExists: '&cThat player doesn''t have any data.'
+  seconds: s
+  minutes: m
+  hours: h
+  days: d
+  placeholderAPICooldownReady: "Ready!"
+  placeholderAPICooldownNameError: "No event with that name!"
+  commandCallError: '&cUse &7/ce call <event> (optional)%variable1%=<value1>;%variableN%=<valueN> (optional)player:<player>'
+  commandCallInvalidEvent: '&cYou can only execute a CALL event.'
+  commandCallCorrect: '&aEvent &7%event% &asuccessfully executed.'
+  commandCallCorrectPlayer: '&aEvent &7%event% &asuccessfully executed for player &7%player%&a.'
+  commandCallFailed: '&cEvent &7%event% &ccould not be executed. Maybe a format error?'
+  playerNotOnline: '&cThat player is not online.'
+  commandItemError: "&cUse &7/ce item <save/remove> <name>"
+  savedItemDoesNotExists: "&cThat saved item doesn't exists."
+  savedItemRemoved: "&aItem &7%name% &aremoved."
+  mustHaveItemInHand: "&cYou must have an item on your hand."
+  savedItemAlreadyExists: "&cA saved item with that name already exists."
+  savedItemAdded: "&aItem &7%name% &asaved."
+  commandInterruptError: '&cUse &7/ce interrupt <event> (optional)<player>'
+  commandInterruptCorrect: '&aActions of event &7%event% &ainterrupted.'
+  commandInterruptCorrectPlayer: '&aActions of event &7%event% &ainterrupted for player &7%player%&a.'
+Events: 
+  variables:
+
+  break_blocks:
+    type: block_break
+    ignore_with_permission: conditionalevents.ignore.event4
+    conditions:
+      - '%block_world% == Lobby'
+    actions:
+      default:
+        - 'cancel_event: true'
+
+ # WHEN THE ENDER DRAGON IS BEAT, RESET THE RUN COUNT TO ZERO USING:
+  # papi parse %player% %javascript_data_set,run_number,0%
+  death_reset:
+    type: player_death
+    conditions:
+      - '%player_world% equals world_overworld or %player_world% equals world_nether or %player_world% equals world_the_end'
+    actions:
+      default:
+        - "set_death_message: ''"
+        - "to_all: title: 0;60;0; &a☠ &l%player% HAS DIED &a☠;&c&lWORLD RESET"
+        - 'console_command: papi parse %player% "%javascript_data_set_time,global_death_protection%"' 
+        - 'console_command: papi parse %player% "%javascript_data_set_time,world_time%"' 
+        - "wait: 1"
+        - "to_all: console_command: gamemode survival %player%"
+        - "wait: 3"
+
+        - "to_all: message: &c&lWORLD RESET! &7Attempt &e#%javascript_data_get,run_number% &7lasted &f%javascript_data_get_duration,new_world_time,world_time%."
+       
+        - 'console_command: papi parse %player% "%javascript_data_add,run_number,1%"'
+        
+        # 3. 10s RESET COUNTDOWN (with player name)
+        - "to_all: title: 0;21;0; &e10;&c&l%player% DIED - RESETTING IN..."
+        - "wait: 1"
+        - "to_all: title: 0;21;0; &e9;&c&l%player% DIED - RESETTING IN..."
+        - "wait: 1"
+        - "to_all: title: 0;21;0; &e8;&c&l%player% DIED - RESETTING IN..."
+        - "wait: 1"
+        - "to_all: title: 0;21;0; &e7;&c&l%player% DIED - RESETTING IN..."
+        - "wait: 1"
+        - "to_all: title: 0;21;0; &e6;&c&l%player% DIED - RESETTING IN..."
+        - "wait: 1"
+        - "to_all: title: 0;21;0; &e5;&c&l%player% DIED - RESETTING IN..."
+        - "wait: 1"
+        - "to_all: title: 0;21;0; &e4;&c&l%player% DIED - RESETTING IN..."
+        - "wait: 1"
+        - "to_all: title: 0;21;0; &e3;&c&l%player% DIED - RESETTING IN..."
+        - "to_all: playsound: BLOCK_NOTE_BLOCK_BIT;10;1.2"
+        - "wait: 1"
+        - "to_all: title: 0;21;0; &e2;&c&l%player% DIED - RESETTING IN..."
+        - "to_all: playsound: BLOCK_NOTE_BLOCK_BIT;10;1.4"
+        - "wait: 1"
+        - "to_all: title: 0;21;0; &e1;&c&l%player% DIED - RESETTING IN..."
+        - "to_all: playsound: BLOCK_NOTE_BLOCK_BIT;10;1.6"
+        - "wait: 1"
+
+        # 4. MOVE TO Lobby & DELETE WORLDS
+        - 'to_all: clear_inventory'
+        - 'to_all: heal: 20'
+        - 'to_all: give_potion_effect: SATURATION;20;1' 
+        - "to_all: console_command: mv teleport %player% Lobby --unsafe"
+  
+    
+        # 2. DELETE OLD WORLDS
+        - "wait: 1"
+        - "console_command: minecraft:kill @e[type=!player,type=!armor_stand,type=!item_frame,type=!painting]"        
+        - "console_command: time set 0"
+        - "to_all: title: 5;100;5; &b&lGENERATING...;&7Please wait on the island"
+        - "wait: 5"
+        - "console_command: mv regen world_overworld --seed %random_1_999999%"
+        - "console_command: mv regen world_nether --seed %random_1_999999%"
+        - "console_command: mv regen world_the_end --seed %random_1_999999%"
+                
+        - "wait: 1" # Regen is slow; give it time to finish
+        
+        # 6. RETURN COUNTDOWN
+        - "to_all: title: 0;21;0; &b3;&3&lTELEPORTING...;&bAttempt #%ce_variable_attempts%"
+        - "wait: 1"
+        - "to_all: title: 0;21;0; &b2;&3&lTELEPORTING...;&bAttempt #%ce_variable_attempts%"
+        - "wait: 1"
+        - "to_all: title: 0;21;0; &b1;&3&lTELEPORTING...;&bAttempt #%ce_variable_attempts%"
+        - "wait: 1"
+        
+        # 7. FINAL RETURN & SET SURVIVAL
+        - "to_all: console_command: mv teleport %player% world_overworld --unsafe"
+        - "console_command: gamemode survival %player%"
+        - 'console_command: papi parse %player% "%javascript_data_set_time,new_world_time%"' 
+
+
+        - "to_all: title: 20;80;20; &a&lGOOD LUCK!;&7Beginning &6&lAttempt &e#%javascript_data_get,run_number%"
+        - "to_all: playsound: ENTITY_PLAYER_LEVELUP;10;1"
+
+  stop_damage_post_death:
+    type: player_damage
+    conditions:
+       - '%javascript_data_within_time,global_death_protection,30% == true'
+
+    actions:
+      default:
+        - 'cancel_event: true'
+        
+  stop_damage_lobby:
+    type: player_damage
+    conditions:
+        - '%player_world% equals Lobby'
+    actions:
+      default:       
+       - 'cancel_event: true'
+      
+
+  stop_enemy_spawing_lobby:
+    type: entity_spawn
+    conditions:
+      - '%player_world% equals Lobby'
+    actions:
+      default:
+        - 'cancel_event:true'
+
+  move_to_world:
+    type: player_join
+    conditions: '%player_world% equals Lobby or %player_world equals world' 
+    actions:
+      default:
+        - "console_command: mv tp %player% world_overworld --unsafe"
+
+  server_on:
+    type: server_start
+    actions:
+      default:
+       - "console_command: mv modify world_overworld set difficulty hardcore"
+       - "console_command: mv modify world_nether set difficulty hardcore"
+       - "console_command: mv modify world_the_end set difficulty hardcore"
+       - "console_command: gamerule sendCommandFeedback false"
+       - "console_command: gamerule showDeathMessages false"
+       - "set_death_message: no"
+
+  event1:
+    type: player_join
+    conditions:
+      - '%player% == Ajneb'
+    actions:
+      default:
+        - 'to_all: message: &e&l[ALERT] &f&lAjneb joined the game!'
+  event2:
+    type: block_interact
+    one_time: true
+    conditions:
+      - '%block_x% == 20'
+      - '%block_y% == 60'
+      - '%block_z% == 20'
+      - '%block_world% == Lobby'
+      - '%block% == STONE_BUTTON'
+      - '%action_type% == RIGHT_CLICK'
+      - '%player_has_permission_conditionalevents.event.event2% == no execute actions2'
+    actions:
+      default:
+        - 'message: &aYou''ve received $500!'
+        - 'console_command: eco give %player% 500'
+        - 'playsound: ENTITY_PLAYER_LEVELUP;10;2'
+      actions2:
+        - 'message: &cYou need to have a rank to use this button.'
+      one_time:
+        - 'message: &cYou can claim this reward just once!'
+  event3:
+    type: player_attack
+    conditions:
+      - '%victim% == PLAYER'
+      - '%item% == DIAMOND_SWORD'
+      - '%item_name% == Super Sword'
+      - '%random_1_10% >= 8'
+    actions:
+      default:
+        - 'message: &aYour diamond sword poison effect was activated! &6%target:player_name% &ais now poisoned!'
+        - 'to_target: give_potion_effect: POISON;120;1'
+        - 'to_target: message: &cYou were poisoned by &e%player%&c!'
+  # event4:
+  #   type: block_break
+  #   ignore_with_permission: conditionalevents.ignore.event4
+  #   conditions:
+  #     - '%block_world% == spawn'
+  #   actions:
+  #     default:
+  #       - 'cancel_event: true'
+  #       - 'message: &cYou can''t break blocks on this world.'
+  #       - 'playsound: BLOCK_NOTE_BLOCK_PLING;10;0.1'
+  event5:
+    type: player_command
+    ignore_with_permission: conditionalevents.ignore.event5
+    conditions:
+      - '%main_command% equalsIgnoreCase //calc or %main_command% equalsIgnoreCase //solve or %main_command% equalsIgnoreCase //eval'
+    actions:
+      default:
+        - 'cancel_event: true'
+        - 'kick: &cWhat are you trying to do?'
+  event6:
+    type: repetitive
+    repetitive_time: 10
+    conditions:
+      - '%player_world% == plotworld'
+      - '%player_gamemode% != CREATIVE'
+    actions:
+      default:
+        - 'gamemode: CREATIVE'
+        - 'actionbar: &6Changing gamemode to creative.;100'
+  event7:
+    type: player_command
+    conditions:
+      - '%main_command% == /hello'
+    actions:
+      default:
+        - 'cancel_event: true'
+        - "message: &7You said hello to nearby players!"
+        - 'to_range: 10;false: message: &e%player% &7says you hello!'
+
