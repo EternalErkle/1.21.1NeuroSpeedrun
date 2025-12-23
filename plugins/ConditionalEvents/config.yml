@@ -316,5 +316,14 @@ Events:
         - "cancel_event: true"
         - "message: &fThe current best time is: &6&l%javascript_data_get_duration,zero_time,best_time%" 
 
+  command_runcount:
+    type: player_command
+    conditions:
+      - "%main_command% equalsIgnoreCase /runcount"
+    actions:
+      default:
+        - "cancel_event: true"
+        - "message: &fThere have been &e&l%javascript_data_get,run_number% &fruns."
+
 
   #need a command to reset the best time.
