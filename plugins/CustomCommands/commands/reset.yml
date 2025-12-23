@@ -1,0 +1,5 @@
+aliases: [reset]
+
+patterns:
+  - pattern: 'besttime|runcount'
+  - description: reset the best time [besttime] or run count [runcount]
