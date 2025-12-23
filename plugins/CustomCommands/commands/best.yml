@@ -4,4 +4,7 @@ aliases: [best]
 
 
 patterns:
-  pattern: ''
+  default:
+    pattern: ''
+    description: show the best speedrun time to date.
+    actions: []

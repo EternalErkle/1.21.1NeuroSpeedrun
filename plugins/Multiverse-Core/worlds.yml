@@ -493,7 +493,7 @@ world_nether:
   pvp: true
   respawn-world: ''
   scale: 8.0
-  seed: 415266
+  seed: 42370
   spawn-location:
     ==: MVSpawnLocation
     x: 0.0
@@ -571,12 +571,12 @@ world_overworld:
   pvp: true
   respawn-world: ''
   scale: 1.0
-  seed: 691487
+  seed: 65012
   spawn-location:
     ==: MVSpawnLocation
-    x: 0.0
-    y: 65.0
-    z: 0.0
+    x: 368.0
+    y: 64.0
+    z: -96.0
     pitch: 0.0
     yaw: 0.0
   spawning:
@@ -649,11 +649,11 @@ world_the_end:
   pvp: true
   respawn-world: ''
   scale: 1.0
-  seed: 335095
+  seed: 158853
   spawn-location:
     ==: MVSpawnLocation
     x: 0.0
-    y: 61.0
+    y: 62.0
     z: 0.0
     pitch: 0.0
     yaw: 0.0
