@@ -1,119 +1,122 @@
-[12:41:33] [ServerMain/INFO]: [bootstrap] Running Java 21 (OpenJDK 64-Bit Server VM 21.0.9+10-LTS; Eclipse Adoptium Temurin-21.0.9+10) on Windows 11 10.0 (amd64)
-[12:41:33] [ServerMain/INFO]: [bootstrap] Loading Paper 1.21.1-133-ver/1.21.1@3cb8529 (2025-03-28T16:14:36Z) for Minecraft 1.21.1
-[12:41:34] [ServerMain/INFO]: [PluginInitializerManager] Initializing plugins...
-[12:41:36] [ServerMain/INFO]: [PluginInitializerManager] Initialized 6 plugins
-[12:41:36] [ServerMain/INFO]: [PluginInitializerManager] Bukkit plugins (6):
- - ConditionalEvents (4.67.1), CustomCommands (4.3.0), Fahare (1.2.1), GCore (8.50.0), Multiverse-Core (5.4.0), PlaceholderAPI (2.11.7)
-[12:41:44] [ServerMain/INFO]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
-[12:41:48] [ServerMain/INFO]: Loaded 1290 recipes
-[12:41:48] [ServerMain/INFO]: Loaded 1399 advancements
-[12:41:49] [Server thread/INFO]: Starting minecraft server version 1.21.1
-[12:41:49] [Server thread/INFO]: Loading properties
-[12:41:49] [Server thread/INFO]: This server is running Paper version 1.21.1-133-ver/1.21.1@3cb8529 (2025-03-28T16:14:36Z) (Implementing API version 1.21.1-R0.1-SNAPSHOT)
-[12:41:50] [Server thread/INFO]: [spark] This server bundles the spark profiler. For more information please visit https://docs.papermc.io/paper/profiling
-[12:41:50] [Server thread/INFO]: Server Ping Player Sample Count: 12
-[12:41:50] [Server thread/INFO]: Using 4 threads for Netty based IO
-[12:41:52] [Server thread/INFO]: [ChunkTaskScheduler] Chunk system is using 1 I/O threads, 4 worker threads, and population gen parallelism of 4 threads
-[12:41:52] [Server thread/INFO]: Default game type: SURVIVAL
-[12:41:52] [Server thread/INFO]: Generating keypair
-[12:41:52] [Server thread/INFO]: Starting Minecraft server on *:25565
-[12:41:52] [Server thread/INFO]: Using default channel type
-[12:41:52] [Server thread/INFO]: Paper: Using Java compression from Velocity.
-[12:41:52] [Server thread/INFO]: Paper: Using Java cipher from Velocity.
-[12:41:53] [Server thread/INFO]: [PlaceholderAPI] Loading server plugin PlaceholderAPI v2.11.7
-[12:41:53] [Server thread/INFO]: [GCore] Loading server plugin GCore v8.50.0
-[12:41:53] [Server thread/INFO]: [CoreLogging] Loading server plugin Multiverse-Core v5.4.0
-[12:41:53] [Server thread/INFO]: [Fahare] Loading server plugin Fahare v1.2.1
-[12:41:53] [Server thread/INFO]: [CustomCommands] Loading server plugin CustomCommands v4.3.0
-[12:41:53] [Server thread/INFO]: [ConditionalEvents] Loading server plugin ConditionalEvents v4.67.1
-[12:41:53] [Server thread/INFO]: Server permissions file permissions.yml is empty, ignoring it
-[12:41:53] [Server thread/INFO]: Preparing level "world"
-[12:41:55] [Server thread/INFO]: Preparing start region for dimension minecraft:overworld
-[12:41:57] [Server thread/INFO]: Time elapsed: 2070 ms
-[12:41:57] [Server thread/INFO]: Preparing start region for dimension minecraft:the_nether
-[12:41:57] [Server thread/INFO]: Time elapsed: 214 ms
-[12:41:57] [Server thread/INFO]: Preparing start region for dimension minecraft:the_end
-[12:41:57] [Server thread/INFO]: Time elapsed: 206 ms
-[12:41:57] [Server thread/INFO]: [PlaceholderAPI] Enabling PlaceholderAPI v2.11.7
-[12:41:58] [Server thread/INFO]: [PlaceholderAPI] Fetching available expansion information...
-[12:41:58] [Server thread/INFO]: [GCore] Enabling GCore v8.50.0
-[12:41:58] [Server thread/INFO]: [GCore-migration] Already processed v7 -> v8 (config)
-[12:41:58] [Server thread/INFO]: [GCore-migration] Already processed v7 -> v8 (data)
-[12:41:58] [Server thread/INFO]: [GCore-migration] Already processed v8.4 -> v8.5
-[12:41:58] [Server thread/INFO]: [GCore-migration] Already processed v8.8 -> v8.9
-[12:41:58] [Server thread/INFO]: [GCore-migration] Already processed v8.23 -> v8.24
-[12:41:58] [Server thread/INFO]: [GCore-migration] Already processed v8.24 -> v8.25
-[12:41:58] [Server thread/INFO]: [GCore-migration] Already processed v8.29 -> v8.30
-[12:41:58] [Server thread/INFO]: [GCore-8.50.0] Found server version MC_1_21_R1
-[12:41:59] [Server thread/INFO]: [GCore-8.50.0] Loading materials...
-[12:41:59] [Server thread/INFO]: [GCore-8.50.0] Loading sounds...
-[12:42:00] [Server thread/INFO]: [GCore-8.50.0] Loading particles...
-[12:42:00] [Server thread/INFO]: [GCore-8.50.0] Enabled currency XP_LEVEL
-[12:42:00] [Server thread/INFO]: [GCore-8.50.0] Enabled currency XP
-[12:42:00] [Server thread/INFO]: [GCore-8.50.0] Loading texts...
-[12:42:00] [Server thread/INFO]: [GCore-8.50.0] Text durationformatdays doesn't exist in default files (not even in en_US)
-[12:42:00] [Server thread/INFO]: [GCore-8.50.0] Loaded 1 missing text from default lang for generic.yml : durationFormatDays
-[12:42:00] [Server thread/INFO]: [PlaceholderAPI] Successfully registered internal expansion: gcore [1.0.0]
-[12:42:00] [Server thread/INFO]: [GCore-8.50.0] Enabled integration for PlaceholderAPI
-[12:42:00] [Server thread/INFO]: [GCore-8.50.0] Initializing worker and caches
-[12:42:00] [Server thread/INFO]: [GCore-8.50.0] Registering integrations
-[12:42:00] [Server thread/INFO]: [GCore-8.50.0] Initializing tasks and listeners
-[12:42:00] [Server thread/INFO]: [GCore-8.50.0] Successfully enabled
-[12:42:00] [Server thread/INFO]: [Multiverse-Core] Enabling Multiverse-Core v5.4.0
-[12:42:02] [Server thread/INFO]: Preparing start region for dimension minecraft:world_overworld
-[12:42:02] [Server thread/INFO]: Time elapsed: 314 ms
-[12:42:02] [Server thread/ERROR]: [Multiverse-Core] Failed to autoload world Lobby_nether: Failure{reason=WORLD_FOLDER_INVALID}
-[12:42:02] [Server thread/ERROR]: [Multiverse-Core] Failed to autoload world Lobby_the_end: Failure{reason=WORLD_FOLDER_INVALID}
-[12:42:02] [Server thread/INFO]: Preparing start region for dimension minecraft:lobby
-[12:42:02] [Server thread/INFO]: Time elapsed: 327 ms
-[12:42:03] [Server thread/ERROR]: [Multiverse-Core] Failed to create bukkit world: overworld
-[12:42:03] [Server thread/WARN]: java.lang.IllegalArgumentException: Cannot create a world with key minecraft:overworld and name overworld one (or both) already match a world that exists
-[12:42:03] [Server thread/WARN]: 	at org.bukkit.craftbukkit.CraftServer.createWorld(CraftServer.java:1288)
-[12:42:03] [Server thread/WARN]: 	at org.bukkit.Bukkit.createWorld(Bukkit.java:838)
-[12:42:03] [Server thread/WARN]: 	at org.bukkit.WorldCreator.createWorld(WorldCreator.java:502)
-[12:42:03] [Server thread/WARN]: 	at multiverse-core-5.4.0.jar//org.mvplugins.multiverse.core.world.WorldManager.lambda$createBukkitWorld$9f2048fa$1(WorldManager.java:885)
-[12:42:03] [Server thread/WARN]: 	at multiverse-core-5.4.0.jar//org.mvplugins.multiverse.external.vavr.control.Try.of(Try.java:74)
-[12:42:03] [Server thread/WARN]: 	at multiverse-core-5.4.0.jar//org.mvplugins.multiverse.core.world.WorldManager.createBukkitWorld(WorldManager.java:883)
-[12:42:03] [Server thread/WARN]: 	at multiverse-core-5.4.0.jar//org.mvplugins.multiverse.core.utils.result.Attempt$Success.mapAttempt(Attempt.java:365)
-[12:42:03] [Server thread/WARN]: 	at multiverse-core-5.4.0.jar//org.mvplugins.multiverse.core.world.WorldManager.doLoadWorld(WorldManager.java:477)
-[12:42:03] [Server thread/WARN]: 	at multiverse-core-5.4.0.jar//org.mvplugins.multiverse.core.utils.result.Attempt$Success.mapAttempt(Attempt.java:365)
-[12:42:03] [Server thread/WARN]: 	at multiverse-core-5.4.0.jar//org.mvplugins.multiverse.core.world.WorldManager.loadWorld(WorldManager.java:444)
-[12:42:03] [Server thread/WARN]: 	at multiverse-core-5.4.0.jar//org.mvplugins.multiverse.core.world.WorldManager.lambda$autoLoadWorlds$18(WorldManager.java:230)
-[12:42:03] [Server thread/WARN]: 	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:184)
-[12:42:03] [Server thread/WARN]: 	at java.base/java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:179)
-[12:42:03] [Server thread/WARN]: 	at java.base/java.util.AbstractList$RandomAccessSpliterator.forEachRemaining(AbstractList.java:722)
-[12:42:03] [Server thread/WARN]: 	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
-[12:42:03] [Server thread/WARN]: 	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
-[12:42:03] [Server thread/WARN]: 	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:151)
-[12:42:03] [Server thread/WARN]: 	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:174)
-[12:42:03] [Server thread/WARN]: 	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
-[12:42:03] [Server thread/WARN]: 	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:596)
-[12:42:03] [Server thread/WARN]: 	at multiverse-core-5.4.0.jar//org.mvplugins.multiverse.core.world.WorldManager.autoLoadWorlds(WorldManager.java:230)
-[12:42:03] [Server thread/WARN]: 	at multiverse-core-5.4.0.jar//org.mvplugins.multiverse.core.world.WorldManager.lambda$initAllWorlds$0(WorldManager.java:153)
-[12:42:03] [Server thread/WARN]: 	at multiverse-core-5.4.0.jar//org.mvplugins.multiverse.external.vavr.control.Try.andThenTry(Try.java:308)
-[12:42:03] [Server thread/WARN]: 	at multiverse-core-5.4.0.jar//org.mvplugins.multiverse.core.world.WorldManager.initAllWorlds(WorldManager.java:151)
-[12:42:03] [Server thread/WARN]: 	at multiverse-core-5.4.0.jar//org.mvplugins.multiverse.core.MultiverseCore.onEnable(MultiverseCore.java:101)
-[12:42:03] [Server thread/WARN]: 	at org.bukkit.plugin.java.JavaPlugin.setEnabled(JavaPlugin.java:288)
-[12:42:03] [Server thread/WARN]: 	at io.papermc.paper.plugin.manager.PaperPluginInstanceManager.enablePlugin(PaperPluginInstanceManager.java:202)
-[12:42:03] [Server thread/WARN]: 	at io.papermc.paper.plugin.manager.PaperPluginManagerImpl.enablePlugin(PaperPluginManagerImpl.java:109)
-[12:42:03] [Server thread/WARN]: 	at org.bukkit.plugin.SimplePluginManager.enablePlugin(SimplePluginManager.java:520)
-[12:42:03] [Server thread/WARN]: 	at org.bukkit.craftbukkit.CraftServer.enablePlugin(CraftServer.java:641)
-[12:42:03] [Server thread/WARN]: 	at org.bukkit.craftbukkit.CraftServer.enablePlugins(CraftServer.java:590)
-[12:42:03] [Server thread/WARN]: 	at net.minecraft.server.MinecraftServer.loadWorld0(MinecraftServer.java:753)
-[12:42:03] [Server thread/WARN]: 	at net.minecraft.server.MinecraftServer.loadLevel(MinecraftServer.java:515)
-[12:42:03] [Server thread/WARN]: 	at net.minecraft.server.dedicated.DedicatedServer.initServer(DedicatedServer.java:329)
-[12:42:03] [Server thread/WARN]: 	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:1214)
-[12:42:03] [Server thread/WARN]: 	at net.minecraft.server.MinecraftServer.lambda$spin$0(MinecraftServer.java:329)
-[12:42:03] [Server thread/WARN]: 	at java.base/java.lang.Thread.run(Thread.java:1583)
-[12:42:03] [Server thread/ERROR]: [Multiverse-Core] Failed to autoload world overworld: Failure{reason=WORLD_CREATOR_FAILED, causeBy=Failure{reason=BUKKIT_CREATION_FAILED}}
-[12:42:03] [Server thread/INFO]: Preparing start region for dimension minecraft:limbo
-[12:42:03] [Server thread/INFO]: Time elapsed: 127 ms
-[12:42:04] [Server thread/INFO]: [PlaceholderAPI] Successfully registered internal expansion: multiverse-core [5.4.0]
-[12:42:04] [Server thread/INFO]: [Multiverse-Core] API service loaded!
-[12:42:04] [Server thread/INFO]: [Multiverse-Core] Version 5.4.0 (API v5.4) Enabled - By dumptruckman, Rigby, fernferret, lithium3141, main--, benwoo1110 and Zax71
-[12:42:04] [Server thread/INFO]: [Multiverse-Core] Loving Multiverse-Core? Please consider supporting the project with a small donation: https://github.com/sponsors/Multiverse
-[12:42:04] [Server thread/INFO]: [Fahare] Enabling Fahare v1.2.1
-[12:42:04] [Server thread/ERROR]: Error occurred while enabling Fahare v1.2.1 (Is it up to date?)
+[00:20:16] [ServerMain/INFO]: [bootstrap] Running Java 21 (OpenJDK 64-Bit Server VM 21.0.9+10-LTS; Eclipse Adoptium Temurin-21.0.9+10) on Windows 11 10.0 (amd64)
+[00:20:16] [ServerMain/INFO]: [bootstrap] Loading Paper 1.21.1-133-ver/1.21.1@3cb8529 (2025-03-28T16:14:36Z) for Minecraft 1.21.1
+[00:20:18] [ServerMain/INFO]: [PluginInitializerManager] Initializing plugins...
+[00:20:19] [ServerMain/INFO]: [PluginInitializerManager] Initialized 7 plugins
+[00:20:19] [ServerMain/INFO]: [PluginInitializerManager] Bukkit plugins (7):
+ - ConditionalEvents (4.67.1), CustomCommands (4.3.0), Fahare (1.2.1), GCore (8.50.0), Multiverse-Core (5.4.0), Multiverse-NetherPortals (5.0.3), PlaceholderAPI (2.11.7)
+[00:20:27] [ServerMain/INFO]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
+[00:20:30] [ServerMain/INFO]: Loaded 1290 recipes
+[00:20:31] [ServerMain/INFO]: Loaded 1399 advancements
+[00:20:31] [Server thread/INFO]: Starting minecraft server version 1.21.1
+[00:20:31] [Server thread/INFO]: Loading properties
+[00:20:31] [Server thread/INFO]: This server is running Paper version 1.21.1-133-ver/1.21.1@3cb8529 (2025-03-28T16:14:36Z) (Implementing API version 1.21.1-R0.1-SNAPSHOT)
+[00:20:33] [Server thread/INFO]: [spark] This server bundles the spark profiler. For more information please visit https://docs.papermc.io/paper/profiling
+[00:20:33] [Server thread/INFO]: Server Ping Player Sample Count: 12
+[00:20:33] [Server thread/INFO]: Using 4 threads for Netty based IO
+[00:20:34] [Server thread/INFO]: [ChunkTaskScheduler] Chunk system is using 1 I/O threads, 4 worker threads, and population gen parallelism of 4 threads
+[00:20:35] [Server thread/INFO]: Default game type: SURVIVAL
+[00:20:35] [Server thread/INFO]: Generating keypair
+[00:20:35] [Server thread/INFO]: Starting Minecraft server on *:25565
+[00:20:35] [Server thread/INFO]: Using default channel type
+[00:20:35] [Server thread/INFO]: Paper: Using Java compression from Velocity.
+[00:20:35] [Server thread/INFO]: Paper: Using Java cipher from Velocity.
+[00:20:36] [Server thread/INFO]: [PlaceholderAPI] Loading server plugin PlaceholderAPI v2.11.7
+[00:20:36] [Server thread/INFO]: [CoreLogging] Loading server plugin Multiverse-Core v5.4.0
+[00:20:36] [Server thread/INFO]: [GCore] Loading server plugin GCore v8.50.0
+[00:20:36] [Server thread/INFO]: [Multiverse-NetherPortals] Loading server plugin Multiverse-NetherPortals v5.0.3
+[00:20:36] [Server thread/INFO]: [Fahare] Loading server plugin Fahare v1.2.1
+[00:20:36] [Server thread/INFO]: [CustomCommands] Loading server plugin CustomCommands v4.3.0
+[00:20:36] [Server thread/INFO]: [ConditionalEvents] Loading server plugin ConditionalEvents v4.67.1
+[00:20:36] [Server thread/INFO]: Server permissions file permissions.yml is empty, ignoring it
+[00:20:36] [Server thread/INFO]: Preparing level "world"
+[00:20:37] [Server thread/INFO]: Preparing start region for dimension minecraft:overworld
+[00:20:39] [Server thread/INFO]: Time elapsed: 1807 ms
+[00:20:39] [Server thread/INFO]: Preparing start region for dimension minecraft:the_nether
+[00:20:39] [Server thread/INFO]: Time elapsed: 430 ms
+[00:20:39] [Server thread/INFO]: Preparing start region for dimension minecraft:the_end
+[00:20:40] [Server thread/INFO]: Time elapsed: 71 ms
+[00:20:40] [Server thread/INFO]: [PlaceholderAPI] Enabling PlaceholderAPI v2.11.7
+[00:20:40] [Server thread/INFO]: [PlaceholderAPI] Fetching available expansion information...
+[00:20:40] [Server thread/INFO]: [Multiverse-Core] Enabling Multiverse-Core v5.4.0
+[00:20:42] [Server thread/INFO]: Preparing start region for dimension minecraft:world_overworld
+[00:20:42] [Server thread/INFO]: Time elapsed: 260 ms
+[00:20:42] [Server thread/ERROR]: [Multiverse-Core] Failed to autoload world Lobby_nether: Failure{reason=WORLD_FOLDER_INVALID}
+[00:20:42] [Server thread/ERROR]: [Multiverse-Core] Failed to autoload world Lobby_the_end: Failure{reason=WORLD_FOLDER_INVALID}
+[00:20:42] [Server thread/INFO]: Preparing start region for dimension minecraft:lobby
+[00:20:43] [Server thread/INFO]: Time elapsed: 102 ms
+[00:20:43] [Server thread/ERROR]: [Multiverse-Core] Failed to create bukkit world: overworld
+[00:20:43] [Server thread/WARN]: java.lang.IllegalArgumentException: Cannot create a world with key minecraft:overworld and name overworld one (or both) already match a world that exists
+[00:20:43] [Server thread/WARN]: 	at org.bukkit.craftbukkit.CraftServer.createWorld(CraftServer.java:1288)
+[00:20:43] [Server thread/WARN]: 	at org.bukkit.Bukkit.createWorld(Bukkit.java:838)
+[00:20:43] [Server thread/WARN]: 	at org.bukkit.WorldCreator.createWorld(WorldCreator.java:502)
+[00:20:43] [Server thread/WARN]: 	at multiverse-core-5.4.0.jar//org.mvplugins.multiverse.core.world.WorldManager.lambda$createBukkitWorld$9f2048fa$1(WorldManager.java:885)
+[00:20:43] [Server thread/WARN]: 	at multiverse-core-5.4.0.jar//org.mvplugins.multiverse.external.vavr.control.Try.of(Try.java:74)
+[00:20:43] [Server thread/WARN]: 	at multiverse-core-5.4.0.jar//org.mvplugins.multiverse.core.world.WorldManager.createBukkitWorld(WorldManager.java:883)
+[00:20:43] [Server thread/WARN]: 	at multiverse-core-5.4.0.jar//org.mvplugins.multiverse.core.utils.result.Attempt$Success.mapAttempt(Attempt.java:365)
+[00:20:43] [Server thread/WARN]: 	at multiverse-core-5.4.0.jar//org.mvplugins.multiverse.core.world.WorldManager.doLoadWorld(WorldManager.java:477)
+[00:20:43] [Server thread/WARN]: 	at multiverse-core-5.4.0.jar//org.mvplugins.multiverse.core.utils.result.Attempt$Success.mapAttempt(Attempt.java:365)
+[00:20:43] [Server thread/WARN]: 	at multiverse-core-5.4.0.jar//org.mvplugins.multiverse.core.world.WorldManager.loadWorld(WorldManager.java:444)
+[00:20:43] [Server thread/WARN]: 	at multiverse-core-5.4.0.jar//org.mvplugins.multiverse.core.world.WorldManager.lambda$autoLoadWorlds$18(WorldManager.java:230)
+[00:20:43] [Server thread/WARN]: 	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:184)
+[00:20:43] [Server thread/WARN]: 	at java.base/java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:179)
+[00:20:43] [Server thread/WARN]: 	at java.base/java.util.AbstractList$RandomAccessSpliterator.forEachRemaining(AbstractList.java:722)
+[00:20:43] [Server thread/WARN]: 	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+[00:20:43] [Server thread/WARN]: 	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+[00:20:43] [Server thread/WARN]: 	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:151)
+[00:20:43] [Server thread/WARN]: 	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:174)
+[00:20:43] [Server thread/WARN]: 	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+[00:20:43] [Server thread/WARN]: 	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:596)
+[00:20:43] [Server thread/WARN]: 	at multiverse-core-5.4.0.jar//org.mvplugins.multiverse.core.world.WorldManager.autoLoadWorlds(WorldManager.java:230)
+[00:20:43] [Server thread/WARN]: 	at multiverse-core-5.4.0.jar//org.mvplugins.multiverse.core.world.WorldManager.lambda$initAllWorlds$0(WorldManager.java:153)
+[00:20:43] [Server thread/WARN]: 	at multiverse-core-5.4.0.jar//org.mvplugins.multiverse.external.vavr.control.Try.andThenTry(Try.java:308)
+[00:20:43] [Server thread/WARN]: 	at multiverse-core-5.4.0.jar//org.mvplugins.multiverse.core.world.WorldManager.initAllWorlds(WorldManager.java:151)
+[00:20:43] [Server thread/WARN]: 	at multiverse-core-5.4.0.jar//org.mvplugins.multiverse.core.MultiverseCore.onEnable(MultiverseCore.java:101)
+[00:20:43] [Server thread/WARN]: 	at org.bukkit.plugin.java.JavaPlugin.setEnabled(JavaPlugin.java:288)
+[00:20:43] [Server thread/WARN]: 	at io.papermc.paper.plugin.manager.PaperPluginInstanceManager.enablePlugin(PaperPluginInstanceManager.java:202)
+[00:20:43] [Server thread/WARN]: 	at io.papermc.paper.plugin.manager.PaperPluginManagerImpl.enablePlugin(PaperPluginManagerImpl.java:109)
+[00:20:43] [Server thread/WARN]: 	at org.bukkit.plugin.SimplePluginManager.enablePlugin(SimplePluginManager.java:520)
+[00:20:43] [Server thread/WARN]: 	at org.bukkit.craftbukkit.CraftServer.enablePlugin(CraftServer.java:641)
+[00:20:43] [Server thread/WARN]: 	at org.bukkit.craftbukkit.CraftServer.enablePlugins(CraftServer.java:590)
+[00:20:43] [Server thread/WARN]: 	at net.minecraft.server.MinecraftServer.loadWorld0(MinecraftServer.java:753)
+[00:20:43] [Server thread/WARN]: 	at net.minecraft.server.MinecraftServer.loadLevel(MinecraftServer.java:515)
+[00:20:43] [Server thread/WARN]: 	at net.minecraft.server.dedicated.DedicatedServer.initServer(DedicatedServer.java:329)
+[00:20:43] [Server thread/WARN]: 	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:1214)
+[00:20:43] [Server thread/WARN]: 	at net.minecraft.server.MinecraftServer.lambda$spin$0(MinecraftServer.java:329)
+[00:20:43] [Server thread/WARN]: 	at java.base/java.lang.Thread.run(Thread.java:1583)
+[00:20:43] [Server thread/ERROR]: [Multiverse-Core] Failed to autoload world overworld: Failure{reason=WORLD_CREATOR_FAILED, causeBy=Failure{reason=BUKKIT_CREATION_FAILED}}
+[00:20:43] [Server thread/INFO]: Preparing start region for dimension minecraft:limbo
+[00:20:43] [Server thread/INFO]: Time elapsed: 48 ms
+[00:20:44] [Server thread/INFO]: [PlaceholderAPI] Successfully registered internal expansion: multiverse-core [5.4.0]
+[00:20:44] [Server thread/INFO]: [Multiverse-Core] API service loaded!
+[00:20:44] [Server thread/INFO]: [Multiverse-Core] Version 5.4.0 (API v5.4) Enabled - By dumptruckman, Rigby, fernferret, lithium3141, main--, benwoo1110 and Zax71
+[00:20:44] [Server thread/INFO]: [Multiverse-Core] Loving Multiverse-Core? Please consider supporting the project with a small donation: https://github.com/sponsors/Multiverse
+[00:20:44] [Server thread/INFO]: [GCore] Enabling GCore v8.50.0
+[00:20:44] [Server thread/INFO]: [GCore-migration] Already processed v7 -> v8 (config)
+[00:20:44] [Server thread/INFO]: [GCore-migration] Already processed v7 -> v8 (data)
+[00:20:44] [Server thread/INFO]: [GCore-migration] Already processed v8.4 -> v8.5
+[00:20:44] [Server thread/INFO]: [GCore-migration] Already processed v8.8 -> v8.9
+[00:20:44] [Server thread/INFO]: [GCore-migration] Already processed v8.23 -> v8.24
+[00:20:44] [Server thread/INFO]: [GCore-migration] Already processed v8.24 -> v8.25
+[00:20:44] [Server thread/INFO]: [GCore-migration] Already processed v8.29 -> v8.30
+[00:20:44] [Server thread/INFO]: [GCore-8.50.0] Found server version MC_1_21_R1
+[00:20:44] [Server thread/INFO]: [GCore-8.50.0] Loading materials...
+[00:20:45] [Server thread/INFO]: [GCore-8.50.0] Loading sounds...
+[00:20:45] [Server thread/INFO]: [GCore-8.50.0] Loading particles...
+[00:20:45] [Server thread/INFO]: [GCore-8.50.0] Enabled currency XP_LEVEL
+[00:20:45] [Server thread/INFO]: [GCore-8.50.0] Enabled currency XP
+[00:20:46] [Server thread/INFO]: [GCore-8.50.0] Loading texts...
+[00:20:46] [Server thread/INFO]: [GCore-8.50.0] Text durationformatdays doesn't exist in default files (not even in en_US)
+[00:20:46] [Server thread/INFO]: [GCore-8.50.0] Loaded 1 missing text from default lang for generic.yml : durationFormatDays
+[00:20:46] [Server thread/INFO]: [PlaceholderAPI] Successfully registered internal expansion: gcore [1.0.0]
+[00:20:46] [Server thread/INFO]: [GCore-8.50.0] Enabled integration for PlaceholderAPI
+[00:20:46] [Server thread/INFO]: [GCore-8.50.0] Initializing worker and caches
+[00:20:46] [Server thread/INFO]: [GCore-8.50.0] Registering integrations
+[00:20:46] [Server thread/INFO]: [GCore-8.50.0] Initializing tasks and listeners
+[00:20:46] [Server thread/INFO]: [GCore-8.50.0] Successfully enabled
+[00:20:46] [Server thread/INFO]: [Multiverse-NetherPortals] Enabling Multiverse-NetherPortals v5.0.3
+[00:20:46] [Server thread/INFO]: [Multiverse-NetherPortals 5.0.3]  Enabled - By Rigby, fernferret and benwoo1110
+[00:20:46] [Server thread/INFO]: [Fahare] Enabling Fahare v1.2.1
+[00:20:46] [Server thread/ERROR]: Error occurred while enabling Fahare v1.2.1 (Is it up to date?)
 java.lang.IllegalArgumentException: Cannot create a world with key fahare:limbo and name limbo one (or both) already match a world that exists
 	at org.bukkit.craftbukkit.CraftServer.createWorld(CraftServer.java:1288) ~[paper-1.21.1.jar:1.21.1-133-3cb8529]
 	at org.bukkit.Bukkit.createWorld(Bukkit.java:838) ~[paper-mojangapi-1.21.1-R0.1-SNAPSHOT.jar:?]
@@ -131,293 +134,156 @@ java.lang.IllegalArgumentException: Cannot create a world with key fahare:limbo 
 	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:1214) ~[paper-1.21.1.jar:1.21.1-133-3cb8529]
 	at net.minecraft.server.MinecraftServer.lambda$spin$0(MinecraftServer.java:329) ~[paper-1.21.1.jar:1.21.1-133-3cb8529]
 	at java.base/java.lang.Thread.run(Thread.java:1583) ~[?:?]
-[12:42:04] [Server thread/INFO]: [Fahare] Disabling Fahare v1.2.1
-[12:42:04] [Server thread/INFO]: [CustomCommands] Enabling CustomCommands v4.3.0
-[12:42:04] [Server thread/INFO]: [CustomCommands-migration] Already processed v3 -> v4 (config)
-[12:42:04] [Server thread/INFO]: [CustomCommands-migration] Already processed v3 -> v4 (data)
-[12:42:04] [Server thread/INFO]: [PlaceholderAPI] Successfully registered internal expansion: gcore [1.0.0]
-[12:42:04] [Server thread/INFO]: [CustomCommands-4.3.0] Enabled integration for PlaceholderAPI
-[12:42:04] [Server thread/INFO]: [CustomCommands-4.3.0] Errors were found when loading CustomCommand spawn :
-[12:42:04] [Server thread/INFO]: [CustomCommands-4.3.0] - missing StringList at path aliases
-[12:42:04] [Server thread/INFO]: [CustomCommands-4.3.0] - missing PatternList at path patterns
-[12:42:04] [Server thread/INFO]: [CustomCommands-4.3.0] Errors were found when loading CustomCommand spawncost :
-[12:42:04] [Server thread/INFO]: [CustomCommands-4.3.0] - key VAULT at path patterns.a.currency_cost isn't a valid currency
-[12:42:04] [Server thread/INFO]: [CustomCommands-4.3.0] Successfully loaded 8 custom commands : best, complex, helpserver, reset, runcount, spawn, spawnconditions, spawncost
-[12:42:04] [Server thread/INFO]: [CustomCommands-4.3.0] Loading texts...
-[12:42:04] [Server thread/INFO]: [CustomCommands-4.3.0] Successfully enabled
-[12:42:04] [Server thread/INFO]: [ConditionalEvents] Enabling ConditionalEvents v4.67.1
-[12:42:05] [Server thread/INFO]: [PlaceholderAPI] Successfully registered internal expansion: conditionalevents [4.67.1]
-[12:42:05] [Server thread/INFO]: [ConditionalEvents] Has been enabled! Version: 4.67.1
-[12:42:05] [Server thread/INFO]: [ConditionalEvents] Thanks for using my plugin!   ~Ajneb97
-[12:42:05] [Server thread/INFO]: There is a new version available. (4.73.1)
-[12:42:05] [Server thread/INFO]: You can download it at: https://modrinth.com/plugin/conditionalevents
-[12:42:05] [Server thread/INFO]: Gamerule sendCommandFeedback is now set to: false
-[12:42:05] [Server thread/INFO]: Gamerule showDeathMessages is now set to: false
-[12:42:05] [Server thread/INFO]: Gamerule doImmediateRespawn is now set to: true
-[12:42:05] [Server thread/INFO]: A team already exists by that name
-[12:42:05] [Server thread/INFO]: Nothing changed. That team already has that color
-[12:42:05] [Server thread/INFO]: [spark] Starting background profiler...
-[12:42:05] [Server thread/INFO]: [spark] The async-profiler engine is not supported for your os/arch (windows11/amd64), so the built-in Java engine will be used instead.
-[12:42:05] [Server thread/INFO]: [PlaceholderAPI] Placeholder expansion registration initializing...
-[12:42:05] [Server thread/INFO]: Done preparing level "world" (11.925s)
-[12:42:05] [Server thread/INFO]: Running delayed init tasks
-[12:42:05] [Server thread/INFO]: Done (33.936s)! For help, type "help"
-[12:42:05] [Server thread/INFO]: Timings Reset
-[12:42:07] [Server thread/INFO]: [PlaceholderAPI] Successfully registered external expansion: math [2.0.2]
-[12:42:07] [Server thread/INFO]: [PlaceholderAPI] Successfully registered external expansion: player [2.0.9]
-[12:42:07] [Server thread/INFO]: [PlaceholderAPI] Successfully registered external expansion: server [2.7.3]
-[12:42:07] [Server thread/INFO]: [PlaceholderAPI] Successfully registered external expansion: world [1.2.3]
-[12:42:07] [Server thread/INFO]: [PAPI] [Javascript-Expansion] 3 scripts loaded!
-[12:42:07] [Server thread/INFO]: [PlaceholderAPI] Successfully registered external expansion: javascript [2.1.3]
-[12:42:07] [Server thread/INFO]: 5 placeholder hook(s) registered!
-[12:42:54] [User Authenticator #0/INFO]: UUID of player erel__ is 3647a364-58a1-4189-9b15-ce15b5d674dd
-[12:42:55] [Server thread/INFO]: ""
-[12:42:55] [Server thread/INFO]: erel__ joined the game
-[12:42:56] [Server thread/INFO]: erel__[/99.244.177.0:50856] logged in with entity id 141 at ([world_overworld]-16.00006595726286, 94.0, 66.6921972559572)
-[12:42:57] [Server thread/WARN]: Can't keep up! Is the server overloaded? Running 2507ms or 50 ticks behind
-[12:43:02] [Server thread/INFO]: erel__ issued server command: /kill
-[12:43:03] [Server thread/INFO]: "set"
-[12:43:03] [Server thread/INFO]: "set"
-[12:43:03] [Server thread/INFO]: [erel__: Killed erel__]
-[12:43:03] [Server thread/INFO]: Added erel__ to team [Players]
-[12:43:06] [Server thread/INFO]: ""
-[12:43:16] [Server thread/INFO]: Revoked 1399 advancements from erel__
-[12:43:16] [Server thread/INFO]: Teleported erel__ to Lobby.
-[12:43:17] [Server thread/INFO]: Villager Villager['Villager'/366, uuid='4713a562-4db5-4651-be5e-76ab5ac4e867', l='ServerLevel[world_overworld]', x=33.63, y=69.00, z=250.28, cpos=[2, 15], tl=0, v=true] died, message: 'Villager was killed'
-[12:43:17] [Server thread/INFO]: Villager Villager['Villager'/346, uuid='40e04cd6-59df-413f-8e3d-e61d07492fe5', l='ServerLevel[world_overworld]', x=32.28, y=67.00, z=233.37, cpos=[2, 14], tl=0, v=true] died, message: 'Villager was killed'
-[12:43:17] [Server thread/INFO]: Villager Villager['Villager'/376, uuid='539fc279-d3c4-4927-bdde-08b6e1b5a601', l='ServerLevel[world_overworld]', x=48.28, y=72.00, z=236.37, cpos=[3, 14], tl=0, v=true] died, message: 'Villager was killed'
-[12:43:17] [Server thread/INFO]: Killed 239 entities
-[12:43:17] [Server thread/INFO]: Set the time to 0
-[12:43:22] [Server thread/INFO]: Regenerating world 'world_overworld'...
-[12:43:22] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_overworld'
-[12:43:22] [Server thread/INFO]: [ChunkHolderManager] Halted chunk system for world 'world_overworld'
-[12:43:26] [Server thread/INFO]: Preparing start region for dimension minecraft:world_overworld
-[12:43:28] [Server thread/INFO]: Time elapsed: 2228 ms
-[12:43:28] [Server thread/INFO]: World 'world_overworld' regenerated!
-[12:43:28] [Server thread/INFO]: Regenerating world 'world_nether'...
-[12:43:28] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_nether'
-[12:43:28] [Server thread/INFO]: [ChunkHolderManager] Halted chunk system for world 'world_nether'
-[12:43:29] [Server thread/INFO]: Preparing start region for dimension minecraft:the_nether
-[12:43:30] [Server thread/INFO]: Time elapsed: 1081 ms
-[12:43:30] [Server thread/WARN]: [Multiverse-Core] Spawn location from world.dat file was unsafe. Adjusting...
-[12:43:30] [Server thread/WARN]: [Multiverse-Core] Original Location: X: 0 Y: 66 Z: 0 P: 0 Y: 0 
-[12:43:30] [Server thread/INFO]: [Multiverse-Core] New Spawn for 'world_nether' is located at: world_nether:0.00,128.00,0.00:0.00:0.00
-[12:43:30] [Server thread/INFO]: World 'world_nether' regenerated!
-[12:43:30] [Server thread/INFO]: Regenerating world 'world_the_end'...
-[12:43:30] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_the_end'
-[12:43:30] [Server thread/INFO]: [ChunkHolderManager] Halted chunk system for world 'world_the_end'
-[12:43:30] [Server thread/INFO]: Preparing start region for dimension minecraft:the_end
-[12:43:31] [Server thread/INFO]: Time elapsed: 379 ms
-[12:43:31] [Server thread/INFO]: World 'world_the_end' regenerated!
-[12:43:34] [Server thread/INFO]: Revoked 1399 advancements from erel__
-[12:43:34] [Server thread/INFO]: "set"
-[12:43:34] [Server thread/INFO]: Target has no effects to remove
-[12:43:34] [Server thread/INFO]: Applied effect Glowing to erel__
-[12:43:34] [Server thread/INFO]: Set 0 experience levels on erel__
-[12:43:34] [Server thread/INFO]: false
-[12:43:34] [Server thread/INFO]: Teleported erel__ to world_overworld.
-[12:43:40] [Server thread/INFO]: erel__ issued server command: /kill
-[12:43:40] [Server thread/INFO]: "set"
-[12:43:40] [Server thread/INFO]: "set"
-[12:43:40] [Server thread/INFO]: [erel__: Killed erel__]
-[12:43:40] [Server thread/INFO]: Added erel__ to team [Players]
-[12:43:44] [Server thread/INFO]: ""
-[12:43:54] [Server thread/INFO]: Revoked 1399 advancements from erel__
-[12:43:54] [Server thread/INFO]: Teleported erel__ to Lobby.
-[12:43:55] [Server thread/INFO]: Killed 310 entities
-[12:43:55] [Server thread/INFO]: Set the time to 0
-[12:44:00] [Server thread/INFO]: Regenerating world 'world_overworld'...
-[12:44:00] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_overworld'
-[12:44:00] [Server thread/INFO]: [ChunkHolderManager] Halted chunk system for world 'world_overworld'
-[12:44:05] [Server thread/INFO]: Preparing start region for dimension minecraft:world_overworld
-[12:44:08] [Server thread/INFO]: Time elapsed: 2423 ms
-[12:44:08] [Server thread/INFO]: World 'world_overworld' regenerated!
-[12:44:08] [Server thread/INFO]: Regenerating world 'world_nether'...
-[12:44:08] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_nether'
-[12:44:08] [Server thread/INFO]: [ChunkHolderManager] Halted chunk system for world 'world_nether'
-[12:44:08] [Server thread/INFO]: Preparing start region for dimension minecraft:the_nether
-[12:44:09] [Server thread/INFO]: Time elapsed: 1007 ms
-[12:44:09] [Server thread/WARN]: [Multiverse-Core] Spawn location from world.dat file was unsafe. Adjusting...
-[12:44:09] [Server thread/WARN]: [Multiverse-Core] Original Location: X: 0 Y: 66 Z: 0 P: 0 Y: 0 
-[12:44:09] [Server thread/INFO]: [Multiverse-Core] New Spawn for 'world_nether' is located at: world_nether:0.00,128.00,0.00:0.00:0.00
-[12:44:09] [Server thread/INFO]: World 'world_nether' regenerated!
-[12:44:09] [Server thread/INFO]: Regenerating world 'world_the_end'...
-[12:44:09] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_the_end'
-[12:44:09] [Server thread/INFO]: [ChunkHolderManager] Halted chunk system for world 'world_the_end'
-[12:44:09] [Server thread/INFO]: Preparing start region for dimension minecraft:the_end
-[12:44:10] [Server thread/INFO]: Time elapsed: 284 ms
-[12:44:10] [Server thread/INFO]: World 'world_the_end' regenerated!
-[12:44:13] [Server thread/INFO]: Revoked 1399 advancements from erel__
-[12:44:13] [Server thread/INFO]: "set"
-[12:44:13] [Server thread/INFO]: Target has no effects to remove
-[12:44:13] [Server thread/INFO]: Applied effect Glowing to erel__
-[12:44:13] [Server thread/INFO]: Set 0 experience levels on erel__
-[12:44:13] [Server thread/INFO]: false
-[12:44:13] [Server thread/INFO]: Teleported erel__ to world_overworld.
-[12:44:42] [Server thread/INFO]: [PlaceholderAPI] Placeholder expansion registration initializing...
-[12:44:42] [Server thread/INFO]: [PlaceholderAPI] Fetching available expansion information...
-[12:44:42] [Server thread/INFO]: [PlaceholderAPI] Successfully registered external expansion: math [2.0.2]
-[12:44:42] [Server thread/INFO]: [PlaceholderAPI] Successfully registered external expansion: player [2.0.9]
-[12:44:42] [Server thread/INFO]: [PlaceholderAPI] Successfully registered external expansion: server [2.7.3]
-[12:44:42] [Server thread/INFO]: [PlaceholderAPI] Successfully registered external expansion: world [1.2.3]
-[12:44:43] [Server thread/INFO]: [PAPI] [Javascript-Expansion] 3 scripts loaded!
-[12:44:43] [Server thread/INFO]: [PlaceholderAPI] Successfully registered external expansion: javascript [2.1.3]
-[12:44:43] [Server thread/INFO]: 5 placeholder hook(s) registered!
-[12:44:44] [Server thread/INFO]: [ConditionalEvents] Config Reloaded.
-[12:44:45] [Server thread/INFO]: [CustomCommands-4.3.0] Disabled integration for PlaceholderAPI
-[12:44:45] [Server thread/INFO]: [CustomCommands-migration] Already processed v3 -> v4 (config)
-[12:44:45] [Server thread/INFO]: [CustomCommands-migration] Already processed v3 -> v4 (data)
-[12:44:45] [Server thread/INFO]: [PlaceholderAPI] Successfully registered internal expansion: gcore [1.0.0]
-[12:44:45] [Server thread/INFO]: [CustomCommands-4.3.0] Enabled integration for PlaceholderAPI
-[12:44:45] [Server thread/INFO]: [CustomCommands-4.3.0] Errors were found when loading CustomCommand spawn :
-[12:44:45] [Server thread/INFO]: [CustomCommands-4.3.0] - missing StringList at path aliases
-[12:44:45] [Server thread/INFO]: [CustomCommands-4.3.0] - missing PatternList at path patterns
-[12:44:45] [Server thread/INFO]: [CustomCommands-4.3.0] Errors were found when loading CustomCommand spawncost :
-[12:44:45] [Server thread/INFO]: [CustomCommands-4.3.0] - key VAULT at path patterns.a.currency_cost isn't a valid currency
-[12:44:45] [Server thread/INFO]: [CustomCommands-4.3.0] Successfully loaded 8 custom commands : best, complex, helpserver, reset, runcount, spawn, spawnconditions, spawncost
-[12:44:45] [Server thread/INFO]: [CustomCommands-4.3.0] Loading texts...
-[12:44:45] [Server thread/INFO]: [CustomCommands-4.3.0] Successfully enabled
-[12:44:45] [Server thread/INFO]: Plugin CustomCommands was reloaded.
-[12:44:47] [Server thread/INFO]: erel__ issued server command: /kill
-[12:44:47] [Server thread/INFO]: "set"
-[12:44:47] [Server thread/INFO]: "set"
-[12:44:47] [Server thread/INFO]: [erel__: Killed erel__]
-[12:44:47] [Server thread/INFO]: Added erel__ to team [Players]
-[12:44:51] [Server thread/INFO]: ""
-[12:44:51] [Server thread/WARN]: [ConditionalEvents] Task #59 for ConditionalEvents v4.67.1 generated an exception
-java.lang.NumberFormatException: For input string: "1s"
-	at java.base/java.lang.NumberFormatException.forInputString(NumberFormatException.java:67) ~[?:?]
-	at java.base/java.lang.Integer.parseInt(Integer.java:662) ~[?:?]
-	at java.base/java.lang.Integer.parseInt(Integer.java:778) ~[?:?]
-	at ConditionalEvents-4.67.1.jar/ce.ajneb97.utils.ActionUtils.wait(ActionUtils.java:860) ~[ConditionalEvents-4.67.1.jar:?]
-	at ConditionalEvents-4.67.1.jar/ce.ajneb97.model.internal.ExecutedEvent.executeAction(ExecutedEvent.java:256) ~[ConditionalEvents-4.67.1.jar:?]
-	at ConditionalEvents-4.67.1.jar/ce.ajneb97.model.internal.ExecutedEvent.executeActionsFinal(ExecutedEvent.java:222) ~[ConditionalEvents-4.67.1.jar:?]
-	at ConditionalEvents-4.67.1.jar/ce.ajneb97.model.internal.ExecutedEvent.continueWithActions(ExecutedEvent.java:133) ~[ConditionalEvents-4.67.1.jar:?]
-	at ConditionalEvents-4.67.1.jar/ce.ajneb97.utils.ActionUtils$1.run(ActionUtils.java:867) ~[ConditionalEvents-4.67.1.jar:?]
-	at org.bukkit.craftbukkit.scheduler.CraftTask.run(CraftTask.java:86) ~[paper-1.21.1.jar:1.21.1-133-3cb8529]
-	at org.bukkit.craftbukkit.scheduler.CraftScheduler.mainThreadHeartbeat(CraftScheduler.java:475) ~[paper-1.21.1.jar:1.21.1-133-3cb8529]
-	at net.minecraft.server.MinecraftServer.tickChildren(MinecraftServer.java:1724) ~[paper-1.21.1.jar:1.21.1-133-3cb8529]
-	at net.minecraft.server.dedicated.DedicatedServer.tickChildren(DedicatedServer.java:473) ~[paper-1.21.1.jar:1.21.1-133-3cb8529]
-	at net.minecraft.server.MinecraftServer.tickServer(MinecraftServer.java:1596) ~[paper-1.21.1.jar:1.21.1-133-3cb8529]
-	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:1302) ~[paper-1.21.1.jar:1.21.1-133-3cb8529]
-	at net.minecraft.server.MinecraftServer.lambda$spin$0(MinecraftServer.java:329) ~[paper-1.21.1.jar:1.21.1-133-3cb8529]
-	at java.base/java.lang.Thread.run(Thread.java:1583) ~[?:?]
-[12:45:03] [Server thread/INFO]: Villager Villager['Villager'/2120, uuid='beb447af-5967-474d-bb32-9665d502c6b3', l='ServerLevel[world_overworld]', x=-191.72, y=63.50, z=18.37, cpos=[-12, 1], tl=191, v=true] died, message: 'Villager suffocated in a wall'
-[12:46:54] [Server thread/INFO]: [PlaceholderAPI] Placeholder expansion registration initializing...
-[12:46:54] [Server thread/INFO]: [PlaceholderAPI] Fetching available expansion information...
-[12:46:54] [Server thread/INFO]: [PlaceholderAPI] Successfully registered external expansion: math [2.0.2]
-[12:46:54] [Server thread/INFO]: [PlaceholderAPI] Successfully registered external expansion: player [2.0.9]
-[12:46:54] [Server thread/INFO]: [PlaceholderAPI] Successfully registered external expansion: server [2.7.3]
-[12:46:54] [Server thread/INFO]: [PlaceholderAPI] Successfully registered external expansion: world [1.2.3]
-[12:46:54] [Server thread/INFO]: [PAPI] [Javascript-Expansion] 3 scripts loaded!
-[12:46:54] [Server thread/INFO]: [PlaceholderAPI] Successfully registered external expansion: javascript [2.1.3]
-[12:46:54] [Server thread/INFO]: 5 placeholder hook(s) registered!
-[12:46:56] [Server thread/INFO]: [ConditionalEvents] Config Reloaded.
-[12:46:57] [Server thread/INFO]: [CustomCommands-4.3.0] Disabled integration for PlaceholderAPI
-[12:46:57] [Server thread/INFO]: [CustomCommands-migration] Already processed v3 -> v4 (config)
-[12:46:57] [Server thread/INFO]: [CustomCommands-migration] Already processed v3 -> v4 (data)
-[12:46:57] [Server thread/INFO]: [PlaceholderAPI] Successfully registered internal expansion: gcore [1.0.0]
-[12:46:57] [Server thread/INFO]: [CustomCommands-4.3.0] Enabled integration for PlaceholderAPI
-[12:46:57] [Server thread/INFO]: [CustomCommands-4.3.0] Errors were found when loading CustomCommand spawn :
-[12:46:57] [Server thread/INFO]: [CustomCommands-4.3.0] - missing StringList at path aliases
-[12:46:57] [Server thread/INFO]: [CustomCommands-4.3.0] - missing PatternList at path patterns
-[12:46:57] [Server thread/INFO]: [CustomCommands-4.3.0] Errors were found when loading CustomCommand spawncost :
-[12:46:57] [Server thread/INFO]: [CustomCommands-4.3.0] - key VAULT at path patterns.a.currency_cost isn't a valid currency
-[12:46:57] [Server thread/INFO]: [CustomCommands-4.3.0] Successfully loaded 8 custom commands : best, complex, helpserver, reset, runcount, spawn, spawnconditions, spawncost
-[12:46:57] [Server thread/INFO]: [CustomCommands-4.3.0] Loading texts...
-[12:46:57] [Server thread/INFO]: [CustomCommands-4.3.0] Successfully enabled
-[12:46:57] [Server thread/INFO]: Plugin CustomCommands was reloaded.
-[12:47:00] [Server thread/INFO]: erel__ issued server command: /kill
-[12:47:00] [Server thread/INFO]: "set"
-[12:47:00] [Server thread/INFO]: "set"
-[12:47:00] [Server thread/INFO]: [erel__: Killed erel__]
-[12:47:00] [Server thread/INFO]: Added erel__ to team [Players]
-[12:47:04] [Server thread/INFO]: ""
-[12:47:14] [Server thread/INFO]: Revoked 1399 advancements from erel__
-[12:47:14] [Server thread/INFO]: Teleported erel__ to Lobby.
-[12:47:15] [Server thread/INFO]: Villager Villager['Villager'/2062, uuid='6e1e69d9-23d8-4599-bc62-339389fb553b', l='ServerLevel[world_overworld]', x=-158.54, y=72.00, z=14.34, cpos=[-10, 0], tl=3375, v=true] died, message: 'Villager was killed'
-[12:47:15] [Server thread/INFO]: Villager Villager['Armorer'/2126, uuid='0d72bb66-809a-4439-b6ab-da7b561a3024', l='ServerLevel[world_overworld]', x=-181.60, y=65.00, z=37.43, cpos=[-12, 2], tl=461, v=true] died, message: 'Armorer was killed'
-[12:47:15] [Server thread/INFO]: Villager Villager['Villager'/2066, uuid='91cbd769-2073-4e70-abdc-6272a29be7cc', l='ServerLevel[world_overworld]', x=-122.71, y=89.00, z=5.52, cpos=[-8, 0], tl=3342, v=true] died, message: 'Villager was killed'
-[12:47:15] [Server thread/INFO]: Villager Villager['Farmer'/2064, uuid='9dd18b01-3970-4674-90a9-d57909c0f5e6', l='ServerLevel[world_overworld]', x=-113.56, y=96.00, z=5.74, cpos=[-8, 0], tl=3375, v=true] died, message: 'Farmer was killed'
-[12:47:15] [Server thread/INFO]: Villager Villager['Villager'/2144, uuid='6353c9db-1dbd-4cea-93ee-2fefc79b17da', l='ServerLevel[world_overworld]', x=20.50, y=33.00, z=203.50, cpos=[1, 12], tl=2606, v=true] died, message: 'Villager was killed'
-[12:47:15] [Server thread/INFO]: Villager Villager['Nitwit'/2060, uuid='ef685937-b51f-4adb-bd2d-e1d68f502c79', l='ServerLevel[world_overworld]', x=-157.92, y=72.00, z=14.12, cpos=[-10, 0], tl=3375, v=true] died, message: 'Nitwit was killed'
-[12:47:15] [Server thread/INFO]: Killed 273 entities
-[12:47:15] [Server thread/INFO]: Set the time to 0
-[12:47:20] [Server thread/INFO]: Regenerating world 'world_overworld'...
-[12:47:20] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_overworld'
-[12:47:20] [Server thread/INFO]: [ChunkHolderManager] Halted chunk system for world 'world_overworld'
-[12:47:25] [Server thread/INFO]: Preparing start region for dimension minecraft:world_overworld
-[12:47:28] [Server thread/INFO]: Time elapsed: 2393 ms
-[12:47:28] [Server thread/INFO]: World 'world_overworld' regenerated!
-[12:47:28] [Server thread/INFO]: Regenerating world 'world_nether'...
-[12:47:28] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_nether'
-[12:47:28] [Server thread/INFO]: [ChunkHolderManager] Halted chunk system for world 'world_nether'
-[12:47:28] [Server thread/INFO]: Preparing start region for dimension minecraft:the_nether
-[12:47:29] [Server thread/INFO]: Time elapsed: 1122 ms
-[12:47:29] [Server thread/WARN]: [Multiverse-Core] Spawn location from world.dat file was unsafe. Adjusting...
-[12:47:29] [Server thread/WARN]: [Multiverse-Core] Original Location: X: 0 Y: 66 Z: 14 P: 0 Y: 0 
-[12:47:29] [Server thread/INFO]: [Multiverse-Core] New Spawn for 'world_nether' is located at: world_nether:0.00,128.00,0.00:0.00:0.00
-[12:47:29] [Server thread/INFO]: World 'world_nether' regenerated!
-[12:47:29] [Server thread/INFO]: Regenerating world 'world_the_end'...
-[12:47:29] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_the_end'
-[12:47:29] [Server thread/INFO]: [ChunkHolderManager] Halted chunk system for world 'world_the_end'
-[12:47:29] [Server thread/INFO]: Preparing start region for dimension minecraft:the_end
-[12:47:30] [Server thread/INFO]: Time elapsed: 288 ms
-[12:47:30] [Server thread/INFO]: World 'world_the_end' regenerated!
-[12:47:33] [Server thread/INFO]: Revoked 1399 advancements from erel__
-[12:47:33] [Server thread/INFO]: "set"
-[12:47:33] [Server thread/INFO]: Target has no effects to remove
-[12:47:33] [Server thread/INFO]: Applied effect Glowing to erel__
-[12:47:33] [Server thread/INFO]: Set 0 experience levels on erel__
-[12:47:33] [Server thread/INFO]: false
-[12:47:33] [Server thread/INFO]: Teleported erel__ to world_overworld.
-[12:50:18] [Server thread/INFO]: Stopping server
-[12:50:18] [Server thread/INFO]: [ConditionalEvents] Disabling ConditionalEvents v4.67.1
-[12:50:18] [Server thread/INFO]: [ConditionalEvents] Has been disabled! Version: 4.67.1
-[12:50:18] [Server thread/INFO]: [CustomCommands] Disabling CustomCommands v4.3.0
-[12:50:18] [Server thread/INFO]: [CustomCommands-4.3.0] Disabled integration for PlaceholderAPI
-[12:50:18] [Server thread/INFO]: [Multiverse-Core] Disabling Multiverse-Core v5.4.0
-[12:50:18] [Server thread/INFO]: [GCore] Disabling GCore v8.50.0
-[12:50:18] [Server thread/INFO]: [GCore-8.50.0] Disabled integration for PlaceholderAPI
-[12:50:18] [Server thread/INFO]: [PlaceholderAPI] Disabling PlaceholderAPI v2.11.7
-[12:50:18] [Server thread/INFO]: Saving players
-[12:50:18] [Server thread/INFO]: erel__ lost connection: Server closed
-[12:50:18] [Server thread/INFO]: erel__ left the game
-[12:50:18] [Server thread/INFO]: Saving worlds
-[12:50:18] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:overworld
-[12:50:18] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world'
-[12:50:18] [Server thread/INFO]: [ChunkHolderManager] Halted chunk system for world 'world'
-[12:50:18] [Server thread/INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world'
-[12:50:18] [Server thread/INFO]: [ChunkHolderManager] Saved 0 block chunks, 27 entity chunks, 0 poi chunks in world 'world' in 0.01s
-[12:50:18] [Server thread/INFO]: Saving chunks for level 'ServerLevel[Lobby]'/minecraft:lobby
-[12:50:18] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'Lobby'
-[12:50:18] [Server thread/INFO]: [ChunkHolderManager] Halted chunk system for world 'Lobby'
-[12:50:18] [Server thread/INFO]: [ChunkHolderManager] Saving all chunkholders for world 'Lobby'
-[12:50:18] [Server thread/INFO]: [ChunkHolderManager] Saved 1 block chunks, 0 entity chunks, 0 poi chunks in world 'Lobby' in 0.01s
-[12:50:18] [Server thread/INFO]: Saving chunks for level 'ServerLevel[limbo]'/minecraft:limbo
-[12:50:18] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'limbo'
-[12:50:18] [Server thread/INFO]: [ChunkHolderManager] Halted chunk system for world 'limbo'
-[12:50:18] [Server thread/INFO]: [ChunkHolderManager] Saving all chunkholders for world 'limbo'
-[12:50:18] [Server thread/INFO]: [ChunkHolderManager] Saved 0 block chunks, 0 entity chunks, 0 poi chunks in world 'limbo' in 0.00s
-[12:50:18] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world_overworld]'/minecraft:world_overworld
-[12:50:18] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_overworld'
-[12:50:18] [Server thread/INFO]: [ChunkHolderManager] Halted chunk system for world 'world_overworld'
-[12:50:18] [Server thread/INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world_overworld'
-[12:50:20] [Server thread/INFO]: [ChunkHolderManager] Saved 2209 block chunks, 625 entity chunks, 26 poi chunks in world 'world_overworld' in 2.23s
-[12:50:20] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world_nether]'/minecraft:the_nether
-[12:50:20] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_nether'
-[12:50:20] [Server thread/INFO]: [ChunkHolderManager] Halted chunk system for world 'world_nether'
-[12:50:20] [Server thread/INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world_nether'
-[12:50:21] [Server thread/INFO]: [ChunkHolderManager] Saved 841 block chunks, 49 entity chunks, 0 poi chunks in world 'world_nether' in 0.26s
-[12:50:21] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world_the_end]'/minecraft:the_end
-[12:50:21] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_the_end'
-[12:50:21] [Server thread/INFO]: [ChunkHolderManager] Halted chunk system for world 'world_the_end'
-[12:50:21] [Server thread/INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world_the_end'
-[12:50:21] [Server thread/INFO]: [ChunkHolderManager] Saved 841 block chunks, 49 entity chunks, 0 poi chunks in world 'world_the_end' in 0.15s
-[12:50:21] [Server thread/INFO]: ThreadedAnvilChunkStorage (world): All chunks are saved
-[12:50:21] [Server thread/INFO]: ThreadedAnvilChunkStorage (Lobby): All chunks are saved
-[12:50:21] [Server thread/INFO]: ThreadedAnvilChunkStorage (limbo): All chunks are saved
-[12:50:21] [Server thread/INFO]: ThreadedAnvilChunkStorage (world_overworld): All chunks are saved
-[12:50:21] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
-[12:50:21] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
-[12:50:21] [Server thread/INFO]: ThreadedAnvilChunkStorage: All dimensions are saved
+[00:20:46] [Server thread/INFO]: [Fahare] Disabling Fahare v1.2.1
+[00:20:46] [Server thread/INFO]: [CustomCommands] Enabling CustomCommands v4.3.0
+[00:20:46] [Server thread/INFO]: [CustomCommands-migration] Already processed v3 -> v4 (config)
+[00:20:46] [Server thread/INFO]: [CustomCommands-migration] Already processed v3 -> v4 (data)
+[00:20:46] [Server thread/INFO]: [PlaceholderAPI] Successfully registered internal expansion: gcore [1.0.0]
+[00:20:46] [Server thread/INFO]: [CustomCommands-4.3.0] Enabled integration for PlaceholderAPI
+[00:20:46] [Server thread/INFO]: [CustomCommands-4.3.0] Errors were found when loading CustomCommand spawn :
+[00:20:46] [Server thread/INFO]: [CustomCommands-4.3.0] - missing StringList at path aliases
+[00:20:46] [Server thread/INFO]: [CustomCommands-4.3.0] - missing PatternList at path patterns
+[00:20:46] [Server thread/INFO]: [CustomCommands-4.3.0] Errors were found when loading CustomCommand spawncost :
+[00:20:46] [Server thread/INFO]: [CustomCommands-4.3.0] - key VAULT at path patterns.a.currency_cost isn't a valid currency
+[00:20:46] [Server thread/INFO]: [CustomCommands-4.3.0] Successfully loaded 9 custom commands : best, complex, helpserver, reset, runcount, runtime, spawn, spawnconditions, spawncost
+[00:20:46] [Server thread/INFO]: [CustomCommands-4.3.0] Loading texts...
+[00:20:46] [Server thread/INFO]: [CustomCommands-4.3.0] Successfully enabled
+[00:20:46] [Server thread/INFO]: [ConditionalEvents] Enabling ConditionalEvents v4.67.1
+[00:20:46] [Server thread/INFO]: [PlaceholderAPI] Successfully registered internal expansion: conditionalevents [4.67.1]
+[00:20:46] [Server thread/INFO]: [ConditionalEvents] Has been enabled! Version: 4.67.1
+[00:20:46] [Server thread/INFO]: [ConditionalEvents] Thanks for using my plugin!   ~Ajneb97
+[00:20:46] [Server thread/INFO]: There is a new version available. (4.73.1)
+[00:20:46] [Server thread/INFO]: You can download it at: https://modrinth.com/plugin/conditionalevents
+[00:20:46] [Server thread/INFO]: The nether portals in world_overworld are now linked to world_nether.
+[00:20:46] [Server thread/INFO]: The end portals in world_overworld are now linked to world_the_end.
+[00:20:46] [Server thread/INFO]: The nether portals in world_nether are now linked to world_overworld.
+[00:20:46] [Server thread/INFO]: The end portals in world_the_end are now linked to world_overworld.
+[00:20:46] [Server thread/INFO]: Gamerule sendCommandFeedback is now set to: false
+[00:20:46] [Server thread/INFO]: Gamerule showDeathMessages is now set to: false
+[00:20:46] [Server thread/INFO]: Gamerule doImmediateRespawn is now set to: true
+[00:20:46] [Server thread/INFO]: A team already exists by that name
+[00:20:46] [Server thread/INFO]: Nothing changed. That team already has that color
+[00:20:47] [Server thread/INFO]: [spark] Starting background profiler...
+[00:20:47] [Server thread/INFO]: [spark] The async-profiler engine is not supported for your os/arch (windows11/amd64), so the built-in Java engine will be used instead.
+[00:20:47] [Server thread/INFO]: [PlaceholderAPI] Placeholder expansion registration initializing...
+[00:20:47] [Server thread/INFO]: Done preparing level "world" (10.795s)
+[00:20:47] [Server thread/INFO]: Running delayed init tasks
+[00:20:47] [Server thread/INFO]: Done (32.320s)! For help, type "help"
+[00:20:47] [Server thread/INFO]: Timings Reset
+[00:20:48] [Server thread/INFO]: [PlaceholderAPI] Successfully registered external expansion: math [2.0.2]
+[00:20:48] [Server thread/INFO]: [PlaceholderAPI] Successfully registered external expansion: player [2.0.9]
+[00:20:48] [Server thread/INFO]: [PlaceholderAPI] Successfully registered external expansion: server [2.7.3]
+[00:20:48] [Server thread/INFO]: [PlaceholderAPI] Successfully registered external expansion: world [1.2.3]
+[00:20:48] [Server thread/INFO]: [PAPI] [Javascript-Expansion] 3 scripts loaded!
+[00:20:48] [Server thread/INFO]: [PlaceholderAPI] Successfully registered external expansion: javascript [2.1.3]
+[00:20:48] [Server thread/INFO]: 5 placeholder hook(s) registered!
+[00:20:52] [User Authenticator #0/INFO]: UUID of player erel__ is 3647a364-58a1-4189-9b15-ce15b5d674dd
+[00:20:53] [Server thread/INFO]: ""
+[00:20:53] [Server thread/INFO]: erel__ joined the game
+[00:20:53] [Server thread/INFO]: erel__[/99.244.177.0:53325] logged in with entity id 178 at ([world_overworld]4.319858848286719, 70.0, -28.949970521481426)
+[00:21:12] [Server thread/INFO]: erel__ issued server command: /gamemode creative
+[00:21:12] [Server thread/INFO]: [erel__: Set own game mode to Creative Mode]
+[00:21:32] [Server thread/INFO]: erel__ issued server command: /mv teleport erel__ world
+[00:21:36] [Server thread/INFO]: erel__ issued server command: /mv teleport erel__ world_the_end
+[00:21:36] [Server thread/INFO]: erel__ has made the advancement [The End?]
+[00:21:38] [Server thread/INFO]: Scanning for legacy world dragon fight...
+[00:21:38] [Server thread/INFO]: Found that the dragon has not yet been killed in this world.
+[00:21:40] [Server thread/INFO]: erel__ issued server command: /gamemode creative
+[00:21:40] [Server thread/INFO]: [erel__: Set own game mode to Creative Mode]
+[00:22:11] [Server thread/INFO]: erel__ issued server command: /kill @e[type=minecraft:ender_dragon]
+[00:22:11] [Server thread/INFO]: [erel__: Killed Ender Dragon]
+[00:22:11] [Server thread/INFO]: "set"
+[00:22:11] [Server thread/INFO]: "set"
+[00:22:11] [Server thread/INFO]: "set"
+[00:22:11] [Server thread/INFO]: "New Record Saved"
+[00:22:11] [Server thread/INFO]: Error: Player(s) %player not found.
+[00:22:11] [Server thread/INFO]: Usage: mvtp [player] <destination> [--unsafe]
+[00:22:11] [Server thread/INFO]: Error: Player(s) %player not found.
+[00:22:11] [Server thread/INFO]: Usage: mvtp [player] <destination> [--unsafe]
+[00:22:18] [Server thread/INFO]: ""
+[00:22:22] [Server thread/INFO]: Revoked 1399 advancements from erel__
+[00:22:22] [Server thread/INFO]: Teleported erel__ to Lobby.
+[00:22:23] [Server thread/INFO]: Killed 404 entities
+[00:22:23] [Server thread/INFO]: Set the time to 0
+[00:22:28] [Server thread/INFO]: Regenerating world 'world_overworld'...
+[00:22:28] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_overworld'
+[00:22:28] [Server thread/INFO]: [ChunkHolderManager] Halted chunk system for world 'world_overworld'
+[00:22:32] [Server thread/INFO]: Preparing start region for dimension minecraft:world_overworld
+[00:22:33] [Server thread/WARN]: erel__ moved too quickly! -6.692922639039672,0.7531999805212024,-7.619150070435044
+[00:22:34] [Server thread/INFO]: Time elapsed: 1995 ms
+[00:22:34] [Server thread/INFO]: World 'world_overworld' regenerated!
+[00:22:34] [Server thread/INFO]: Regenerating world 'world_nether'...
+[00:22:34] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_nether'
+[00:22:34] [Server thread/INFO]: [ChunkHolderManager] Halted chunk system for world 'world_nether'
+[00:22:34] [Server thread/INFO]: Preparing start region for dimension minecraft:the_nether
+[00:22:35] [Server thread/INFO]: Time elapsed: 879 ms
+[00:22:35] [Server thread/INFO]: World 'world_nether' regenerated!
+[00:22:35] [Server thread/INFO]: Regenerating world 'world_the_end'...
+[00:22:35] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_the_end'
+[00:22:35] [Server thread/INFO]: [ChunkHolderManager] Halted chunk system for world 'world_the_end'
+[00:22:35] [Server thread/INFO]: Preparing start region for dimension minecraft:the_end
+[00:22:36] [Server thread/INFO]: Time elapsed: 221 ms
+[00:22:36] [Server thread/INFO]: World 'world_the_end' regenerated!
+[00:22:39] [Server thread/INFO]: Revoked 1399 advancements from erel__
+[00:22:39] [Server thread/INFO]: "set"
+[00:22:39] [Server thread/INFO]: Removed every effect from erel__
+[00:22:39] [Server thread/INFO]: Applied effect Glowing to erel__
+[00:22:39] [Server thread/INFO]: Set 0 experience levels on erel__
+[00:22:39] [Server thread/INFO]: false
+[00:22:39] [Server thread/INFO]: Teleported erel__ to world_overworld.
+[00:22:45] [Server thread/INFO]: erel__ issued server command: /reset hard
+[00:22:45] [Server thread/INFO]: ''
+[00:22:45] [Server thread/INFO]: ''
+[00:22:45] [Server thread/INFO]: ''
+[00:22:47] [Server thread/INFO]: erel__ lost connection: Disconnected
+[00:22:47] [Server thread/INFO]: erel__ left the game
+[00:22:50] [Server thread/INFO]: Stopping server
+[00:22:50] [Server thread/INFO]: [ConditionalEvents] Disabling ConditionalEvents v4.67.1
+[00:22:50] [Server thread/INFO]: [ConditionalEvents] Has been disabled! Version: 4.67.1
+[00:22:50] [Server thread/INFO]: [CustomCommands] Disabling CustomCommands v4.3.0
+[00:22:50] [Server thread/INFO]: [CustomCommands-4.3.0] Disabled integration for PlaceholderAPI
+[00:22:50] [Server thread/INFO]: [Multiverse-NetherPortals] Disabling Multiverse-NetherPortals v5.0.3
+[00:22:50] [Server thread/INFO]: [Multiverse-NetherPortals] - Disabled
+[00:22:50] [Server thread/INFO]: [GCore] Disabling GCore v8.50.0
+[00:22:50] [Server thread/INFO]: [GCore-8.50.0] Disabled integration for PlaceholderAPI
+[00:22:50] [Server thread/INFO]: [Multiverse-Core] Disabling Multiverse-Core v5.4.0
+[00:22:50] [Server thread/INFO]: [PlaceholderAPI] Disabling PlaceholderAPI v2.11.7
+[00:22:50] [Server thread/INFO]: Saving players
+[00:22:50] [Server thread/INFO]: Saving worlds
+[00:22:50] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:overworld
+[00:22:50] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world'
+[00:22:50] [Server thread/INFO]: [ChunkHolderManager] Halted chunk system for world 'world'
+[00:22:50] [Server thread/INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world'
+[00:22:52] [Server thread/INFO]: [ChunkHolderManager] Saved 650 block chunks, 650 entity chunks, 0 poi chunks in world 'world' in 1.71s
+[00:22:52] [Server thread/INFO]: Saving chunks for level 'ServerLevel[Lobby]'/minecraft:lobby
+[00:22:52] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'Lobby'
+[00:22:52] [Server thread/INFO]: [ChunkHolderManager] Halted chunk system for world 'Lobby'
+[00:22:52] [Server thread/INFO]: [ChunkHolderManager] Saving all chunkholders for world 'Lobby'
+[00:22:52] [Server thread/INFO]: [ChunkHolderManager] Saved 660 block chunks, 660 entity chunks, 0 poi chunks in world 'Lobby' in 0.36s
+[00:22:52] [Server thread/INFO]: Saving chunks for level 'ServerLevel[limbo]'/minecraft:limbo
+[00:22:52] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'limbo'
+[00:22:52] [Server thread/INFO]: [ChunkHolderManager] Halted chunk system for world 'limbo'
+[00:22:52] [Server thread/INFO]: [ChunkHolderManager] Saving all chunkholders for world 'limbo'
+[00:22:52] [Server thread/INFO]: [ChunkHolderManager] Saved 49 block chunks, 49 entity chunks, 0 poi chunks in world 'limbo' in 0.03s
+[00:22:52] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world_overworld]'/minecraft:world_overworld
+[00:22:52] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_overworld'
+[00:22:52] [Server thread/INFO]: [ChunkHolderManager] Halted chunk system for world 'world_overworld'
+[00:22:52] [Server thread/INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world_overworld'
+[00:22:54] [Server thread/INFO]: [ChunkHolderManager] Saved 1917 block chunks, 333 entity chunks, 2 poi chunks in world 'world_overworld' in 2.13s
+[00:22:54] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world_nether]'/minecraft:the_nether
+[00:22:54] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_nether'
+[00:22:54] [Server thread/INFO]: [ChunkHolderManager] Halted chunk system for world 'world_nether'
+[00:22:54] [Server thread/INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world_nether'
+[00:22:55] [Server thread/INFO]: [ChunkHolderManager] Saved 841 block chunks, 49 entity chunks, 0 poi chunks in world 'world_nether' in 0.45s
+[00:22:55] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world_the_end]'/minecraft:the_end
+[00:22:55] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_the_end'
+[00:22:55] [Server thread/INFO]: [ChunkHolderManager] Halted chunk system for world 'world_the_end'
+[00:22:55] [Server thread/INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world_the_end'
+[00:22:55] [Server thread/INFO]: [ChunkHolderManager] Saved 841 block chunks, 49 entity chunks, 0 poi chunks in world 'world_the_end' in 0.34s
+[00:22:55] [Server thread/INFO]: ThreadedAnvilChunkStorage (world): All chunks are saved
+[00:22:55] [Server thread/INFO]: ThreadedAnvilChunkStorage (Lobby): All chunks are saved
+[00:22:55] [Server thread/INFO]: ThreadedAnvilChunkStorage (limbo): All chunks are saved
+[00:22:55] [Server thread/INFO]: ThreadedAnvilChunkStorage (world_overworld): All chunks are saved
+[00:22:55] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[00:22:55] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[00:22:55] [Server thread/INFO]: ThreadedAnvilChunkStorage: All dimensions are saved

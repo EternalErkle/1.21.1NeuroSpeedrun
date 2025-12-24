@@ -277,6 +277,10 @@ Events:
     type: server_start
     actions:
       default:
+       - "console_command: mvnp link nether world_overworld world_nether"
+       - "console_command: mvnp link end world_overworld world_the_end"
+       - "console_command: mvnp link nether world_nether world_overworld"
+       - "console_command: mvnp link end world_the_end world_overworld"
        - "console_command: gamerule sendCommandFeedback false"
        - "console_command: gamerule showDeathMessages false"
        - "set_death_message: no"
@@ -300,26 +304,26 @@ Events:
         #create null time object
        - 'console_command: papi parse %player% "%javascript_data_set,zero_time,0%"' 
   
-  # bring_to_world_overworld:
-  #   type: player_world_change
-  #   conditions:
-  #     - "%world_to% equals world"
-  #   actions:
-  #     default:
-  #       - "console_command: mv teleport %player Lobby --unsafe"
-  #       - "console_command: mv teleport %player world_overworld --unsafe"
-
-  enforce_world_restriction:
-    type: repetitive
-    # 20 ticks = 1 second. Checks frequently without lagging the server.
-    repetitive_time: 20
+  bring_to_world_overworld:
+    type: player_world_change
     conditions:
-      - "%player_world% == world"
+      - "%world_to% equals world"
     actions:
       default:
-        - "console_command: mv teleport %player% Lobby --unsafe"
-        - "wait: 10"
-        - "console_command: mv teleport %player% world_overworld --unsafe"
+        - "console_command: mv teleport %player Lobby --unsafe"
+        - "console_command: mv teleport %player world_overworld --unsafe"
+
+  # enforce_world_restriction:
+  #   type: repetitive
+  #   # 20 ticks = 1 second. Checks frequently without lagging the server.
+  #   repetitive_time: 20
+  #   conditions:
+  #     - "%player_world% == world"
+  #   actions:
+  #     default:
+  #       - "console_command: mv teleport %player% Lobby --unsafe"
+  #       - "wait: 10"
+  #       - "console_command: mv teleport %player% world_overworld --unsafe"
 
   command_best:
     type: player_command
@@ -357,6 +361,18 @@ Events:
         - "console_command: papi parse %player% '%javascript_data_set,best_time,0%'"
         - "message: &fBest speedrun time has been reset."
     
+  command_current_time:
+    type: player_command
+    conditions:
+      - "%main_command% equalsIgnoreCase /runtime"
+    actions:
+      default:
+        - "cancel_event: true"
+        - 'console_command: papi parse %player% "%javascript_data_set_time,current_moment%"'
+        # Then we calculate the duration between start and now
+        - "to_all: message: &b&lTIMER &8| &fCurrent run duration: &e%javascript_data_get_duration,new_world_time,current_moment%&f."
+
+
   command_resetruncount:
     type: player_command
     conditions:
@@ -401,4 +417,6 @@ Events:
         - "message: &fRun counter has been reset."
 
 
-  #need a command to reset the best time.
+  #need to display current run time in the top left
+
+  #need to create  the voteskip command
