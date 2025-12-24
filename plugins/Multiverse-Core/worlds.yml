@@ -25,14 +25,14 @@ Lobby:
   pvp: true
   respawn-world: ''
   scale: 1.0
-  seed: 1492652628
+  seed: 8448133618939162738
   spawn-location:
     ==: MVSpawnLocation
-    x: 0.5
-    y: 53.0
-    z: -96.5
-    pitch: -3.4500465
-    yaw: -0.74928296
+    x: 9.676981481063205
+    y: 13.0
+    z: 9.377829845728813
+    pitch: -0.29995143
+    yaw: -88.34903
   spawning:
     monster:
       spawn: true
@@ -493,11 +493,11 @@ world_nether:
   pvp: true
   respawn-world: ''
   scale: 8.0
-  seed: 42370
+  seed: 358773
   spawn-location:
     ==: MVSpawnLocation
     x: 0.0
-    y: 128.0
+    y: 53.0
     z: 0.0
     pitch: 0.0
     yaw: 0.0
@@ -571,12 +571,12 @@ world_overworld:
   pvp: true
   respawn-world: ''
   scale: 1.0
-  seed: 65012
+  seed: 940744
   spawn-location:
     ==: MVSpawnLocation
-    x: 368.0
+    x: -16.0
     y: 64.0
-    z: -96.0
+    z: -16.0
     pitch: 0.0
     yaw: 0.0
   spawning:
@@ -649,11 +649,11 @@ world_the_end:
   pvp: true
   respawn-world: ''
   scale: 1.0
-  seed: 158853
+  seed: 199156
   spawn-location:
     ==: MVSpawnLocation
     x: 0.0
-    y: 62.0
+    y: 60.0
     z: 0.0
     pitch: 0.0
     yaw: 0.0

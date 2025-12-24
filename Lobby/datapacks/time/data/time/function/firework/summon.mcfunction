@@ -1,2 +1,0 @@
-summon firework_rocket ~ ~ ~ {LifeTime:0,FireworksItem:{id:"minecraft:firework_rocket",count:1,components:{"minecraft:fireworks":{explosions:[{shape:"burst",has_trail:false,has_twinkle:false,colors:[I;1143861],fade_colors:[I;16711680]}]}}}}
-execute as @e[type=firework_rocket,limit=1,sort=nearest] run function time:firework/set_nbt
