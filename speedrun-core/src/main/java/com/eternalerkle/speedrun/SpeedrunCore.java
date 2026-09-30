@@ -46,11 +46,7 @@ public class SpeedrunCore implements ModInitializer {
 				runs.tick();
 			}
 		});
-		ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
-			if (runs != null) {
-				runs.onJoin(handler.player);
-			}
-		});
+		// Joins reach the run manager through PlayerListMixin, after the player is placed in their level.
 		ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> {
 			if (runs != null) {
 				runs.onLeave(handler.player);

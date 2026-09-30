@@ -7,7 +7,22 @@ repositories {
 	mavenCentral()
 }
 
+sourceSets {
+	gametest {
+		compileClasspath += main.compileClasspath + main.output
+		runtimeClasspath += main.runtimeClasspath + main.output
+	}
+}
+
 loom {
+	mods {
+		"speedrun-core" {
+			sourceSet sourceSets.main
+		}
+		"speedrun-core-gametest" {
+			sourceSet sourceSets.gametest
+		}
+	}
 	runs {
 		server {
 			runDir = 'run'
@@ -17,6 +32,9 @@ loom {
 			name = 'Game Test'
 			vmArg '-Dfabric-api.gametest'
 			vmArg "-Dfabric-api.gametest.report-file=${project.layout.buildDirectory.get()}/junit.xml"
+			// Shortens the empty-server grace period so the grace test does not wait a full minute.
+			vmArg '-Dspeedrun.emptyGraceSeconds=10'
+			source sourceSets.gametest
 			runDir = 'build/gametest'
 		}
 	}

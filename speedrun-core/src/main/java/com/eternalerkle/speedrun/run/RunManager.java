@@ -53,7 +53,8 @@ import java.util.UUID;
 public final class RunManager {
 	private static final double VICTORY_SHOW_SECONDS = 5.0;
 	private static final double COUNTDOWN_SECONDS = 3.0;
-	private static final double EMPTY_GRACE_SECONDS = 60.0;
+	/** Real seconds a run survives an empty server. The GameTest run shortens it through the system property. */
+	private static final double EMPTY_GRACE_SECONDS = Double.parseDouble(System.getProperty("speedrun.emptyGraceSeconds", "60"));
 	/** Delay after a run starts before generating the next run's worlds, so the start is not slowed down. */
 	private static final double PREGENERATE_DELAY_SECONDS = 20.0;
 	private static final long HUD_INTERVAL_NANOS = 200_000_000L;

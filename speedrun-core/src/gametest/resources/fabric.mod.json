@@ -1,0 +1,14 @@
+{
+	"schemaVersion": 1,
+	"id": "speedrun-core-gametest",
+	"version": "1.0.0",
+	"name": "Speedrun Core GameTests",
+	"environment": "*",
+	"entrypoints": {
+		"fabric-gametest": ["com.eternalerkle.speedrun.gametest.RunLifecycleTests"]
+	},
+	"depends": {
+		"speedrun-core": "*",
+		"fabric-gametest-api-v1": "*"
+	}
+}
