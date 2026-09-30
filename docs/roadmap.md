@@ -10,7 +10,6 @@ Each spike answers a question the design depends on. A failed spike changes the 
 | Can the dragon fight be initialized in a Fantasy End? | Start the fight manually through the End's dragon fight API |
 | Does Polymer autohost work on 1.21.1? | Host the pack on a small separate HTTP port |
 | Can the resource pack make the dimension-change screen black? | Accept a brief flash on entering the death room |
-| How is Shared Life toggled at runtime, and does it need a client install? | Build shared health and hunger into `speedrun-core` |
 | Does an 8x8 text display face render gap-free at the death room distance? | Adjust glyph spacing, or render one text display per row |
 
 ## Phase 1: scaffold

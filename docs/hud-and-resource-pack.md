@@ -39,17 +39,31 @@ Players whose skin cannot be fetched get the default Steve or Alex face, matchin
 
 The pack is served by Polymer's autohost module over the Minecraft port. No extra port is forwarded. It is required, so clients receive it on join.
 
-Contents:
+`ServerPack` registers the mod's `assets/` folder with Polymer. Polymer builds the pack at server start, writes `polymer/resource_pack.zip`, and computes its SHA-1 hash. Clients re-download only when the pack changes.
+
+Contents, all under `speedrun-core/src/main/resources/assets/`:
 
 | Asset | Purpose |
 |---|---|
-| Transparent bossbar texture | Background-free top-of-screen text |
-| Pixel font | The 2D face |
-| Black loading screen | Hides the brief dimension-change screen |
-| Death sound | Plays when a run fails |
-| Corner hit sound | Plays when the face lands in a corner |
-| New record sound | Plays when a run sets a category record |
+| `minecraft/textures/gui/sprites/boss_bar/white_background.png`, `white_progress.png` | Fully transparent 182x5 sprites. White bossbars show only their title text |
+| `speedrun/font/face.json`, `speedrun/textures/font/pixel.png` | The pixel font for the 2D face |
+| `minecraft/textures/gui/title/background/panorama_0.png` to `panorama_5.png` | Black panorama for the dimension-change screen |
 
-Pack sources live in `speedrun-core/src/main/resources/pack/`. The build zips them, and the SHA-1 hash is computed at build time so clients re-download only when the pack changes.
+Sounds are vanilla sound events, so the pack ships no sound files.
 
-Retexturing the dimension-change loading screen is checked in Phase 0. If 1.21.1 draws it from a texture the pack cannot override, the brief flash stays as is.
+### Autohost config
+
+Autohost is disabled by default on a production server. On first start, `ServerPack` writes `config/polymer/auto-host.json` with `enabled` and `required` set to true, and Polymer fills in the other fields. If that file already exists, it is left alone. In that case set `"enabled": true` by hand. The pack URL is derived from the address each client connected with. Behind a proxy or a different public hostname, set `settings.forced_address` to something like `http://play.example.com:25565`.
+
+### Pixel font metrics
+
+The face is 8 rows. Each row is 8 `` pixel glyphs with a `` between neighbors, and rows are separated by newlines.
+
+- `pixel.png` is an 8x8 solid white square. The bitmap provider sets `height` 10, so it scales by 10/8 and draws 10x10 font units.
+- A bitmap glyph advances by its drawn width plus 1, so the pixel advances 11. The space glyph advances -1. Each pixel therefore starts exactly 10 units after the previous one and touches it.
+- Text displays step each line down by a fixed 10 units, the same as the pixel height, so rows touch too.
+- `ascent` 7 puts the top of each pixel at the top of its line, so the face fills the display's 80-unit box exactly.
+
+### Dimension-change screen
+
+In 1.21.1, `ReceivingLevelScreen` draws the nether portal texture for vanilla nether travel and the end portal effect for vanilla end travel. Every other dimension change uses the title panorama, blurred, under the in-world menu background. Run worlds are Fantasy dimensions with their own keys, so every run teleport and the death room use the panorama. The pack makes all six panorama faces black. The title screen still shows the normal panorama, because the client drops server packs on disconnect.

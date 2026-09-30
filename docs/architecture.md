@@ -12,12 +12,11 @@ All game logic lives in one server-side mod, `speedrun-core`. Players need no cl
 |---|---|---|
 | Fabric Loader + Fabric API | Mod loading, events, command registration | No |
 | Fantasy (NucleoidMC) | Create and delete run dimensions at runtime | Yes: a 1.21.1 build exists |
-| Polymer autohost (Patbox) | Serve the resource pack over the game port | Yes: module available for 1.21.1 |
+| Polymer resource pack + autohost (Patbox) | Build the resource pack from the mod's assets and serve it over the game port | No |
 | fabric-permissions-api (lucko) | Permission nodes, falling back to op level | No |
-| Shared Life (CurseForge) | Shared health and hunger, toggled by command | Yes: how it switches on and off at runtime |
 | packwiz | Pinned mod list, including CurseForge mods | No |
 
-The original Shared Health and Hunger mod by neddslayer stops at 1.20.4, so Shared Life is the 1.21.1 replacement. If Shared Life cannot be switched off while the server runs, `speedrun-core` implements shared health and hunger itself behind the same command.
+Shared health and shared hunger are built into `speedrun-core`. No third-party mod is involved.
 
 ## Repo layout
 
@@ -54,6 +53,8 @@ The rewrite lives in the same repository. Every file from the old Paper server w
 | `Stats` | Records, run history, death counts and causes, saved as JSON |
 | `Settings` | Goal, tick rate, shared health, shared hunger, modifier pool, saved as JSON |
 | `Modifiers` | Applies and removes the active run modifiers |
+| `SharedVitals` | Shared health and shared hunger for the players in a run |
+| `ServerPack` | Registers the mod's assets with Polymer and enables autohost |
 | `Commands` | Command registration, each with the metadata `/help` reads |
 | `Time` | Converts seconds to ticks at the current tick rate |
 

@@ -1,0 +1,17 @@
+{
+	"providers": [
+		{
+			"type": "bitmap",
+			"file": "speedrun:font/pixel.png",
+			"height": 10,
+			"ascent": 7,
+			"chars": [""]
+		},
+		{
+			"type": "space",
+			"advances": {
+				"": -1
+			}
+		}
+	]
+}
