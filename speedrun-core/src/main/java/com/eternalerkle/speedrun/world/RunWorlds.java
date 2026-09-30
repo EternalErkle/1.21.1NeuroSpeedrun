@@ -221,8 +221,7 @@ public final class RunWorlds {
 			.setTimeOfDay(0)
 			.setGameRule(GameRules.RULE_DOMOBSPAWNING, true)
 			.setGameRule(GameRules.RULE_WEATHER_CYCLE, true)
-			.setGameRule(GameRules.RULE_SHOWDEATHMESSAGES, false)
-			.setGameRule(GameRules.RULE_SENDCOMMANDFEEDBACK, false);
+			.setGameRule(GameRules.RULE_SHOWDEATHMESSAGES, false);
 	}
 
 	private ChunkGenerator overworldGenerator() {
