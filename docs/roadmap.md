@@ -59,6 +59,11 @@ Each spike answers a question the design depends on. A failed spike changes the 
   - a new seed being used
   - an empty server losing the run after the grace period
   - the `allbosses` goal winning only after all three boss kills
+  - a rejoin during the grace period keeping the run
+  - a player joining mid-run landing only in the run overworld
+  - nether portals routing between the run's own overworld and nether
+
+  The suite lives in `speedrun-core/src/gametest` and runs with `./gradlew runGametest`, which takes about three minutes because world generation and the lifecycle timers run in real time. It is not part of `check`. The run sets `-Dspeedrun.emptyGraceSeconds=10` so the grace test does not wait a full minute.
 - **Manual checks with two clients** cover the death room visuals, shared health, portal routing, and a full win.
 
 ## Open questions

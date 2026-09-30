@@ -11,6 +11,7 @@
 		"ModifierMobCategoryMixin",
 		"ModifierNaturalSpawnerMixin",
 		"NetherPortalBlockMixin",
+		"PlayerListMixin",
 		"ServerLevelMixin",
 		"ServerPlayerMixin",
 		"TheEndGatewayBlockEntityMixin"
