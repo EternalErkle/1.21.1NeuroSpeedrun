@@ -34,6 +34,11 @@ public final class ActiveRun {
 	public boolean unranked;
 
 	public ActiveRun(int attempt, RunWorldSet worlds, Goal goal, float tickRate, boolean sharedHealth, boolean sharedHunger, List<String> modifiers) {
+		this(attempt, worlds, goal, tickRate, sharedHealth, sharedHunger, modifiers, 0);
+	}
+
+	/** A run that has already been going for {@code elapsedMillis}, restored after a server restart. */
+	public ActiveRun(int attempt, RunWorldSet worlds, Goal goal, float tickRate, boolean sharedHealth, boolean sharedHunger, List<String> modifiers, long elapsedMillis) {
 		this.attempt = attempt;
 		this.worlds = worlds;
 		this.goal = goal;
@@ -42,7 +47,7 @@ public final class ActiveRun {
 		this.sharedHunger = sharedHunger;
 		this.modifiers = List.copyOf(modifiers);
 		this.category = Category.key(goal, tickRate, sharedHealth, sharedHunger, modifiers);
-		this.startNanos = System.nanoTime();
+		this.startNanos = System.nanoTime() - elapsedMillis * 1_000_000L;
 	}
 
 	public long realMillis() {

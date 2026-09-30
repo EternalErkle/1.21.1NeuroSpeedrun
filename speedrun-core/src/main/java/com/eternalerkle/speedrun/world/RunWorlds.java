@@ -1,6 +1,8 @@
 package com.eternalerkle.speedrun.world;
 
 import com.eternalerkle.speedrun.SpeedrunCore;
+import com.google.gson.JsonElement;
+import com.mojang.serialization.JsonOps;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
@@ -26,18 +28,27 @@ import net.minecraft.world.level.dimension.end.EndDragonFight;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
+import net.minecraft.world.level.storage.LevelResource;
 import org.jetbrains.annotations.Nullable;
 import xyz.nucleoid.fantasy.Fantasy;
 import xyz.nucleoid.fantasy.RuntimeWorldConfig;
 import xyz.nucleoid.fantasy.RuntimeWorldHandle;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 /**
  * Creates, prepares and deletes the per-run dimensions, and answers which run dimension a portal leads to.
  * Holds at most one current set and one set being prepared for the next run.
+ * <p>
+ * Run worlds are Fantasy persistent worlds, saved under world/dimensions/speedrun/, so a run can be reopened after a
+ * restart. Nothing reopens them automatically: {@link #sweep} deletes every leftover folder on startup except a
+ * restored run's.
  */
 public final class RunWorlds {
 	private static final TicketType<ChunkPos> PREPARE_TICKET = TicketType.create("speedrun_prepare", Comparator.comparingLong(ChunkPos::toLong));
@@ -74,13 +85,7 @@ public final class RunWorlds {
 		}
 		counter++;
 		String id = "run" + counter + "_" + Long.toHexString(System.nanoTime() & 0xFFFFFFL);
-		Fantasy fantasy = Fantasy.get(server);
-		RuntimeWorldHandle overworld = fantasy.openTemporaryWorld(key(id + "_overworld"), config(seed, BuiltinDimensionTypes.OVERWORLD, overworldGenerator(), true));
-		RuntimeWorldHandle nether = fantasy.openTemporaryWorld(key(id + "_nether"), config(seed, BuiltinDimensionTypes.NETHER, netherGenerator(), false));
-		RuntimeWorldHandle end = fantasy.openTemporaryWorld(key(id + "_end"), config(seed, BuiltinDimensionTypes.END, endGenerator(), false));
-		RunWorldSet set = new RunWorldSet(seed, overworld, nether, end);
-		ServerLevel endLevel = set.end();
-		endLevel.setDragonFight(new EndDragonFight(endLevel, seed, EndDragonFight.Data.DEFAULT));
+		RunWorldSet set = open(id, seed, EndDragonFight.Data.DEFAULT);
 
 		ServerLevel level = set.overworld();
 		ChunkPos center = new ChunkPos(level.getChunkSource().randomState().sampler().findSpawnPosition());
@@ -88,6 +93,68 @@ public final class RunWorlds {
 		next = set;
 		preparation = new Preparation(set, center, onReady);
 		SpeedrunCore.LOGGER.info("Preparing run worlds {} with seed {}", id, seed);
+	}
+
+	private RunWorldSet open(String id, long seed, EndDragonFight.Data dragon) {
+		Fantasy fantasy = Fantasy.get(server);
+		RuntimeWorldHandle overworld = fantasy.getOrOpenPersistentWorld(key(id + "_overworld"), config(seed, BuiltinDimensionTypes.OVERWORLD, overworldGenerator(), true));
+		RuntimeWorldHandle nether = fantasy.getOrOpenPersistentWorld(key(id + "_nether"), config(seed, BuiltinDimensionTypes.NETHER, netherGenerator(), false));
+		RuntimeWorldHandle end = fantasy.getOrOpenPersistentWorld(key(id + "_end"), config(seed, BuiltinDimensionTypes.END, endGenerator(), false));
+		RunWorldSet set = new RunWorldSet(id, seed, overworld, nether, end);
+		ServerLevel endLevel = set.end();
+		endLevel.setDragonFight(new EndDragonFight(endLevel, seed, dragon));
+		return set;
+	}
+
+	/** Whether a run's worlds are on disk, so {@link #restore} can reopen them. */
+	public boolean isSaved(String id) {
+		return Files.isDirectory(folder().resolve(id + "_overworld"));
+	}
+
+	private Path folder() {
+		return server.getWorldPath(LevelResource.ROOT).resolve("dimensions").resolve("speedrun");
+	}
+
+	/** Reopens a saved run's worlds from disk as the current set. */
+	public RunWorldSet restore(String id, long seed, BlockPos spawn, @Nullable JsonElement dragon) {
+		EndDragonFight.Data data = dragon == null ? EndDragonFight.Data.DEFAULT
+			: EndDragonFight.Data.CODEC.parse(JsonOps.INSTANCE, dragon).result().orElse(EndDragonFight.Data.DEFAULT);
+		RunWorldSet set = open(id, seed, data);
+		set.spawn = spawn;
+		set.ready = true;
+		current = set;
+		SpeedrunCore.LOGGER.info("Reopened run worlds {} with seed {}", id, seed);
+		return set;
+	}
+
+	/** The end's dragon fight state, for saving alongside a run. */
+	@Nullable
+	public static JsonElement saveDragon(RunWorldSet set) {
+		EndDragonFight fight = set.end().getDragonFight();
+		return fight == null ? null : EndDragonFight.Data.CODEC.encodeStart(JsonOps.INSTANCE, fight.saveData()).result().orElse(null);
+	}
+
+	/** Deletes every run world folder on disk except those of {@code keepId}. Call on startup before opening any. */
+	public void sweep(@Nullable String keepId) {
+		Path folder = folder();
+		if (!Files.isDirectory(folder)) {
+			return;
+		}
+		try (Stream<Path> children = Files.list(folder)) {
+			for (Path child : children.toList()) {
+				if (keepId != null && child.getFileName().toString().startsWith(keepId + "_")) {
+					continue;
+				}
+				try (Stream<Path> tree = Files.walk(child)) {
+					for (Path path : tree.sorted(Comparator.reverseOrder()).toList()) {
+						Files.delete(path);
+					}
+				}
+				SpeedrunCore.LOGGER.info("Deleted leftover run world {}", child.getFileName());
+			}
+		} catch (IOException e) {
+			SpeedrunCore.LOGGER.warn("Could not delete leftover run worlds in {}", folder, e);
+		}
 	}
 
 	/** Promotes the prepared set to current and deletes the old one. */

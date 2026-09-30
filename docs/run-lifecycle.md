@@ -44,7 +44,15 @@ The lobby is a small lit platform where players wait for friends before starting
 
 What happens when every player leaves depends on the keep run setting (`/speedrun keeprun`).
 
-With keep run on, the run pauses. The run timer stops and the server's tick rate manager is frozen, so the time of day, weather, mobs, crops and furnaces do not move. The first player to join unfreezes the server and continues the run in the same world, at their logout position with their inventory. A paused run still ends if the server stops.
+With keep run on, the run pauses. The run timer stops and the server's tick rate manager is frozen, so the time of day, weather, mobs, crops and furnaces do not move. The first player to join unfreezes the server and continues the run in the same world, at their logout position with their inventory.
+
+## Surviving a restart
+
+Run worlds are Fantasy persistent worlds, saved under `world/dimensions/speedrun/`. With keep run on, the rest of the run is written to `config/speedrun-core/current-run.json` every 30 seconds, when the run pauses, and on shutdown: world id, seed, spawn, attempt, category settings, elapsed time, splits, bosses killed, the overworld's time and weather (Fantasy keeps those in memory only), the dragon fight, and feature state such as `mob_randomizer` drops and who already got the starter kit.
+
+On startup, if keep run is on and that file points at worlds still on disk, the worlds are reopened and the run resumes in RUNNING, paused and frozen until someone joins. Players load straight into the run world from their own player data. Every other folder under `dimensions/speedrun/` is deleted, including the prepared next world, which is generated again.
+
+With keep run off, the file is deleted and a run in progress ends as `Server stopped`; its worlds are deleted on the next start.
 
 With keep run off, the default, a run in progress is lost when every player has left.
 

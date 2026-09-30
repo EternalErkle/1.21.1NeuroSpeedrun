@@ -1,6 +1,9 @@
 package com.eternalerkle.speedrun.modifier;
 
 import com.eternalerkle.speedrun.run.ActiveRun;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -36,7 +39,21 @@ final class InventoryModifiers {
 	void onRunStart(ActiveRun run) {
 		kitted.clear();
 		shared = null;
-		nextShuffleNanos = run.startNanos + Modifiers.TIMED_INTERVAL_NANOS;
+		nextShuffleNanos = Modifiers.nextTimedNanos(run);
+	}
+
+	void save(JsonObject out) {
+		JsonArray given = new JsonArray();
+		kitted.forEach(id -> given.add(id.toString()));
+		out.add("starterKitGiven", given);
+	}
+
+	void restore(JsonObject in) {
+		if (in.has("starterKitGiven")) {
+			for (JsonElement id : in.getAsJsonArray("starterKitGiven")) {
+				kitted.add(UUID.fromString(id.getAsString()));
+			}
+		}
 	}
 
 	void onRunEnd() {

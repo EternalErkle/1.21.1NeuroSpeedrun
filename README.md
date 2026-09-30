@@ -64,7 +64,7 @@ Type `/help` in game for every command. The ones admins use most:
 | `/speedrun tickrate <rate>` | Change game speed for the next run |
 | `/speedrun sharedhealth on\|off` | Share one health bar between everyone |
 | `/speedrun modifiers mode off\|random\|vote` | Turn run modifiers on (see [Modifiers](#modifiers)) |
-| `/speedrun keeprun on\|off` | Pause the run when everyone leaves, instead of ending it |
+| `/speedrun keeprun on\|off` | Keep the run when everyone leaves or the server restarts |
 | `/speedrun reset` | End the current run and start a new seed |
 
 Settings and stats are saved in `run/config/speedrun-core/`.
@@ -73,7 +73,7 @@ Every run starts at sunrise with clear weather.
 
 ### Continuing a run across sessions
 
-By default, a run ends as abandoned when everyone has been offline for 60 seconds. For a run that takes more than one sitting, such as the all-bosses goal, turn on keep run:
+By default, a run ends as abandoned when everyone has been offline for 60 seconds, or when the server stops. For a run that takes more than one sitting, such as the all-bosses goal, turn on keep run:
 
 ```
 /speedrun keeprun on
@@ -85,7 +85,9 @@ When the last player leaves, the run pauses instead of ending:
 - The whole server freezes: time of day, weather, mobs, crops and furnaces stay exactly as they were.
 - The first player to join lands back in the same world, where they logged out, with their inventory.
 
-Keep the server running between sessions. Stopping or restarting it still ends the run, because run worlds are temporary and deleted on shutdown.
+The run also survives stopping or restarting the server. The run worlds are saved to disk, and the run's state (timer, splits, bosses killed, modifiers, time of day, weather) is saved to `run/config/speedrun-core/current-run.json` every 30 seconds and on shutdown. On the next start the run is reopened, paused, until someone joins. After a crash, up to 30 seconds of the timer and up to 5 minutes of world changes (the autosave interval) can be lost.
+
+With keep run off, leftover run worlds are deleted when the server starts.
 
 ## Modifiers
 
@@ -93,7 +95,9 @@ Modifiers change the rules of one run: for example one heart, moon gravity, a do
 
 Modifiers are **off by default**. To turn them on, as op:
 
-1. Run `/speedrun modifiers pool`. It lists every modifier. Click one to add it to the pool, or use `/speedrun modifiers enable <id>`. Only modifiers in the pool can be picked.
+1. Add modifiers to the pool. Only modifiers in the pool can be picked.
+   - `/speedrun modifiers enable all` adds all 22 at once. `/speedrun modifiers disable all` empties the pool.
+   - `/speedrun modifiers pool` lists every modifier. Click one to add or remove it, or use `/speedrun modifiers enable <id>` and `disable <id>`.
 2. Choose how they're picked with `/speedrun modifiers mode`:
    - `random`: each run draws from the pool at random.
    - `vote`: while waiting in the lobby or death room, everyone votes between two options drawn from the pool, by clicking in chat or with `/vote <number>`.

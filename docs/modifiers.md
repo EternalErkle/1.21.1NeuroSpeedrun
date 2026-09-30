@@ -6,7 +6,7 @@ In vote mode, the lobby or death room offers two options drawn from the pool as 
 
 Active modifiers are shown under the GO! title when a run starts and under the top-of-screen timer, and form part of the record category. Anyone can run `/modifiers` to see them, how the next run's are chosen, and the full list.
 
-Modifiers are off by default. To turn them on, add some to the pool with `/speedrun modifiers pool` (click to toggle) or `/speedrun modifiers enable <id>`, then set `/speedrun modifiers mode random` or `vote`.
+Modifiers are off by default. To turn them on, add some to the pool with `/speedrun modifiers enable all`, `/speedrun modifiers pool` (click to toggle) or `/speedrun modifiers enable <id>`, then set `/speedrun modifiers mode random` or `vote`.
 
 Tags describe how each modifier affects difficulty:
 

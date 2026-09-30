@@ -69,10 +69,14 @@ public final class ModifierCommands {
 			.then(mode)
 			.then(literal("count").then(argument("n", IntegerArgumentType.integer(1, ModifierCatalog.ALL.size())).executes(ModifierCommands::setCount)))
 			.then(literal("pool").executes(ModifierCommands::showPool))
-			.then(literal("enable").then(argument("id", StringArgumentType.word()).suggests((context, builder) -> SharedSuggestionProvider.suggest(ModifierCatalog.ids(), builder))
-				.executes(context -> setEnabled(context, true))))
-			.then(literal("disable").then(argument("id", StringArgumentType.word()).suggests((context, builder) -> SharedSuggestionProvider.suggest(ModifierCatalog.ids(), builder))
-				.executes(context -> setEnabled(context, false))))
+			.then(literal("enable")
+				.then(literal("all").executes(context -> setAll(context, true)))
+				.then(argument("id", StringArgumentType.word()).suggests((context, builder) -> SharedSuggestionProvider.suggest(ModifierCatalog.ids(), builder))
+					.executes(context -> setEnabled(context, true))))
+			.then(literal("disable")
+				.then(literal("all").executes(context -> setAll(context, false)))
+				.then(argument("id", StringArgumentType.word()).suggests((context, builder) -> SharedSuggestionProvider.suggest(ModifierCatalog.ids(), builder))
+					.executes(context -> setEnabled(context, false))))
 			.then(literal("force").then(argument("ids", StringArgumentType.greedyString()).suggests((context, builder) -> {
 				// Suggest ids for the word being typed after the last space.
 				String typed = builder.getRemaining();
@@ -85,7 +89,7 @@ public final class ModifierCommands {
 				"random: each run draws modifiers from the pool at random.",
 				"vote: while waiting in the lobby or death room, players vote between two options drawn from the pool.",
 				"random and vote need modifiers in the pool first: see /speedrun modifiers pool.",
-				"Setup: /speedrun modifiers pool, click the ones you want, then set the mode. Takes effect on the next run."),
+				"Setup: /speedrun modifiers enable all (or pick some in /speedrun modifiers pool), then set the mode. Takes effect on the next run."),
 			List.of("speedrun modifiers mode vote", "speedrun modifiers mode random", "speedrun modifiers mode off"), CommandRegistry.ADMIN));
 		registry.document(new CommandDoc("speedrun modifiers count", CATEGORY, "<n>", "Sets how many modifiers are active per run",
 			List.of("Fewer are used when the pool is too small or its modifiers conflict."),
@@ -93,12 +97,12 @@ public final class ModifierCommands {
 		registry.document(new CommandDoc("speedrun modifiers pool", CATEGORY, "", "Lists every modifier and whether it is in the pool",
 			List.of("Click a modifier in the list to add it to or remove it from the pool."),
 			List.of("speedrun modifiers pool"), CommandRegistry.ADMIN));
-		registry.document(new CommandDoc("speedrun modifiers enable", CATEGORY, "<id>", "Adds a modifier to the pool",
-			List.of("Use /speedrun modifiers pool to see every id."),
-			List.of("speedrun modifiers enable one_heart"), CommandRegistry.ADMIN));
-		registry.document(new CommandDoc("speedrun modifiers disable", CATEGORY, "<id>", "Removes a modifier from the pool",
-			List.of("Use /speedrun modifiers pool to see every id."),
-			List.of("speedrun modifiers disable one_heart"), CommandRegistry.ADMIN));
+		registry.document(new CommandDoc("speedrun modifiers enable", CATEGORY, "<id|all>", "Adds a modifier, or every modifier, to the pool",
+			List.of("<id>: one modifier. Use /speedrun modifiers pool to see every id.", "all: adds all " + ModifierCatalog.ALL.size() + " modifiers at once."),
+			List.of("speedrun modifiers enable all", "speedrun modifiers enable one_heart"), CommandRegistry.ADMIN));
+		registry.document(new CommandDoc("speedrun modifiers disable", CATEGORY, "<id|all>", "Removes a modifier, or every modifier, from the pool",
+			List.of("<id>: one modifier. Use /speedrun modifiers pool to see every id.", "all: empties the pool."),
+			List.of("speedrun modifiers disable all", "speedrun modifiers disable one_heart"), CommandRegistry.ADMIN));
 		registry.document(new CommandDoc("speedrun modifiers force", CATEGORY, "<id...>", "Forces specific modifiers for the next run only",
 			List.of("Takes one or more ids separated by spaces. Overrides the mode and pool once, then normal selection resumes.",
 				"Conflicting pairs such as tiny and giant are refused."),
@@ -180,6 +184,21 @@ public final class ModifierCommands {
 		runs.settings().save();
 		modifiers(context).refreshVote();
 		context.getSource().sendSuccess(() -> Component.literal((enabled ? "Added " : "Removed ") + ModifierCatalog.displayName(id) + (enabled ? " to" : " from") + " the pool."), true);
+		return Command.SINGLE_SUCCESS;
+	}
+
+	private static int setAll(CommandContext<CommandSourceStack> context, boolean enabled) throws CommandSyntaxException {
+		RunManager runs = CommandRegistry.runs(context);
+		if (enabled) {
+			runs.settings().modifierPool.addAll(ModifierCatalog.ids());
+		} else {
+			runs.settings().modifierPool.clear();
+		}
+		runs.settings().save();
+		modifiers(context).refreshVote();
+		context.getSource().sendSuccess(() -> Component.literal(enabled
+			? "Added all " + ModifierCatalog.ALL.size() + " modifiers to the pool."
+			: "Removed every modifier from the pool."), true);
 		return Command.SINGLE_SUCCESS;
 	}
 

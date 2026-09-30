@@ -92,8 +92,9 @@ public final class RunCommands {
 		registry.document(new CommandDoc("speedrun keeprun", "Settings", "<on|off>", "Keeps the run when everyone leaves",
 			List.of("on: when the last player leaves, the run pauses instead of ending. The timer stops and the world freezes,",
 				"so time of day, mobs and furnaces stay exactly as they were. The next player to join resumes it.",
-				"off: the default. The run ends as abandoned if nobody rejoins within 60 seconds.",
-				"Applies immediately. A paused run still ends if the server itself is stopped or restarted."),
+				"The run also survives a server stop or restart: it is saved and continues, paused, on the next start.",
+				"off: the default. The run ends as abandoned if nobody rejoins within 60 seconds, or when the server stops.",
+				"Applies immediately."),
 			List.of("speedrun keeprun on", "speedrun keeprun off"), CommandRegistry.ADMIN));
 
 		LiteralArgumentBuilder<CommandSourceStack> goal = literal("goal");
@@ -208,8 +209,8 @@ public final class RunCommands {
 		runs.settings().save();
 		runs.onKeepRunChanged();
 		context.getSource().sendSuccess(() -> Component.literal(on
-			? "Keep run on. When everyone leaves, the run pauses until someone rejoins."
-			: "Keep run off. When everyone leaves, the run ends after 60 seconds.").withStyle(ChatFormatting.GREEN), true);
+			? "Keep run on. When everyone leaves or the server restarts, the run pauses until someone joins."
+			: "Keep run off. The run ends 60 seconds after everyone leaves, or when the server stops.").withStyle(ChatFormatting.GREEN), true);
 		return Command.SINGLE_SUCCESS;
 	}
 

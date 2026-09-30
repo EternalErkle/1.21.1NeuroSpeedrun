@@ -39,10 +39,10 @@ Permission node prefix: `speedrun.admin`.
 | `/speedrun modifiers mode <off\|random\|vote>` | How modifiers are chosen each run |
 | `/speedrun modifiers count <n>` | How many modifiers are active per run |
 | `/speedrun modifiers pool` | Lists every modifier and whether it is in the pool |
-| `/speedrun modifiers enable <id>` | Adds a modifier to the pool |
-| `/speedrun modifiers disable <id>` | Removes a modifier from the pool |
+| `/speedrun modifiers enable <id\|all>` | Adds a modifier to the pool, or every modifier with `all` |
+| `/speedrun modifiers disable <id\|all>` | Removes a modifier from the pool, or empties it with `all` |
 | `/speedrun modifiers force <id...>` | Forces specific modifiers for the next run only |
-| `/speedrun keeprun <on\|off>` | Keeps the run when everyone leaves. On: the run pauses, freezing the timer and the world, until someone rejoins. Off (default): the run ends after 60 seconds. Applies immediately. |
+| `/speedrun keeprun <on\|off>` | Keeps the run when everyone leaves or the server restarts. On: the run pauses, freezing the timer and the world, until someone joins, and is saved to disk to survive restarts. Off (default): the run ends 60 seconds after everyone leaves, or when the server stops. Applies immediately. |
 | `/speedrun deathroom mintime <seconds>` | Minimum time the death room stays up. Default 5. Accepts 0 to 600. |
 | `/speedrun stats reset runcount` | Resets the attempt counter |
 | `/speedrun stats reset best [category]` | Clears one category's record, or all of them |

@@ -6,6 +6,7 @@ import com.eternalerkle.speedrun.run.ModifierHooks;
 import com.eternalerkle.speedrun.run.RunFeature;
 import com.eternalerkle.speedrun.run.RunManager;
 import com.eternalerkle.speedrun.run.RunState;
+import com.google.gson.JsonObject;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.ChatFormatting;
@@ -214,7 +215,25 @@ public final class Modifiers implements ModifierHooks, RunFeature {
 		}
 		MobModifiers.onRunStart(run, random.nextLong());
 		inventories.onRunStart(run);
-		nextSwapNanos = run.startNanos + TIMED_INTERVAL_NANOS;
+		nextSwapNanos = nextTimedNanos(run);
+	}
+
+	@Override
+	public void save(ActiveRun run, JsonObject out) {
+		inventories.save(out);
+		MobModifiers.save(out);
+	}
+
+	@Override
+	public void restore(ActiveRun run, JsonObject in) {
+		inventories.restore(in);
+		MobModifiers.restore(in);
+	}
+
+	/** The next 5 minute mark of run time. A restored run continues the schedule instead of catching up. */
+	static long nextTimedNanos(ActiveRun run) {
+		long elapsed = Math.max(0, run.clockNanos() - run.startNanos);
+		return run.startNanos + (elapsed / TIMED_INTERVAL_NANOS + 1) * TIMED_INTERVAL_NANOS;
 	}
 
 	@Override

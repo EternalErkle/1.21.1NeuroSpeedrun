@@ -10,6 +10,7 @@ import com.eternalerkle.speedrun.room.Hub;
 import com.eternalerkle.speedrun.stats.PlayerStats;
 import com.eternalerkle.speedrun.stats.RunRecord;
 import com.eternalerkle.speedrun.stats.Stats;
+import com.eternalerkle.speedrun.util.JsonStore;
 import com.eternalerkle.speedrun.util.Scheduler;
 import com.eternalerkle.speedrun.util.Time;
 import com.eternalerkle.speedrun.util.Titles;
@@ -36,6 +37,7 @@ import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.level.GameType;
+import net.minecraft.world.level.storage.ServerLevelData;
 import org.jetbrains.annotations.Nullable;
 
 import java.nio.file.Path;
@@ -60,10 +62,13 @@ public final class RunManager {
 	/** Delay after a run starts before generating the next run's worlds, so the start is not slowed down. */
 	private static final double PREGENERATE_DELAY_SECONDS = 20.0;
 	private static final long HUD_INTERVAL_NANOS = 200_000_000L;
+	/** How often a kept run is written to disk, so a crash loses little. The worlds autosave every 5 minutes. */
+	private static final long RUN_SAVE_INTERVAL_NANOS = 30_000_000_000L;
 
 	private final MinecraftServer server;
 	private final Settings settings;
 	private final Stats stats;
+	private final Path savedRunFile;
 	private final RunWorlds worlds;
 	private final FaceCache faces = new FaceCache();
 	private final DeathRoom deathRoom;
@@ -96,11 +101,13 @@ public final class RunManager {
 	private int phase;
 	private int graceToken;
 	private long lastHudNanos;
+	private long lastRunSaveNanos;
 
 	public RunManager(MinecraftServer server, Path configDir) {
 		this.server = server;
 		this.settings = Settings.load(configDir.resolve("settings.json"));
 		this.stats = Stats.load(configDir.resolve("stats.json"));
+		this.savedRunFile = configDir.resolve("current-run.json");
 		this.worlds = new RunWorlds(server);
 		this.deathRoom = new DeathRoom(server, faces);
 		this.hud = new Hud(server);
@@ -169,12 +176,28 @@ public final class RunManager {
 		for (PlayerStats player : stats.players.values()) {
 			player.name = player.name == null ? "" : player.name;
 		}
+		SavedRun saved = settings.keepRunWhenEmpty ? SavedRun.load(savedRunFile) : null;
+		if (saved != null && !worlds.isSaved(saved.worldId)) {
+			SpeedrunCore.LOGGER.warn("Saved run #{} has no worlds on disk, starting fresh", saved.attempt);
+			saved = null;
+		}
+		worlds.sweep(saved == null ? null : saved.worldId);
+		if (saved != null) {
+			restoreRun(saved);
+			return;
+		}
+		SavedRun.delete(savedRunFile);
 		enterLobby();
 	}
 
 	public void onServerStopping() {
 		if (state == RunState.RUNNING && run != null) {
-			finishRun(RunRecord.Result.ABANDONED, "Server stopped", null);
+			if (settings.keepRunWhenEmpty) {
+				saveRun();
+				SpeedrunCore.LOGGER.info("Run #{} saved, it continues when the server starts again", run.attempt);
+			} else {
+				finishRun(RunRecord.Result.ABANDONED, "Server stopped", null);
+			}
 		}
 		deathRoom.close();
 		hud.shutdown();
@@ -198,6 +221,11 @@ public final class RunManager {
 			}
 		}
 		long now = System.nanoTime();
+		if (settings.keepRunWhenEmpty && state == RunState.RUNNING && run != null && !run.isPaused()
+			&& now - lastRunSaveNanos >= RUN_SAVE_INTERVAL_NANOS) {
+			lastRunSaveNanos = now;
+			saveRun();
+		}
 		if (now - lastHudNanos >= HUD_INTERVAL_NANOS) {
 			lastHudNanos = now;
 			updateHud();
@@ -384,6 +412,7 @@ public final class RunManager {
 	private RunRecord finishRun(RunRecord.Result result, String cause, @Nullable ServerPlayer culprit) {
 		ActiveRun ended = run;
 		unpause(ended);
+		SavedRun.delete(savedRunFile);
 		ended.endNanos = System.nanoTime();
 		RunRecord record = new RunRecord();
 		record.attempt = ended.attempt;
@@ -661,11 +690,83 @@ public final class RunManager {
 		});
 	}
 
-	/** Applies a changed keep-run setting to a run that is already empty. */
+	/** Applies a changed keep-run setting to the live run. */
 	public void onKeepRunChanged() {
+		if (settings.keepRunWhenEmpty) {
+			saveRun();
+		} else {
+			SavedRun.delete(savedRunFile);
+		}
 		if (server.getPlayerList().getPlayers().isEmpty()) {
 			onServerEmpty();
 		}
+	}
+
+	// ---- surviving restarts ----
+
+	/** Writes the live run to disk. The world files are saved separately by the server's autosave and shutdown. */
+	private void saveRun() {
+		ActiveRun current = run;
+		if (current == null || state != RunState.RUNNING || !settings.keepRunWhenEmpty) {
+			return;
+		}
+		SavedRun saved = new SavedRun();
+		saved.worldId = current.worlds.id;
+		saved.seed = current.worlds.seed;
+		BlockPos spawn = current.worlds.spawn();
+		saved.spawnX = spawn.getX();
+		saved.spawnY = spawn.getY();
+		saved.spawnZ = spawn.getZ();
+		saved.attempt = current.attempt;
+		saved.goal = current.goal;
+		saved.tickRate = current.tickRate;
+		saved.sharedHealth = current.sharedHealth;
+		saved.sharedHunger = current.sharedHunger;
+		saved.modifiers.addAll(current.modifiers);
+		saved.elapsedMillis = current.realMillis();
+		saved.gameTicks = current.gameTicks;
+		saved.splits.putAll(current.splits);
+		saved.bossesKilled.addAll(current.bossesKilled);
+		saved.unranked = current.unranked;
+		ServerLevel overworld = current.worlds.overworld();
+		ServerLevelData data = (ServerLevelData) overworld.getLevelData();
+		saved.dayTime = data.getDayTime();
+		saved.clearWeatherTime = data.getClearWeatherTime();
+		saved.rainTime = data.getRainTime();
+		saved.raining = data.isRaining();
+		saved.thundering = data.isThundering();
+		saved.dragon = RunWorlds.saveDragon(current.worlds);
+		for (RunFeature feature : features) {
+			feature.save(current, saved.features);
+		}
+		JsonStore.save(savedRunFile, saved);
+	}
+
+	/** Reopens a run saved before the last shutdown. It stays paused until someone joins. */
+	private void restoreRun(SavedRun saved) {
+		RunWorldSet set = worlds.restore(saved.worldId, saved.seed, new BlockPos(saved.spawnX, saved.spawnY, saved.spawnZ), saved.dragon);
+		phase++;
+		server.tickRateManager().setTickRate(saved.tickRate);
+		run = new ActiveRun(saved.attempt, set, saved.goal, saved.tickRate, saved.sharedHealth, saved.sharedHunger, saved.modifiers, saved.elapsedMillis);
+		run.gameTicks = saved.gameTicks;
+		run.splits.putAll(saved.splits);
+		run.bossesKilled.addAll(saved.bossesKilled);
+		run.unranked = saved.unranked;
+		state = RunState.RUNNING;
+		for (RunFeature feature : features) {
+			feature.onRunStart(run);
+			feature.restore(run, saved.features);
+		}
+		set.overworld().setDayTime(saved.dayTime);
+		set.overworld().setWeatherParameters(saved.clearWeatherTime, saved.rainTime, saved.raining, saved.thundering);
+		pause(run);
+		int token = phase;
+		scheduler.after(PREGENERATE_DELAY_SECONDS, () -> {
+			if (token == phase && state == RunState.RUNNING) {
+				ensureNextPreparing();
+			}
+		});
+		SpeedrunCore.LOGGER.info("Run #{} restored at {}, waiting for a player to join", run.attempt, Time.format(run.realMillis()));
 	}
 
 	/**
@@ -678,6 +779,7 @@ public final class RunManager {
 		}
 		current.pause();
 		server.tickRateManager().setFrozen(true);
+		saveRun();
 		SpeedrunCore.LOGGER.info("Run #{} paused because the server is empty", current.attempt);
 	}
 

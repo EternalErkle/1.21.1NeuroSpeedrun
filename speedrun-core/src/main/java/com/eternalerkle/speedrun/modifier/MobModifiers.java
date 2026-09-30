@@ -2,8 +2,11 @@ package com.eternalerkle.speedrun.modifier;
 
 import com.eternalerkle.speedrun.mixin.ModifierCreeperMixin;
 import com.eternalerkle.speedrun.run.ActiveRun;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -64,6 +67,27 @@ public final class MobModifiers {
 		randomDrops.clear();
 		dropRandom = new Random(seed);
 		dropCandidates = null;
+	}
+
+	/** Saves mob_randomizer's drops so they stay the same after a restart. */
+	static void save(JsonObject out) {
+		JsonObject drops = new JsonObject();
+		randomDrops.forEach((type, item) -> drops.addProperty(EntityType.getKey(type).toString(), BuiltInRegistries.ITEM.getKey(item).toString()));
+		out.add("mobDrops", drops);
+	}
+
+	static void restore(JsonObject in) {
+		if (!in.has("mobDrops")) {
+			return;
+		}
+		for (Map.Entry<String, JsonElement> entry : in.getAsJsonObject("mobDrops").entrySet()) {
+			ResourceLocation typeId = ResourceLocation.tryParse(entry.getKey());
+			ResourceLocation itemId = ResourceLocation.tryParse(entry.getValue().getAsString());
+			if (typeId != null && itemId != null) {
+				BuiltInRegistries.ENTITY_TYPE.getOptional(typeId).ifPresent(type ->
+					BuiltInRegistries.ITEM.getOptional(itemId).ifPresent(item -> randomDrops.put(type, item)));
+			}
+		}
 	}
 
 	static void onRunEnd() {

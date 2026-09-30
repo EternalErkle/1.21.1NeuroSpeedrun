@@ -1,5 +1,6 @@
 package com.eternalerkle.speedrun.run;
 
+import com.google.gson.JsonObject;
 import net.minecraft.server.level.ServerPlayer;
 
 /**
@@ -25,5 +26,13 @@ public interface RunFeature {
 
 	/** Called every server tick while the run is RUNNING. */
 	default void tick(ActiveRun run) {
+	}
+
+	/** Writes state that must survive a server restart into {@code out}, under keys of this feature's own. */
+	default void save(ActiveRun run, JsonObject out) {
+	}
+
+	/** Reads state written by {@link #save}. Called on startup right after {@link #onRunStart} for a restored run. */
+	default void restore(ActiveRun run, JsonObject in) {
 	}
 }
