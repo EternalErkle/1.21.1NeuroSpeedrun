@@ -29,6 +29,7 @@ public class SpeedrunCore implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		Integrations.init();
 		ServerLifecycleEvents.SERVER_STARTED.register(server -> {
 			runs = new RunManager(server, FabricLoader.getInstance().getConfigDir().resolve(MOD_ID));
 			Integrations.register(runs);

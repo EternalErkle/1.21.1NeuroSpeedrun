@@ -1,25 +1,19 @@
 package com.eternalerkle.speedrun.command;
 
-import com.eternalerkle.speedrun.SpeedrunCore;
+import com.eternalerkle.speedrun.modifier.ModifierCommands;
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.network.chat.Component;
 
+/** Registers every command module. /help is registered last so it sees every other command's documentation. */
 public final class Commands {
 	private Commands() {
 	}
 
 	public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
-		dispatcher.register(net.minecraft.commands.Commands.literal("start").executes(context -> {
-			if (SpeedrunCore.runs() == null) {
-				return 0;
-			}
-			Component error = SpeedrunCore.runs().requestStart();
-			if (error != null) {
-				context.getSource().sendFailure(error);
-				return 0;
-			}
-			return 1;
-		}));
+		CommandRegistry registry = new CommandRegistry(dispatcher);
+		RunCommands.register(registry);
+		StatsCommands.register(registry);
+		ModifierCommands.register(registry);
+		HelpCommand.register(registry);
 	}
 }
