@@ -33,6 +33,7 @@ How it works:
 - Natural regeneration and starvation happen per player, so with shared health they scale with the number of players.
 - A player who joins mid-run takes the current shared values.
 - If the shared health reaches 0, one player dies through normal damage. That triggers exactly one reset.
+- Every hit is announced in chat with who took it, how many hearts, and the cause, for example `❤ Bravo -1.5 (Zombie)`. The amount is after armor. Lethal hits are covered by the death summary instead.
 
 Every reset restores full health and hunger to everyone.
 
