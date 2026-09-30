@@ -1,0 +1,16 @@
+{
+	"required": true,
+	"package": "com.eternalerkle.speedrun.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+		"BaseFireBlockMixin",
+		"EndPortalBlockMixin",
+		"NetherPortalBlockMixin",
+		"ServerLevelMixin",
+		"ServerPlayerMixin",
+		"TheEndGatewayBlockEntityMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

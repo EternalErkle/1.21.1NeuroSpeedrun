@@ -1,0 +1,61 @@
+plugins {
+	id 'net.fabricmc.fabric-loom-remap' version "${loom_version}"
+}
+
+repositories {
+	maven { url = 'https://maven.nucleoid.xyz/' }
+	mavenCentral()
+}
+
+loom {
+	runs {
+		server {
+			runDir = 'run'
+		}
+		gametest {
+			server()
+			name = 'Game Test'
+			vmArg '-Dfabric-api.gametest'
+			vmArg "-Dfabric-api.gametest.report-file=${project.layout.buildDirectory.get()}/junit.xml"
+			runDir = 'build/gametest'
+		}
+	}
+}
+
+dependencies {
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	mappings loom.officialMojangMappings()
+	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+
+	modImplementation include("xyz.nucleoid:fantasy:${project.fantasy_version}")
+	modImplementation include("eu.pb4:polymer-resource-pack:${project.polymer_version}")
+	modImplementation include("eu.pb4:polymer-autohost:${project.polymer_version}")
+	modImplementation include("me.lucko:fabric-permissions-api:${project.permissions_api_version}")
+
+	testImplementation "org.junit.jupiter:junit-jupiter:${project.junit_version}"
+	testRuntimeOnly "org.junit.platform:junit-platform-launcher"
+}
+
+processResources {
+	def version = project.version
+	inputs.property "version", version
+
+	filesMatching("fabric.mod.json") {
+		expand "version": version
+	}
+}
+
+test {
+	useJUnitPlatform()
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.release = 21
+}
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}

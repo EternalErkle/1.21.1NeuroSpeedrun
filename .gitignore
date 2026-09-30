@@ -1,2 +1,13 @@
 .serena/
 .token-optimizer/
+
+.gradle/
+build/
+out/
+run/
+.idea/
+*.iml
+.vscode/
+bin/
+*.DS_Store
+hs_err_*.log

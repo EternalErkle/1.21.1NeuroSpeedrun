@@ -1,0 +1,23 @@
+{
+	"schemaVersion": 1,
+	"id": "speedrun-core",
+	"version": "${version}",
+	"name": "Speedrun Core",
+	"description": "Cooperative hardcore speedrun server: resets on death, records, modifiers.",
+	"authors": ["EternalErkle"],
+	"contact": {
+		"sources": "https://github.com/EternalErkle/1.21.1NeuroSpeedrun"
+	},
+	"license": "MIT",
+	"environment": "*",
+	"entrypoints": {
+		"main": ["com.eternalerkle.speedrun.SpeedrunCore"]
+	},
+	"mixins": ["speedrun-core.mixins.json"],
+	"depends": {
+		"fabricloader": ">=0.16.0",
+		"minecraft": "~1.21.1",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}
