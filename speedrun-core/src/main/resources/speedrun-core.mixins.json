@@ -5,6 +5,11 @@
 	"mixins": [
 		"BaseFireBlockMixin",
 		"EndPortalBlockMixin",
+		"ModifierCreeperMixin",
+		"ModifierFoodDataMixin",
+		"ModifierLivingEntityMixin",
+		"ModifierMobCategoryMixin",
+		"ModifierNaturalSpawnerMixin",
 		"NetherPortalBlockMixin",
 		"ServerLevelMixin",
 		"ServerPlayerMixin",
