@@ -46,11 +46,11 @@ The goal setting decides what wins a run: `dragon` (default) or `allbosses`, whi
 
 Any Fabric mod for 1.21.1 can run beside `speedrun-core`:
 
-- The server's mod list is kept in `pack/` with packwiz, which pins exact versions from CurseForge or Modrinth.
+- The server's extra mods are listed in `server-template/mods.txt`, one pinned jar and download URL per line. Setup downloads them into `run/mods/`.
 - Mods that are server-side only need nothing from players.
-- If a mod must also be on the client, packwiz exports the same list as a CurseForge modpack that players import in the CurseForge app.
+- A mod that must also be on the client breaks the unmodded-client rule, so it needs a separate decision and a client install guide.
 
-Mods that change health, hunger, death or dimensions can conflict with the run lifecycle. Each new one is tested against a full reset and a full win before it is added to the pack.
+Mods that change health, hunger, death or dimensions can conflict with the run lifecycle. Each new one is tested against a full reset and a full win before it is added to `mods.txt`.
 
 ## Stats storage
 

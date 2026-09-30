@@ -14,7 +14,6 @@ All game logic lives in one server-side mod, `speedrun-core`. Players need no cl
 | Fantasy (NucleoidMC) | Create and delete run dimensions at runtime | Yes: a 1.21.1 build exists |
 | Polymer resource pack + autohost (Patbox) | Build the resource pack from the mod's assets and serve it over the game port | No |
 | fabric-permissions-api (lucko) | Permission nodes, falling back to op level | No |
-| packwiz | Pinned mod list, including CurseForge mods | No |
 
 Shared health and shared hunger are built into `speedrun-core`. No third-party mod is involved.
 
@@ -26,14 +25,13 @@ speedrun-core/            the Fabric mod (Gradle + Fabric Loom)
   src/main/resources/     fabric.mod.json, resource pack sources
   src/test/java/...       unit tests
   src/gametest/java/...   Fabric GameTest integration tests
-pack/                     packwiz manifest for the server's mod list
-server-template/          server.properties and other files copied on setup
+server-template/          server.properties and mods.txt, the pinned extra mod list
 scripts/                  setup and launch scripts for Windows and Linux
 docs/                     these documents
 .gitignore                excludes worlds, jars, logs, libraries, player data
 ```
 
-Nothing the server generates is committed. `scripts/setup` downloads the Fabric server, builds `speedrun-core`, pulls the mod list through packwiz, and copies `server-template/` into a local `run/` folder that git ignores.
+Nothing the server generates is committed. `scripts/setup` downloads the Fabric server, builds `speedrun-core`, downloads the mods in `server-template/mods.txt`, and copies `server-template/` into a local `run/` folder that git ignores.
 
 The rewrite lives in the same repository. Every file from the old Paper server was deleted from the tree.
 

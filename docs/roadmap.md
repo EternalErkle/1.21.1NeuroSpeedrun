@@ -16,7 +16,7 @@ Each spike answers a question the design depends on. A failed spike changes the 
 
 - Gradle project with Fabric Loom, Fabric API, Fantasy and the permissions API.
 - `.gitignore` excluding everything the server generates.
-- packwiz manifest, `server-template/`, and `scripts/setup` plus `scripts/start` for Windows and Linux.
+- `server-template/` with a pinned `mods.txt`, and `scripts/setup` plus `scripts/start` for Windows and Linux.
 - CI builds the mod and runs tests on every push.
 
 ## Phase 2: core loop
@@ -65,6 +65,49 @@ Each spike answers a question the design depends on. A failed spike changes the 
 
   The suite lives in `speedrun-core/src/gametest` and runs with `./gradlew runGametest`, which takes about three minutes because world generation and the lifecycle timers run in real time. It is not part of `check`. The run sets `-Dspeedrun.emptyGraceSeconds=10` so the grace test does not wait a full minute.
 - **Manual checks with two clients** cover the death room visuals, shared health, portal routing, and a full win.
+
+## Status
+
+Phases 0 to 5 are built. `./gradlew build` passes 42 unit tests, and `./gradlew runGametest` passes all 9 GameTests.
+
+### Spike answers
+
+- **Fantasy on 1.21.1:** yes. Version 0.6.4+1.21 creates and deletes full world sets.
+- **Dragon fight:** it needed a manual `EndDragonFight`, and a mixin feeds the run seed to structure lookups.
+- **Polymer autohost:** yes. `speedrun-core` enables it in `config/polymer/auto-host.json` on every start.
+- **Black dimension-change screen:** done by blacking out the title panorama, which that screen draws for non-vanilla dimensions.
+- **Gap-free face:** needs checking with a real client.
+
+### Checked on a live server with bot clients
+
+- Lobby, `/start` and the countdown.
+- Death summary with last words and the seed.
+- The death room, then the automatic next run.
+- Nether portals route both ways with 8:1 scaling; end portals route too.
+- Dragon win, splits and the new record.
+- `allbosses` checklist.
+- The resource pack is offered and forced.
+- `/help`.
+- Settings and categories.
+- `/voteskip`.
+- Shared health: damage syncs, simultaneous hits add up, and a pooled death resets once.
+- Modifiers:
+  - `one_heart`, `starter_kit`, `glass_cannon`, `charged_up`, `hasty_mobs`, `heavy_landing`, `snack_size` and `no_crafting_table` all work.
+  - Every modifier is removed at run end.
+- Stress: four double-death cycles with disconnects and rejoins in the death room and mid-run, with no errors.
+
+### Needs a real client
+
+- Visuals:
+  - The face renders gap-free and bounces smoothly.
+  - The camera lock holds, including while sneaking.
+  - The white boss bars are invisible and only their text shows.
+  - The dimension-change screen is black.
+- Two clients:
+  - Shared hunger.
+  - `shared_inventory`, `swap` and `hotbar_only`.
+- Movement feel of `moon_gravity`, `heavy_gravity`, `tiny` and `giant`.
+- `horde` and `mob_randomizer` over a real run.
 
 ## Open questions
 
