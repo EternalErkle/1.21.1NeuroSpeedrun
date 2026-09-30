@@ -30,10 +30,10 @@ How it works:
 - Every tick it reads how much each player's value changed since the last tick and adds all those changes to the shared value. Two players who each take 3 damage in the same tick cost the shared bar 6.
 - The result is clamped and written back to every player in the run.
 - Absorption and max-health changes from modifiers still work. Each player's health is capped at their own max health.
-- Natural regeneration and starvation happen per player, so with shared health they scale with the number of players.
+- Natural regeneration comes from one player only, the best-fed one, so the team heals at the same rate no matter how many players there are. Starvation still happens per player, so every starving player drains the shared bar.
 - A player who joins mid-run takes the current shared values.
 - If the shared health reaches 0, one player dies through normal damage. That triggers exactly one reset.
-- Every hit is announced in chat with who took it, how many hearts, and the cause, for example `❤ Bravo -1.5 (Zombie)`. The amount is after armor. Lethal hits are covered by the death summary instead.
+- Every hit is announced in chat with who took it and how many hearts they lost, for example `❤ Bravo -1.5`. The amount is after armor. Lethal hits are covered by the death summary instead.
 
 Every reset restores full health and hunger to everyone.
 

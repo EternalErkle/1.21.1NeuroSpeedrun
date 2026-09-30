@@ -8,16 +8,14 @@ import com.eternalerkle.speedrun.run.RunState;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.food.FoodData;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
 import org.jetbrains.annotations.Nullable;
@@ -29,8 +27,12 @@ import org.jetbrains.annotations.Nullable;
  * compares each player's value with what it wrote to that player last tick, adds the changes of all players to the
  * canonical value, clamps it, and writes it back to everyone. Vanilla keeps running damage, healing, eating and
  * exhaustion per player, so no damage or food path needs a hook. Two players each taking 3 damage in one tick cost
- * the shared bar 6. Each player's natural regeneration and starvation count separately, so both scale with the
- * number of players.
+ * the shared bar 6.
+ * <p>
+ * Natural regeneration would scale with the number of players if every player ran it, so with shared health only one
+ * player, the regen carrier, regenerates. The carrier is the best-fed player and stays the same until someone else has
+ * strictly more food. Everyone else's natural regeneration is skipped by a FoodData mixin. Starvation still runs for
+ * every player, so each starving player drains the shared bar.
  * <p>
  * Health is clamped to the highest max health in the run and written to each player capped at their own max health,
  * so max-health modifiers and absorption keep working. A drop in a player's max health is not counted as damage.
@@ -40,8 +42,8 @@ import org.jetbrains.annotations.Nullable;
  * last damage source, falling back to a generic kill. That routes through {@link RunManager#allowDeath}, which resets
  * the run once. Only players inside the run's worlds during RUNNING are ever touched.
  * <p>
- * Every hit a player takes is announced in chat with the amount and cause, so the team can see who is draining the
- * shared bar. Lethal hits are left to the death summary.
+ * Every hit a player takes is announced in chat with the hearts lost, so the team can see who is draining the shared
+ * bar. Lethal hits are left to the death summary.
  */
 public final class SharedVitals implements RunFeature {
 	private static final float MAX_FOOD = 20.0F;
@@ -53,6 +55,9 @@ public final class SharedVitals implements RunFeature {
 	private final SharedValue saturation = new SharedValue();
 	private final SharedValue exhaustion = new SharedValue();
 	private final Set<UUID> members = new HashSet<>();
+	/** The one player whose natural regeneration applies to the shared health. */
+	@Nullable
+	private UUID regenCarrier;
 
 	/** The instance for the running server, read by the damage event, which is registered once per JVM. */
 	@Nullable
@@ -81,7 +86,7 @@ public final class SharedVitals implements RunFeature {
 	private void onDamage(ServerPlayer player, DamageSource source, float amount) {
 		ActiveRun run = runs.run();
 		if (run != null && run.sharedHealth && isLive(run) && takesPart(run, player)) {
-			announceDamage(player, source, amount);
+			announceDamage(player, amount);
 		}
 	}
 
@@ -175,6 +180,7 @@ public final class SharedVitals implements RunFeature {
 				hardestHit = player;
 			}
 		}
+		chooseRegenCarrier(players);
 		if (health.apply(0, highestMax) <= 0) {
 			killOne(players, hardestHit);
 			return;
@@ -184,15 +190,11 @@ public final class SharedVitals implements RunFeature {
 		}
 	}
 
-	/** Broadcasts "❤ Alpha -1.5 (Zombie)": who took damage, how many hearts, and what caused it. */
-	private void announceDamage(ServerPlayer player, DamageSource source, float amount) {
-		MutableComponent message = Component.literal("❤ ").withStyle(ChatFormatting.RED)
+	/** Broadcasts "❤ Alpha -1.5": who took damage and how many hearts they lost. */
+	private void announceDamage(ServerPlayer player, float amount) {
+		runs.broadcast(Component.literal("❤ ").withStyle(ChatFormatting.RED)
 			.append(player.getDisplayName().copy().withStyle(ChatFormatting.WHITE))
-			.append(Component.literal(" -" + formatHearts(amount)).withStyle(ChatFormatting.RED));
-		message.append(Component.literal(" (").withStyle(ChatFormatting.GRAY))
-			.append(causeName(source))
-			.append(Component.literal(")").withStyle(ChatFormatting.GRAY));
-		runs.broadcast(message);
+			.append(Component.literal(" -" + formatHearts(amount)).withStyle(ChatFormatting.RED)));
 	}
 
 	/** Health points as hearts, with at most one decimal: 3 health is "1.5", 4 is "2". */
@@ -201,17 +203,34 @@ public final class SharedVitals implements RunFeature {
 		return hearts == (int) hearts ? Integer.toString((int) hearts) : Float.toString(hearts);
 	}
 
-	/** The attacker's name when there is one, otherwise the damage type spelled out ("inFire" becomes "in fire"). */
-	private static Component causeName(DamageSource source) {
-		Entity attacker = source.getEntity();
-		if (attacker != null) {
-			return attacker.getDisplayName().copy().withStyle(ChatFormatting.GRAY);
+	/** Keeps the current carrier unless another player has strictly more food, so the carrier's regen timer is not reset. */
+	private void chooseRegenCarrier(List<ServerPlayer> players) {
+		ServerPlayer best = null;
+		for (ServerPlayer player : players) {
+			if (player.getUUID().equals(regenCarrier)) {
+				best = player;
+			}
 		}
-		return Component.literal(spellOut(source.getMsgId())).withStyle(ChatFormatting.GRAY);
+		for (ServerPlayer player : players) {
+			if (best == null || player.getFoodData().getFoodLevel() > best.getFoodData().getFoodLevel()) {
+				best = player;
+			}
+		}
+		regenCarrier = best == null ? null : best.getUUID();
 	}
 
-	static String spellOut(String msgId) {
-		return msgId.replaceAll("([a-z])([A-Z])", "$1 $2").replace('_', ' ').replace('.', ' ').toLowerCase(Locale.ROOT);
+	/**
+	 * Whether this player's own natural regeneration should be skipped because another player carries
+	 * them for the shared health. Called from FoodData.tick.
+	 */
+	public static boolean skipsNaturalRegen(Player player) {
+		SharedVitals vitals = instance;
+		if (vitals == null || !(player instanceof ServerPlayer serverPlayer)) {
+			return false;
+		}
+		ActiveRun run = vitals.runs.run();
+		return run != null && run.sharedHealth && vitals.isLive(run) && vitals.members.contains(serverPlayer.getUUID())
+			&& vitals.regenCarrier != null && !vitals.regenCarrier.equals(serverPlayer.getUUID());
 	}
 
 	/** Kills one player through normal damage so the run manager handles the death. Stops as soon as it resets. */
@@ -284,6 +303,9 @@ public final class SharedVitals implements RunFeature {
 
 	private void forget(UUID id) {
 		members.remove(id);
+		if (id.equals(regenCarrier)) {
+			regenCarrier = null;
+		}
 		health.forget(id);
 		food.forget(id);
 		saturation.forget(id);
@@ -292,6 +314,7 @@ public final class SharedVitals implements RunFeature {
 
 	private void clear() {
 		members.clear();
+		regenCarrier = null;
 		health.clear();
 		food.clear();
 		saturation.clear();
