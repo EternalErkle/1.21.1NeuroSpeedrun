@@ -36,7 +36,7 @@ docs/                     these documents
 
 Nothing the server generates is committed. `scripts/setup` downloads the Fabric server, builds `speedrun-core`, pulls the mod list through packwiz, and copies `server-template/` into a local `run/` folder that git ignores.
 
-The rewrite lives in the same repository. The last commit of the old server is tagged `legacy`, and every old file was deleted from the tree. The old world and jar data stays in git history, so fresh clones still download it.
+The rewrite lives in the same repository. Every file from the old Paper server was deleted from the tree.
 
 ## Code structure
 
