@@ -274,6 +274,12 @@ public final class RunManager {
 	}
 
 	private void startRun() {
+		RunWorldSet next = worlds.next();
+		if (next == null || !next.isReady()) {
+			// The prepared worlds were rerolled during the countdown. onNextReady starts the run once the new ones are ready.
+			ensureNextPreparing();
+			return;
+		}
 		startRequested = false;
 		List<ServerPlayer> players = List.copyOf(server.getPlayerList().getPlayers());
 		if (players.isEmpty()) {
@@ -517,7 +523,9 @@ public final class RunManager {
 	/** Ends the current run without a death: /speedrun reset and /voteskip. */
 	public void abortRun(RunRecord.Result result, String reason, @Nullable UUID faceOwner) {
 		if (state == RunState.LOBBY) {
-			// Reroll the prepared worlds.
+			// Reroll the prepared worlds. Cancel a running countdown; a pending /start begins once the new worlds are ready.
+			phase++;
+			countdownActive = false;
 			worlds.prepareNext(random.nextLong(), this::onNextReady);
 			broadcast(Component.literal(reason + " New seed is generating.").withStyle(ChatFormatting.YELLOW));
 			return;
@@ -602,7 +610,7 @@ public final class RunManager {
 
 	public void onLeave(ServerPlayer player) {
 		hud.removePlayer(player);
-		deathRoom.leave(player);
+		deathRoom.forget(player);
 		if (state == RunState.RUNNING && run != null) {
 			for (RunFeature feature : features) {
 				feature.onPlayerLeaveRun(run, player);

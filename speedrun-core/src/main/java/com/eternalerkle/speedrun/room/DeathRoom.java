@@ -119,6 +119,14 @@ public final class DeathRoom {
 		}
 	}
 
+	/**
+	 * Drops a disconnecting player without touching their camera. Resetting the camera teleports the player and
+	 * re-registers them for chunk tracking, which corrupts the level's chunk tickets while they are being removed.
+	 */
+	public void forget(ServerPlayer player) {
+		occupants.remove(player.getUUID());
+	}
+
 	public void close() {
 		for (ServerPlayer player : server.getPlayerList().getPlayers()) {
 			leave(player);
