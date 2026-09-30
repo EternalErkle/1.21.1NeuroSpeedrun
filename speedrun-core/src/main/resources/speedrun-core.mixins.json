@@ -1,0 +1,23 @@
+{
+	"required": true,
+	"package": "com.eternalerkle.speedrun.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+		"BaseFireBlockMixin",
+		"EndPortalBlockMixin",
+		"ModifierCreeperMixin",
+		"ModifierFoodDataMixin",
+		"ModifierLivingEntityMixin",
+		"ModifierMobCategoryMixin",
+		"ModifierNaturalSpawnerMixin",
+		"NetherPortalBlockMixin",
+		"PlayerListMixin",
+		"ServerLevelMixin",
+		"ServerPlayerCameraAccessor",
+		"ServerPlayerMixin",
+		"TheEndGatewayBlockEntityMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

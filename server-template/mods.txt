@@ -1,0 +1,15 @@
+# Extra server mods, downloaded into run/mods/ by scripts/setup.
+# One per line: <file name> <url>. Pin exact versions so every setup gets the same jars.
+# speedrun-core bundles Fantasy, Polymer and the permissions API, so only Fabric API is required.
+# The rest are server-side performance mods. Players need none of them.
+fabric-api-0.116.17+1.21.1.jar https://maven.fabricmc.net/net/fabricmc/fabric-api/fabric-api/0.116.17+1.21.1/fabric-api-0.116.17+1.21.1.jar
+# Game logic optimizations that keep vanilla behavior.
+lithium-fabric-0.15.4+mc1.21.1.jar https://cdn.modrinth.com/data/gvQqBUqZ/versions/N08Z8wog/lithium-fabric-0.15.4%2Bmc1.21.1.jar
+# Multithreaded chunk generation. Alpha: remove this line if runs misbehave.
+c2me-fabric-mc1.21.1-0.4.0-alpha.0.29.jar https://cdn.modrinth.com/data/VSNURh3q/versions/RMHYO1LJ/c2me-fabric-mc1.21.1-0.4.0-alpha.0.29.jar
+# Faster lighting engine. Alpha: remove this line if lighting looks wrong.
+ScalableLux-fabric-0.3.0-alpha.0.7-all.jar https://cdn.modrinth.com/data/Ps1zyz6x/versions/AodeMVa6/ScalableLux-fabric-0.3.0-alpha.0.7-all.jar
+# Lower memory use, so fewer and shorter GC pauses.
+ferritecore-7.0.3-fabric.jar https://cdn.modrinth.com/data/uXXizFIs/versions/sOzRw3CG/ferritecore-7.0.3-fabric.jar
+# Profiler: /spark profiler start, then /spark profiler stop for a report link.
+spark-1.10.109-fabric.jar https://cdn.modrinth.com/data/l6YH9Als/versions/cALUj9l1/spark-1.10.109-fabric.jar
