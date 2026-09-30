@@ -66,6 +66,7 @@ public final class RunManager {
 	private final DeathRoom deathRoom;
 	private final Hud hud;
 	private final Splits splits;
+	private final VoteSkip voteSkip = new VoteSkip();
 	private final Scheduler scheduler = new Scheduler();
 	private final List<RunFeature> features = new ArrayList<>();
 	private final Map<UUID, String> lastChat = new HashMap<>();
@@ -95,6 +96,7 @@ public final class RunManager {
 		this.hud = new Hud(server);
 		this.splits = new Splits(this);
 		this.features.add(splits);
+		this.features.add(voteSkip);
 		this.deathRoom.onCornerHit(() -> server.getPlayerList().broadcastSystemMessage(
 			Component.literal("The face hit the corner!").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD), false));
 	}
@@ -138,6 +140,10 @@ public final class RunManager {
 
 	public ModifierHooks modifiers() {
 		return modifiers;
+	}
+
+	public VoteSkip voteSkip() {
+		return voteSkip;
 	}
 
 	/** Category key the next run would use if it started now, without modifiers. */
