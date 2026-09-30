@@ -1,1 +1,0 @@
-deathCount = 0;
