@@ -1,5 +1,6 @@
 .serena/
 .token-optimizer/
+.virtualcontext/
 
 .gradle/
 build/
