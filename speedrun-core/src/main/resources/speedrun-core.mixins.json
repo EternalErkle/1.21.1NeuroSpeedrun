@@ -12,6 +12,7 @@
 		"ModifierNaturalSpawnerMixin",
 		"NetherPortalBlockMixin",
 		"ServerLevelMixin",
+		"ServerPlayerCameraAccessor",
 		"ServerPlayerMixin",
 		"TheEndGatewayBlockEntityMixin"
 	],

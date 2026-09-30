@@ -1,6 +1,8 @@
 package com.eternalerkle.speedrun.room;
 
+import com.eternalerkle.speedrun.mixin.ServerPlayerCameraAccessor;
 import com.mojang.math.Transformation;
+import net.minecraft.network.protocol.game.ClientboundSetCameraPacket;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -103,19 +105,23 @@ public final class DeathRoom {
 	}
 
 	/** Moves a player into the room and locks their view. */
+	/**
+	 * Adds a player to the room. The move and camera lock happen in {@link #tick()}: setCamera teleports internally,
+	 * and doing that in the same tick as another teleport, or during the join event before the player is registered
+	 * with the chunk map, corrupts the level's chunk tracking.
+	 */
 	public void enter(ServerPlayer player) {
 		occupants.add(player.getUUID());
 		player.setGameMode(GameType.SPECTATOR);
-		player.teleportTo(server.overworld(), Hub.CAMERA.x, Hub.CAMERA.y, Hub.CAMERA.z, 0, 0);
-		if (anchor != null) {
-			player.setCamera(anchor);
-		}
 	}
 
 	/** Releases a player from the camera lock. The caller moves them somewhere else. */
 	public void leave(ServerPlayer player) {
-		if (occupants.remove(player.getUUID()) && player.getCamera() != player) {
-			player.setCamera(player);
+		occupants.remove(player.getUUID());
+		if (player.getCamera() != player) {
+			// Not setCamera: its teleport, followed by the caller's own teleport in the same tick, corrupts chunk tracking.
+			((ServerPlayerCameraAccessor) player).speedrun$setCameraField(player);
+			player.connection.send(new ClientboundSetCameraPacket(player));
 		}
 	}
 
@@ -156,7 +162,9 @@ public final class DeathRoom {
 				continue;
 			}
 			if (player.level() != server.overworld() || player.distanceToSqr(Hub.CAMERA) > 4) {
+				// Move first and lock the camera on a later tick, once the player has settled in the new position.
 				player.teleportTo(server.overworld(), Hub.CAMERA.x, Hub.CAMERA.y, Hub.CAMERA.z, 0, 0);
+				continue;
 			}
 			if (player.getCamera() != anchor) {
 				player.setCamera(anchor);

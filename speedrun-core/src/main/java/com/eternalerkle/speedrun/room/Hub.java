@@ -37,7 +37,8 @@ public final class Hub {
 		rules.getRule(GameRules.RULE_ANNOUNCE_ADVANCEMENTS).set(false, server);
 		rules.getRule(GameRules.RULE_SHOWDEATHMESSAGES).set(false, server);
 		rules.getRule(GameRules.RULE_DO_IMMEDIATE_RESPAWN).set(true, server);
-		rules.getRule(GameRules.RULE_SPECTATORSGENERATECHUNKS).set(false, server);
+		// Must match the run worlds (default true). Spectators crossing between levels with different values corrupt chunk tracking.
+		rules.getRule(GameRules.RULE_SPECTATORSGENERATECHUNKS).set(true, server);
 		level.setDayTime(6000);
 		level.setDefaultSpawnPos(BlockPos.containing(LOBBY_SPAWN), 0);
 
