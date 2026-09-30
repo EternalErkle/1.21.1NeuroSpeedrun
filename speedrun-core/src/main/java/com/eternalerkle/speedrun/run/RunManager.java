@@ -72,6 +72,13 @@ public final class RunManager {
 	private final List<RunFeature> features = new ArrayList<>();
 	private final Map<UUID, String> lastChat = new HashMap<>();
 	private final Random random = new Random();
+	/** Every run uses this seed when set with -Dspeedrun.fixedSeed. For benchmarks only: records stay per seed. */
+	@Nullable
+	private static final Long FIXED_SEED = Long.getLong("speedrun.fixedSeed");
+
+	private long nextSeed() {
+		return FIXED_SEED != null ? FIXED_SEED : random.nextLong();
+	}
 	private ModifierHooks modifiers = ModifierHooks.NONE;
 
 	private RunState state = RunState.LOBBY;
@@ -248,7 +255,7 @@ public final class RunManager {
 	private void ensureNextPreparing() {
 		RunWorldSet next = worlds.next();
 		if (next == null || next.isDeleted()) {
-			worlds.prepareNext(random.nextLong(), this::onNextReady);
+			worlds.prepareNext(nextSeed(), this::onNextReady);
 		}
 	}
 
@@ -527,7 +534,7 @@ public final class RunManager {
 			// Reroll the prepared worlds. Cancel a running countdown; a pending /start begins once the new worlds are ready.
 			phase++;
 			countdownActive = false;
-			worlds.prepareNext(random.nextLong(), this::onNextReady);
+			worlds.prepareNext(nextSeed(), this::onNextReady);
 			broadcast(Component.literal(reason + " New seed is generating.").withStyle(ChatFormatting.YELLOW));
 			return;
 		}

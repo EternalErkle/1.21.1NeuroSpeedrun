@@ -68,6 +68,22 @@ Type `/help` in game for every command. The ones admins use most:
 
 Settings and stats are saved in `run/config/speedrun-core/`.
 
+## Performance mods
+
+Setup also installs five server-side performance mods from `server-template/mods.txt`. Players don't need any of them.
+
+| Mod | What it does |
+|---|---|
+| Lithium | Faster game logic with vanilla behavior |
+| C2ME | Generates chunks on several CPU cores (alpha) |
+| ScalableLux | Faster lighting engine (alpha) |
+| FerriteCore | Lower memory use |
+| spark | Profiler. Run `/spark profiler start`, reproduce the lag, then `/spark profiler stop` for a report link. |
+
+If C2ME or ScalableLux causes problems, delete its line from `mods.txt` and its jar from `run/mods/`.
+
+The start scripts use Aikar's flags, a widely used set of Java garbage-collector settings that keep pauses short.
+
 ## Adding mods
 
 To add a server-side Fabric mod, put a line in `server-template/mods.txt` with the jar name and a download URL, then run setup again. You can also drop the jar into `run/mods/` directly. Mods that clients need to install won't work for players on unmodded clients.
