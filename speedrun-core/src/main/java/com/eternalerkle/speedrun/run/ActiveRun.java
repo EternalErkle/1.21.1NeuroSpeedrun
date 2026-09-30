@@ -24,6 +24,9 @@ public final class ActiveRun {
 	public final long startNanos;
 	public long gameTicks;
 	public long endNanos = -1;
+	/** Total time spent paused, and when the current pause began (-1 when not paused). */
+	private long pausedNanos;
+	private long pausedSince = -1;
 	/** Split id to real milliseconds since start. */
 	public final Map<String, Long> splits = new LinkedHashMap<>();
 	public final Set<Boss> bossesKilled = EnumSet.noneOf(Boss.class);
@@ -43,8 +46,33 @@ public final class ActiveRun {
 	}
 
 	public long realMillis() {
-		long end = endNanos >= 0 ? endNanos : System.nanoTime();
-		return (end - startNanos) / 1_000_000L;
+		return (clockNanos() - startNanos) / 1_000_000L;
+	}
+
+	/**
+	 * The run's own clock, comparable with {@link #startNanos}. It stands still while the run is paused and after it
+	 * ends, so timers based on it never count time nobody was playing.
+	 */
+	public long clockNanos() {
+		long now = endNanos >= 0 ? endNanos : pausedSince >= 0 ? pausedSince : System.nanoTime();
+		return now - pausedNanos;
+	}
+
+	public boolean isPaused() {
+		return pausedSince >= 0;
+	}
+
+	public void pause() {
+		if (pausedSince < 0 && endNanos < 0) {
+			pausedSince = System.nanoTime();
+		}
+	}
+
+	public void resume() {
+		if (pausedSince >= 0) {
+			pausedNanos += System.nanoTime() - pausedSince;
+			pausedSince = -1;
+		}
 	}
 
 	public boolean isFinished() {

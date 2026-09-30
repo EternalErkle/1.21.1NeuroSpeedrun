@@ -4,7 +4,9 @@ Modifiers change the rules of a single run. Admins choose which ones are in the 
 
 In vote mode, the lobby or death room offers two options drawn from the pool as clickable chat messages. Players pick with a click or `/vote <number>`. In the death room, voting closes when the new worlds are ready. In the lobby, it closes when someone runs `/start`. Ties are broken at random.
 
-Active modifiers are shown under the top-of-screen timer and form part of the record category.
+Active modifiers are shown under the GO! title when a run starts and under the top-of-screen timer, and form part of the record category. Anyone can run `/modifiers` to see them, how the next run's are chosen, and the full list.
+
+Modifiers are off by default. To turn them on, add some to the pool with `/speedrun modifiers pool` (click to toggle) or `/speedrun modifiers enable <id>`, then set `/speedrun modifiers mode random` or `vote`.
 
 Tags describe how each modifier affects difficulty:
 
@@ -69,6 +71,6 @@ Tags describe how each modifier affects difficulty:
 
 - Modifiers apply when a run starts and are removed when it ends. Nothing carries over into the next run.
 - Every modifier is removable mid-run by a reset, so a bugged modifier never locks the server.
-- Timed modifiers (`shuffle`, `swap`) count real seconds, so they fire at the same real interval at any tick rate.
+- Timed modifiers (`shuffle`, `swap`) count real seconds of run time, so they fire at the same real interval at any tick rate and don't advance while a run is paused.
 - `swap` and `shared_inventory` do nothing with one player online.
 - `/speedrun modifiers force` overrides the pool for the next run only.

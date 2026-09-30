@@ -4,6 +4,7 @@ import com.eternalerkle.speedrun.command.CommandDoc;
 import com.eternalerkle.speedrun.command.CommandRegistry;
 import com.eternalerkle.speedrun.config.Settings;
 import com.eternalerkle.speedrun.config.Settings.ModifierMode;
+import com.eternalerkle.speedrun.run.ActiveRun;
 import com.eternalerkle.speedrun.run.RunManager;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
@@ -49,6 +50,15 @@ public final class ModifierCommands {
 				"You get one vote and can change it until voting closes. Ties are broken at random."),
 			List.of("vote 1", "vote 2"), null));
 
+		registry.dispatcher().register(literal("modifiers").executes(ModifierCommands::showModifiers));
+		registry.document(new CommandDoc("modifiers", CATEGORY, "", "Explains modifiers and lists every one",
+			List.of("Modifiers change the rules of one run, such as one heart, moon gravity or a doubled mob cap.",
+				"Shows the modifiers active in the current run, how the next run's are chosen, and every modifier",
+				"with its effect. Hover a modifier for details.",
+				"Active modifiers also show under the GO! title and under the timer at the top of the screen.",
+				"Each combination of modifiers keeps its own records."),
+			List.of("modifiers"), null));
+
 		LiteralArgumentBuilder<CommandSourceStack> mode = literal("mode");
 		for (ModifierMode value : ModifierMode.values()) {
 			mode.then(literal(value.name().toLowerCase(Locale.ROOT)).executes(context -> setMode(context, value)));
@@ -71,8 +81,12 @@ public final class ModifierCommands {
 			}).executes(ModifierCommands::force)))));
 
 		registry.document(new CommandDoc("speedrun modifiers mode", CATEGORY, "<off|random|vote>", "Sets how modifiers are chosen each run",
-			List.of("off: no modifiers. random: drawn from the pool each run. vote: players pick between two options while waiting."),
-			List.of("speedrun modifiers mode vote"), CommandRegistry.ADMIN));
+			List.of("off: no modifiers. The default.",
+				"random: each run draws modifiers from the pool at random.",
+				"vote: while waiting in the lobby or death room, players vote between two options drawn from the pool.",
+				"random and vote need modifiers in the pool first: see /speedrun modifiers pool.",
+				"Setup: /speedrun modifiers pool, click the ones you want, then set the mode. Takes effect on the next run."),
+			List.of("speedrun modifiers mode vote", "speedrun modifiers mode random", "speedrun modifiers mode off"), CommandRegistry.ADMIN));
 		registry.document(new CommandDoc("speedrun modifiers count", CATEGORY, "<n>", "Sets how many modifiers are active per run",
 			List.of("Fewer are used when the pool is too small or its modifiers conflict."),
 			List.of("speedrun modifiers count 2"), CommandRegistry.ADMIN));
@@ -98,6 +112,37 @@ public final class ModifierCommands {
 			throw new SimpleCommandExceptionType(Component.literal("The server is still starting.")).create();
 		}
 		return modifiers;
+	}
+
+	private static int showModifiers(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
+		RunManager runs = CommandRegistry.runs(context);
+		Settings settings = runs.settings();
+		ActiveRun run = runs.run();
+		String active = run == null ? "no run in progress" : run.modifiers.isEmpty() ? "none"
+			: String.join(", ", run.modifiers.stream().map(ModifierCatalog::displayName).toList());
+		String next = switch (settings.modifierMode) {
+			case OFF -> "none (modifiers are off)";
+			case RANDOM -> settings.modifierCount + " drawn at random from the " + settings.modifierPool.size() + " in the pool";
+			case VOTE -> settings.modifierCount + " chosen by /vote from the " + settings.modifierPool.size() + " in the pool";
+		};
+		MutableComponent message = Component.empty()
+			.append(Component.literal("Modifiers").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD))
+			.append(Component.literal("\nModifiers change the rules of one run. Each combination keeps its own records.").withStyle(ChatFormatting.GRAY))
+			.append(Component.literal("\nThis run: ").withStyle(ChatFormatting.YELLOW))
+			.append(Component.literal(active).withStyle(ChatFormatting.LIGHT_PURPLE))
+			.append(Component.literal("\nNext run: ").withStyle(ChatFormatting.YELLOW))
+			.append(Component.literal(next).withStyle(ChatFormatting.WHITE));
+		for (ModifierInfo info : ModifierCatalog.ALL) {
+			boolean inPool = settings.modifierPool.contains(info.id());
+			Component hover = Component.literal(info.effect() + "\nTag: " + info.tag().label + "\nID: " + info.id());
+			message.append(Component.literal("\n " + (inPool ? "● " : "○ ")).withStyle(inPool ? ChatFormatting.GREEN : ChatFormatting.DARK_GRAY))
+				.append(Component.literal(info.name()).withStyle(Style.EMPTY.withColor(ChatFormatting.WHITE)
+					.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hover))))
+				.append(Component.literal(" - " + info.effect()).withStyle(ChatFormatting.GRAY));
+		}
+		message.append(Component.literal("\n● in the pool   ○ not in the pool").withStyle(ChatFormatting.DARK_GRAY));
+		context.getSource().sendSystemMessage(message);
+		return Command.SINGLE_SUCCESS;
 	}
 
 	private static int setMode(CommandContext<CommandSourceStack> context, ModifierMode mode) throws CommandSyntaxException {

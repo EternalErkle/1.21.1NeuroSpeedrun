@@ -53,6 +53,8 @@ import java.util.UUID;
 public final class RunManager {
 	private static final double VICTORY_SHOW_SECONDS = 5.0;
 	private static final double COUNTDOWN_SECONDS = 3.0;
+	/** Morning on a fresh world: the sunrise every vanilla world starts at. */
+	private static final long RUN_START_DAY_TIME = 0L;
 	/** Real seconds a run survives an empty server. The GameTest run shortens it through the system property. */
 	private static final double EMPTY_GRACE_SECONDS = Double.parseDouble(System.getProperty("speedrun.emptyGraceSeconds", "60"));
 	/** Delay after a run starts before generating the next run's worlds, so the start is not slowed down. */
@@ -184,7 +186,7 @@ public final class RunManager {
 		scheduler.tick();
 		worlds.tick();
 		deathRoom.tick();
-		if (state == RunState.RUNNING && run != null) {
+		if (state == RunState.RUNNING && run != null && !run.isPaused()) {
 			run.gameTicks++;
 			ActiveRun current = run;
 			for (RunFeature feature : features) {
@@ -296,6 +298,9 @@ public final class RunManager {
 		}
 		phase++;
 		RunWorldSet set = worlds.promoteNext();
+		// The worlds were prepared during the previous run and their clock and weather kept running since. Start fresh.
+		set.overworld().setDayTime(RUN_START_DAY_TIME);
+		set.overworld().setWeatherParameters(0, 0, false, false);
 		deathRoom.close();
 		server.tickRateManager().setTickRate(settings.tickRate);
 		stats.attempts++;
@@ -378,6 +383,7 @@ public final class RunManager {
 	/** Records the current run and tells features it ended. Leaves the state for the caller to set. */
 	private RunRecord finishRun(RunRecord.Result result, String cause, @Nullable ServerPlayer culprit) {
 		ActiveRun ended = run;
+		unpause(ended);
 		ended.endNanos = System.nanoTime();
 		RunRecord record = new RunRecord();
 		record.attempt = ended.attempt;
@@ -595,6 +601,11 @@ public final class RunManager {
 	public void onJoin(ServerPlayer player) {
 		faces.fetch(player.getGameProfile());
 		graceToken++;
+		if (state == RunState.RUNNING && run != null && run.isPaused()) {
+			unpause(run);
+			SpeedrunCore.LOGGER.info("Run #{} resumed by {}", run.attempt, player.getGameProfile().getName());
+			player.sendSystemMessage(Component.literal("Welcome back. The run and its timer resume from where everyone left.").withStyle(ChatFormatting.GREEN));
+		}
 		PlayerStats playerStats = stats.player(player.getUUID(), player.getGameProfile().getName());
 		hud.addPlayer(player, playerStats.deathsSinceWin);
 		switch (state) {
@@ -626,15 +637,56 @@ public final class RunManager {
 		}
 		// Called before the player is removed from the player list, so they still count here.
 		boolean empty = server.getPlayerList().getPlayers().stream().allMatch(other -> other == player);
-		if (empty && state == RunState.RUNNING) {
-			int token = ++graceToken;
-			int runPhase = phase;
-			scheduler.after(EMPTY_GRACE_SECONDS, () -> {
-				if (token == graceToken && runPhase == phase && state == RunState.RUNNING && server.getPlayerList().getPlayers().isEmpty()) {
-					abandon();
-				}
-			});
+		if (empty) {
+			onServerEmpty();
 		}
+	}
+
+	/** The last player left during a run: pause it when the setting keeps runs, otherwise start the grace period. */
+	private void onServerEmpty() {
+		if (state != RunState.RUNNING || run == null) {
+			return;
+		}
+		int token = ++graceToken;
+		if (settings.keepRunWhenEmpty) {
+			pause(run);
+			return;
+		}
+		unpause(run);
+		int runPhase = phase;
+		scheduler.after(EMPTY_GRACE_SECONDS, () -> {
+			if (token == graceToken && runPhase == phase && state == RunState.RUNNING && server.getPlayerList().getPlayers().isEmpty()) {
+				abandon();
+			}
+		});
+	}
+
+	/** Applies a changed keep-run setting to a run that is already empty. */
+	public void onKeepRunChanged() {
+		if (server.getPlayerList().getPlayers().isEmpty()) {
+			onServerEmpty();
+		}
+	}
+
+	/**
+	 * Freezes the whole server and stops the run clock, so the run is exactly as everyone left it: no time of day,
+	 * weather, furnaces or mobs move on. Only happens with nobody online.
+	 */
+	private void pause(ActiveRun current) {
+		if (current.isPaused()) {
+			return;
+		}
+		current.pause();
+		server.tickRateManager().setFrozen(true);
+		SpeedrunCore.LOGGER.info("Run #{} paused because the server is empty", current.attempt);
+	}
+
+	private void unpause(ActiveRun current) {
+		if (!current.isPaused()) {
+			return;
+		}
+		current.resume();
+		server.tickRateManager().setFrozen(false);
 	}
 
 	private void abandon() {

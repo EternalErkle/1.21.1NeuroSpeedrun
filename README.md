@@ -63,10 +63,47 @@ Type `/help` in game for every command. The ones admins use most:
 | `/speedrun goal dragon\|allbosses` | Set the win condition |
 | `/speedrun tickrate <rate>` | Change game speed for the next run |
 | `/speedrun sharedhealth on\|off` | Share one health bar between everyone |
-| `/speedrun modifiers mode off\|random\|vote` | Turn run modifiers on |
+| `/speedrun modifiers mode off\|random\|vote` | Turn run modifiers on (see [Modifiers](#modifiers)) |
+| `/speedrun keeprun on\|off` | Pause the run when everyone leaves, instead of ending it |
 | `/speedrun reset` | End the current run and start a new seed |
 
 Settings and stats are saved in `run/config/speedrun-core/`.
+
+Every run starts at sunrise with clear weather.
+
+### Continuing a run across sessions
+
+By default, a run ends as abandoned when everyone has been offline for 60 seconds. For a run that takes more than one sitting, such as the all-bosses goal, turn on keep run:
+
+```
+/speedrun keeprun on
+```
+
+When the last player leaves, the run pauses instead of ending:
+
+- The timer stops, so offline time doesn't count toward the run's time.
+- The whole server freezes: time of day, weather, mobs, crops and furnaces stay exactly as they were.
+- The first player to join lands back in the same world, where they logged out, with their inventory.
+
+Keep the server running between sessions. Stopping or restarting it still ends the run, because run worlds are temporary and deleted on shutdown.
+
+## Modifiers
+
+Modifiers change the rules of one run: for example one heart, moon gravity, a doubled mob cap or a shared inventory. There are 22, tagged Harder, Chaos, Brutal or Helpful. Each combination of modifiers keeps its own records.
+
+Modifiers are **off by default**. To turn them on, as op:
+
+1. Run `/speedrun modifiers pool`. It lists every modifier. Click one to add it to the pool, or use `/speedrun modifiers enable <id>`. Only modifiers in the pool can be picked.
+2. Choose how they're picked with `/speedrun modifiers mode`:
+   - `random`: each run draws from the pool at random.
+   - `vote`: while waiting in the lobby or death room, everyone votes between two options drawn from the pool, by clicking in chat or with `/vote <number>`.
+3. Optionally set how many apply per run: `/speedrun modifiers count 2`. The default is 1.
+
+Changes take effect from the next run. To try specific ones once, use `/speedrun modifiers force <id> [id...]`, which overrides the pool for the next run only.
+
+Anyone can run `/modifiers` to see the active modifiers, how the next run's are picked, and every modifier with its effect. Active modifiers also show under the GO! title when a run starts and under the timer at the top of the screen.
+
+The full list with every effect is in [docs/modifiers.md](docs/modifiers.md).
 
 ## Performance mods
 

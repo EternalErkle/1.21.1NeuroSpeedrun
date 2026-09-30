@@ -248,7 +248,7 @@ public final class Modifiers implements ModifierHooks, RunFeature {
 		}
 		List<ServerPlayer> players = playersIn(run);
 		inventories.tick(run, players);
-		if (run.modifiers.contains(ModifierCatalog.SWAP) && System.nanoTime() >= nextSwapNanos) {
+		if (run.modifiers.contains(ModifierCatalog.SWAP) && run.clockNanos() >= nextSwapNanos) {
 			nextSwapNanos += TIMED_INTERVAL_NANOS;
 			swap(players);
 		}

@@ -84,6 +84,18 @@ public final class RunCommands {
 			List.of("on: every player shares one hunger bar, including saturation. off: normal hunger.", "Takes effect on the next run."),
 			List.of("speedrun sharedhunger on", "speedrun sharedhunger off"), CommandRegistry.ADMIN));
 
+		LiteralArgumentBuilder<CommandSourceStack> keepRun = literal("keeprun");
+		for (boolean on : new boolean[] {true, false}) {
+			keepRun.then(literal(on ? "on" : "off").executes(context -> setKeepRun(context, on)));
+		}
+		root.then(keepRun);
+		registry.document(new CommandDoc("speedrun keeprun", "Settings", "<on|off>", "Keeps the run when everyone leaves",
+			List.of("on: when the last player leaves, the run pauses instead of ending. The timer stops and the world freezes,",
+				"so time of day, mobs and furnaces stay exactly as they were. The next player to join resumes it.",
+				"off: the default. The run ends as abandoned if nobody rejoins within 60 seconds.",
+				"Applies immediately. A paused run still ends if the server itself is stopped or restarted."),
+			List.of("speedrun keeprun on", "speedrun keeprun off"), CommandRegistry.ADMIN));
+
 		LiteralArgumentBuilder<CommandSourceStack> goal = literal("goal");
 		for (Goal value : Goal.values()) {
 			goal.then(literal(value.id).executes(context -> setGoal(context, value)));
@@ -97,7 +109,7 @@ public final class RunCommands {
 
 		root.then(literal("settings").executes(RunCommands::showSettings));
 		registry.document(new CommandDoc("speedrun settings", "Settings", "", "Shows every setting and its record category",
-			List.of("Lists the goal, tick rate, shared toggles, modifier settings and death room time,",
+			List.of("Lists the goal, tick rate, shared toggles, modifier settings, death room time and keep run,",
 				"then the record category the next run will use."),
 			List.of("speedrun settings"), CommandRegistry.ADMIN));
 
@@ -190,6 +202,17 @@ public final class RunCommands {
 		return node;
 	}
 
+	private static int setKeepRun(CommandContext<CommandSourceStack> context, boolean on) throws CommandSyntaxException {
+		RunManager runs = CommandRegistry.runs(context);
+		runs.settings().keepRunWhenEmpty = on;
+		runs.settings().save();
+		runs.onKeepRunChanged();
+		context.getSource().sendSuccess(() -> Component.literal(on
+			? "Keep run on. When everyone leaves, the run pauses until someone rejoins."
+			: "Keep run off. When everyone leaves, the run ends after 60 seconds.").withStyle(ChatFormatting.GREEN), true);
+		return Command.SINGLE_SUCCESS;
+	}
+
 	private static int setGoal(CommandContext<CommandSourceStack> context, Goal goal) throws CommandSyntaxException {
 		RunManager runs = CommandRegistry.runs(context);
 		runs.settings().goal = goal;
@@ -218,6 +241,7 @@ public final class RunCommands {
 		line(message, "Modifiers", settings.modifierMode.name().toLowerCase(java.util.Locale.ROOT) + ", " + settings.modifierCount + " per run, "
 			+ settings.modifierPool.size() + " in pool");
 		line(message, "Death room minimum", Category.formatRate((float) settings.deathRoomMinSeconds) + "s");
+		line(message, "Keep run when empty", settings.keepRunWhenEmpty ? "on" : "off");
 		line(message, "Next run category", runs.pendingCategory());
 		ActiveRun run = runs.run();
 		if (run != null) {

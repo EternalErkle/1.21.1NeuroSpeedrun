@@ -19,6 +19,8 @@ public final class Settings {
 	/** Modifier ids admins have enabled. Empty means none are drawn. */
 	public Set<String> modifierPool = new LinkedHashSet<>();
 	public double deathRoomMinSeconds = 5.0;
+	/** When on, a run survives an empty server: it pauses until someone rejoins instead of being abandoned. */
+	public boolean keepRunWhenEmpty = false;
 
 	private transient Path file;
 

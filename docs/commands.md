@@ -18,6 +18,7 @@ Permissions come from fabric-permissions-api. With no permissions mod installed,
 | `/stats <player>` | Same, for another player |
 | `/stats server` | Run count, win count, total deaths, most common death causes |
 | `/splits` | Current run's splits against the best run |
+| `/modifiers` | Explains modifiers, shows the ones active in this run and how the next run's are chosen, and lists every modifier with its effect. |
 | `/voteskip` | Votes to abandon the current seed. Passes when more than half of the online players have voted, instantly with one player online, and triggers a reset without counting a death. Works only during a live run. Votes clear when a run starts or ends, and a player who leaves loses their vote. |
 | `/vote <number>` | Votes for a modifier while the lobby or death room offers a choice |
 
@@ -41,6 +42,7 @@ Permission node prefix: `speedrun.admin`.
 | `/speedrun modifiers enable <id>` | Adds a modifier to the pool |
 | `/speedrun modifiers disable <id>` | Removes a modifier from the pool |
 | `/speedrun modifiers force <id...>` | Forces specific modifiers for the next run only |
+| `/speedrun keeprun <on\|off>` | Keeps the run when everyone leaves. On: the run pauses, freezing the timer and the world, until someone rejoins. Off (default): the run ends after 60 seconds. Applies immediately. |
 | `/speedrun deathroom mintime <seconds>` | Minimum time the death room stays up. Default 5. Accepts 0 to 600. |
 | `/speedrun stats reset runcount` | Resets the attempt counter |
 | `/speedrun stats reset best [category]` | Clears one category's record, or all of them |

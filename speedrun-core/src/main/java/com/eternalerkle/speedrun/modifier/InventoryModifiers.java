@@ -55,7 +55,7 @@ final class InventoryModifiers {
 	}
 
 	void tick(ActiveRun run, List<ServerPlayer> players) {
-		if (run.modifiers.contains(ModifierCatalog.SHUFFLE) && System.nanoTime() >= nextShuffleNanos) {
+		if (run.modifiers.contains(ModifierCatalog.SHUFFLE) && run.clockNanos() >= nextShuffleNanos) {
 			nextShuffleNanos += Modifiers.TIMED_INTERVAL_NANOS;
 			for (ServerPlayer player : players) {
 				shuffle(player);

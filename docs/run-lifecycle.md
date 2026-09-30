@@ -42,7 +42,11 @@ The lobby is a small lit platform where players wait for friends before starting
 
 ## Empty server
 
-A run in progress is lost when every player has left.
+What happens when every player leaves depends on the keep run setting (`/speedrun keeprun`).
+
+With keep run on, the run pauses. The run timer stops and the server's tick rate manager is frozen, so the time of day, weather, mobs, crops and furnaces do not move. The first player to join unfreezes the server and continues the run in the same world, at their logout position with their inventory. A paused run still ends if the server stops.
+
+With keep run off, the default, a run in progress is lost when every player has left.
 
 1. The last player leaves. A 60 second grace period starts, so a crash and quick reconnect does not end the run. The timer keeps running through it.
 2. If anyone rejoins within the grace period, the run continues as normal.
@@ -97,7 +101,8 @@ The face is a flat 2D image of the front of the player's skin, with the hat laye
     - full health and hunger
     - empty inventory and ender chest
     - no XP, effects or advancements
-12. Active modifiers are applied, the timer starts, and state becomes RUNNING.
+12. The overworld's time is set to sunrise and its weather cleared. The worlds were generated during the previous run, so their clock has already moved on by then.
+13. Active modifiers are applied, the timer starts, and state becomes RUNNING.
 
 All durations are set in seconds and converted to ticks at the current tick rate, so the sequence looks the same at 20 TPS or 100 TPS.
 
