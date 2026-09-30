@@ -8,7 +8,6 @@ import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.message.v1.ServerMessageEvents;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -47,11 +46,6 @@ public class SpeedrunCore implements ModInitializer {
 			}
 		});
 		// Joins reach the run manager through PlayerListMixin, after the player is placed in their level.
-		ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> {
-			if (runs != null) {
-				runs.onLeave(handler.player);
-			}
-		});
 		ServerLivingEntityEvents.ALLOW_DEATH.register((entity, source, amount) -> runs == null || runs.allowDeath(entity, source));
 		ServerLivingEntityEvents.AFTER_DEATH.register((entity, source) -> {
 			if (runs != null) {

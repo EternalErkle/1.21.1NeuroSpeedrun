@@ -617,6 +617,7 @@ public final class RunManager {
 				feature.onPlayerLeaveRun(run, player);
 			}
 		}
+		// Called before the player is removed from the player list, so they still count here.
 		boolean empty = server.getPlayerList().getPlayers().stream().allMatch(other -> other == player);
 		if (empty && state == RunState.RUNNING) {
 			int token = ++graceToken;
