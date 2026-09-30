@@ -1,6 +1,6 @@
 # NeuroSpeedrun
 
-A cooperative speedrun server for Minecraft 1.21.1, based on the neuro-sama hardcore speedrun from last subathon (Dec 2025). Everyone shares one life, ao when any player dies, the run ends for everybody, a new world generates, and the next attempt starts on its own.
+A cooperative speedrun server for Minecraft 1.21.1, based on the neuro-sama hardcore speedrun from last subathon (Dec 2025). Everyone shares one life, so when any player dies, the run ends for everybody, a new world generates, and the next attempt starts on its own.
 
 Players join with an unmodded 1.21.1 client. The server sends a small resource pack on join.
 
