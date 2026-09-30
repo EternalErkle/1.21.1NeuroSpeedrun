@@ -1,17 +1,17 @@
 # NeuroSpeedrun
 
-A cooperative hardcore speedrun server for Minecraft 1.21.1. Everyone shares one life: when any player dies, the run ends for everybody, a new world generates, and the next attempt starts on its own. The server never restarts to reset.
+A cooperative speedrun server for Minecraft 1.21.1, based on the neuro-sama hardcore speedrun from last subathon (Dec 2025). Everyone shares one life, ao when any player dies, the run ends for everybody, a new world generates, and the next attempt starts on its own.
 
 Players join with an unmodded 1.21.1 client. The server sends a small resource pack on join.
 
-Everything runs from one Fabric mod, `speedrun-core`. Design documents are in [docs/](docs/README.md).
+Design documents are in [docs/](docs/README.md).
 
 ## Hosting
 
 ### Requirements
 
 - Java 21 or newer, from [Adoptium](https://adoptium.net).
-- 4 GB of free memory for the server. More helps at high tick rates.
+- 4 GB of free memory for the server. More helps at high tick rates. (Recommending 6GB)
 - Git, to clone this repository.
 
 The first build downloads a newer JDK for Gradle on its own. You don't need to install it.
