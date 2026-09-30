@@ -178,8 +178,13 @@ public final class RunManager {
 		deathRoom.tick();
 		if (state == RunState.RUNNING && run != null) {
 			run.gameTicks++;
+			ActiveRun current = run;
 			for (RunFeature feature : features) {
-				feature.tick(run);
+				// A feature's tick can end the run (a shared-health death), so stop once it is over.
+				if (run != current || state != RunState.RUNNING) {
+					break;
+				}
+				feature.tick(current);
 			}
 		}
 		long now = System.nanoTime();

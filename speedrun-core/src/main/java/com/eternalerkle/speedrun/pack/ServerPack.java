@@ -1,6 +1,9 @@
 package com.eternalerkle.speedrun.pack;
 
 import com.eternalerkle.speedrun.SpeedrunCore;
+import com.eternalerkle.speedrun.util.JsonStore;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import net.fabricmc.loader.api.FabricLoader;
 
@@ -30,17 +33,26 @@ public final class ServerPack {
 		writeDefaultAutoHostConfig();
 	}
 
+	/**
+	 * Polymer writes its own default with autohost disabled the first time it runs, and reads the file at server start,
+	 * after every mod has initialized. So the file is patched here on every start, keeping every other field.
+	 */
 	private static void writeDefaultAutoHostConfig() {
 		Path file = FabricLoader.getInstance().getConfigDir().resolve("polymer").resolve("auto-host.json");
-		if (Files.exists(file)) {
-			return;
-		}
 		try {
+			JsonObject config = Files.exists(file)
+				? JsonParser.parseString(Files.readString(file)).getAsJsonObject()
+				: JsonParser.parseString(DEFAULT_AUTOHOST_CONFIG).getAsJsonObject();
+			if (config.has("enabled") && config.get("enabled").getAsBoolean() && config.has("required") && config.get("required").getAsBoolean()) {
+				return;
+			}
+			config.addProperty("enabled", true);
+			config.addProperty("required", true);
 			Files.createDirectories(file.getParent());
-			Files.writeString(file, DEFAULT_AUTOHOST_CONFIG);
-			SpeedrunCore.LOGGER.info("Wrote default Polymer autohost config to {}", file);
-		} catch (IOException e) {
-			SpeedrunCore.LOGGER.warn("Could not write Polymer autohost config", e);
+			Files.writeString(file, JsonStore.GSON.toJson(config));
+			SpeedrunCore.LOGGER.info("Enabled Polymer resource pack autohost in {}", file);
+		} catch (IOException | RuntimeException e) {
+			SpeedrunCore.LOGGER.warn("Could not update Polymer autohost config at {}; enable it there by hand", file, e);
 		}
 	}
 }
