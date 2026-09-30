@@ -22,14 +22,19 @@ Shared health and shared hunger are two independent settings, not random modifie
 
 Either can be on without the other. Changes apply from the next run.
 
-The mod is Shared Life from CurseForge, which supports Fabric on 1.21.1 and has shared health and shared hunger as separate features. It is installed on the server permanently. The toggles switch its behavior, since Fabric cannot unload a mod while the server runs.
+Both are built into `speedrun-core` (`SharedVitals`). No extra mod is needed.
 
-How the toggles work depends on what Shared Life exposes. Phase 0 answers this:
+How it works:
 
-1. If Shared Life has a gamerule, command or config reload for each feature, `speedrun-core` calls it.
-2. If it has none, `speedrun-core` implements shared health and shared hunger itself behind the same commands, and Shared Life is dropped.
+- The mod keeps one shared value each for health, food level, saturation and exhaustion.
+- Every tick it reads how much each player's value changed since the last tick and adds all those changes to the shared value. Two players who each take 3 damage in the same tick cost the shared bar 6.
+- The result is clamped and written back to every player in the run.
+- Absorption and max-health changes from modifiers still work. Each player's health is capped at their own max health.
+- Natural regeneration and starvation happen per player, so with shared health they scale with the number of players.
+- A player who joins mid-run takes the current shared values.
+- If the shared health reaches 0, one player dies through normal damage. That triggers exactly one reset.
 
-In both cases, every reset restores full health and hunger to everyone, and a shared death still triggers one reset only.
+Every reset restores full health and hunger to everyone.
 
 Both toggles are part of the record category.
 
