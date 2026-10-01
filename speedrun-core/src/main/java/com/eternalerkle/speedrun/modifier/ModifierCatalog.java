@@ -32,6 +32,42 @@ public final class ModifierCatalog {
 	public static final String ETERNAL_NIGHT = "eternal_night";
 	public static final String SWAP = "swap";
 
+	// ---- body ----
+	public static final String EXTRA_HEARTS = "extra_hearts";
+	public static final String VAMPIRE = "vampire";
+	public static final String SUDDEN_DEATH = "sudden_death";
+	public static final String BLEEDING = "bleeding";
+	public static final String FIRE_WEAKNESS = "fire_weakness";
+	public static final String FIREPROOF = "fireproof";
+	public static final String FEATHERWEIGHT = "featherweight";
+	public static final String BLAST_PROOF = "blast_proof";
+	public static final String BIG_BOOMS = "big_booms";
+	public static final String KNOCKBACK_CHAOS = "knockback_chaos";
+	public static final String SECOND_WIND = "second_wind";
+	public static final String LAST_ONE_STANDING = "last_one_standing";
+	public static final String TOTEM_START = "totem_start";
+	public static final String CRITICAL_ONLY = "critical_only";
+	public static final String NIGHT_VISION = "night_vision";
+	public static final String HASTE = "haste";
+	public static final String WEAK_HANDS = "weak_hands";
+	public static final String GILLS = "gills";
+	public static final String SHORT_BREATH = "short_breath";
+	public static final String FROST_WALKER = "frost_walker";
+	public static final String LONG_ARMS = "long_arms";
+	public static final String SHORT_ARMS = "short_arms";
+	public static final String NO_JUMPING = "no_jumping";
+	public static final String BOUNCY = "bouncy";
+	public static final String PUMPKIN_HEAD = "pumpkin_head";
+	public static final String DARKNESS_PULSE = "darkness_pulse";
+	public static final String UNDEAD = "undead";
+	public static final String VERTIGO = "vertigo";
+	public static final String HYDROPHOBIC = "hydrophobic";
+	public static final String VENOMOUS = "venomous";
+	public static final String SHELLSHOCK = "shellshock";
+	public static final String THORNED_MOBS = "thorned_mobs";
+	public static final String EXPLOSIVE_ARROWS = "explosive_arrows";
+	public static final String HELLFIRE_MOBS = "hellfire_mobs";
+
 	public static final List<ModifierInfo> ALL = List.of(
 		new ModifierInfo(ONE_HEART, "One Heart", "Max health is 1 heart", Tag.BRUTAL),
 		new ModifierInfo(HALF_HEALTH, "Half Health", "Max health is 5 hearts", Tag.HARDER),
@@ -54,14 +90,64 @@ public final class ModifierCatalog {
 		new ModifierInfo(SHARED_INVENTORY, "Shared Inventory", "All players share one inventory", Tag.CHAOS),
 		new ModifierInfo(SHUFFLE, "Shuffle", "Every inventory is shuffled every 5 minutes", Tag.CHAOS),
 		new ModifierInfo(ETERNAL_NIGHT, "Eternal Night", "The daylight cycle is locked at midnight", Tag.HARDER),
-		new ModifierInfo(SWAP, "Swap", "All players swap positions every 5 minutes", Tag.CHAOS)
+		new ModifierInfo(SWAP, "Swap", "All players swap positions every 5 minutes", Tag.CHAOS),
+		// ---- body ----
+		new ModifierInfo(EXTRA_HEARTS, "Extra Hearts", "Max health is 15 hearts", Tag.HELPFUL),
+		new ModifierInfo(VAMPIRE, "Vampire", "No natural regeneration, but every kill heals 2 hearts", Tag.CHAOS),
+		new ModifierInfo(SUDDEN_DEATH, "Sudden Death", "After 30 minutes, max health drops 1 heart every 5 minutes", Tag.HARDER),
+		new ModifierInfo(BLEEDING, "Bleeding", "Any hit over 3 hearts also gives 3 seconds of Wither", Tag.HARDER),
+		new ModifierInfo(FIRE_WEAKNESS, "Fire Weakness", "Fire and lava deal double damage", Tag.HARDER),
+		new ModifierInfo(FIREPROOF, "Fireproof", "Permanent Fire Resistance", Tag.HELPFUL),
+		new ModifierInfo(FEATHERWEIGHT, "Featherweight", "No fall damage", Tag.HELPFUL),
+		new ModifierInfo(BLAST_PROOF, "Blast Proof", "Explosions deal no damage to players", Tag.HELPFUL),
+		new ModifierInfo(BIG_BOOMS, "Big Booms", "Every explosion is twice as strong", Tag.HARDER),
+		new ModifierInfo(KNOCKBACK_CHAOS, "Knockback Chaos", "Players take triple knockback", Tag.CHAOS),
+		new ModifierInfo(SECOND_WIND, "Second Wind", "The first death of the run is forgiven and that player respawns at spawn", Tag.HELPFUL),
+		new ModifierInfo(LAST_ONE_STANDING, "Last One Standing", "Dead players become spectators; the run fails only when everyone is dead", Tag.HELPFUL),
+		new ModifierInfo(TOTEM_START, "Totem Start", "Everyone starts with a Totem of Undying", Tag.HELPFUL),
+		new ModifierInfo(CRITICAL_ONLY, "Critical Only", "Only critical hits and critical arrows deal damage", Tag.BRUTAL),
+		new ModifierInfo(NIGHT_VISION, "Night Vision", "Permanent Night Vision", Tag.HELPFUL),
+		new ModifierInfo(HASTE, "Haste", "Permanent Haste II", Tag.HELPFUL),
+		new ModifierInfo(WEAK_HANDS, "Weak Hands", "Permanent Mining Fatigue I", Tag.HARDER),
+		new ModifierInfo(GILLS, "Gills", "Permanent Water Breathing", Tag.HELPFUL),
+		new ModifierInfo(SHORT_BREATH, "Short Breath", "Air runs out three times faster underwater", Tag.HARDER),
+		new ModifierInfo(FROST_WALKER, "Frost Walker", "Water freezes under your feet", Tag.HELPFUL),
+		new ModifierInfo(LONG_ARMS, "Long Arms", "Reach is 3 blocks longer", Tag.HELPFUL),
+		new ModifierInfo(SHORT_ARMS, "Short Arms", "Reach is 2 blocks", Tag.HARDER),
+		new ModifierInfo(NO_JUMPING, "No Jumping", "Players cannot jump", Tag.BRUTAL),
+		new ModifierInfo(BOUNCY, "Bouncy", "Falls bounce you back up instead of hurting", Tag.CHAOS),
+		new ModifierInfo(PUMPKIN_HEAD, "Pumpkin Head", "Everyone wears a carved pumpkin that cannot be removed", Tag.HARDER),
+		new ModifierInfo(DARKNESS_PULSE, "Darkness Pulse", "Darkness falls on everyone every 30 seconds", Tag.HARDER),
+		new ModifierInfo(UNDEAD, "Undead", "Players burn in daylight without a helmet, healing potions hurt, undead mobs ignore you", Tag.CHAOS),
+		new ModifierInfo(VERTIGO, "Vertigo", "Nausea above Y 100", Tag.CHAOS),
+		new ModifierInfo(HYDROPHOBIC, "Hydrophobic", "Touching water hurts", Tag.BRUTAL),
+		new ModifierInfo(VENOMOUS, "Venomous", "Every mob hit poisons you for 3 seconds", Tag.HARDER),
+		new ModifierInfo(SHELLSHOCK, "Shellshock", "After taking damage, sprinting gives no speed for 5 seconds", Tag.HARDER),
+		new ModifierInfo(THORNED_MOBS, "Thorned Mobs", "Hitting a mob reflects a quarter of the damage back to you", Tag.HARDER),
+		new ModifierInfo(EXPLOSIVE_ARROWS, "Explosive Arrows", "Skeleton arrows explode on impact", Tag.BRUTAL),
+		new ModifierInfo(HELLFIRE_MOBS, "Hellfire Mobs", "Hostile mobs burn forever without dying and set you on fire when they hit", Tag.BRUTAL)
 	);
 
 	/** Pairs that contradict each other. The picker never draws both halves of a pair. */
 	public static final List<List<String>> CONFLICTS = List.of(
 		List.of(ONE_HEART, HALF_HEALTH),
 		List.of(TINY, GIANT),
-		List.of(MOON_GRAVITY, HEAVY_GRAVITY)
+		List.of(MOON_GRAVITY, HEAVY_GRAVITY),
+		// ---- body ----
+		List.of(EXTRA_HEARTS, ONE_HEART),
+		List.of(EXTRA_HEARTS, HALF_HEALTH),
+		List.of(SUDDEN_DEATH, ONE_HEART),
+		List.of(SUDDEN_DEATH, HALF_HEALTH),
+		List.of(FIRE_WEAKNESS, FIREPROOF),
+		List.of(FEATHERWEIGHT, HEAVY_LANDING),
+		List.of(FEATHERWEIGHT, BOUNCY),
+		List.of(BOUNCY, HEAVY_LANDING),
+		List.of(HASTE, WEAK_HANDS),
+		List.of(GILLS, SHORT_BREATH),
+		List.of(LONG_ARMS, SHORT_ARMS),
+		List.of(SHORT_ARMS, GIANT),
+		List.of(UNDEAD, FIREPROOF),
+		List.of(UNDEAD, PUMPKIN_HEAD)
 	);
 
 	private static final Map<String, ModifierInfo> BY_ID = new LinkedHashMap<>();

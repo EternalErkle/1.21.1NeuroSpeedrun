@@ -15,7 +15,14 @@
 		"ServerLevelMixin",
 		"ServerPlayerCameraAccessor",
 		"ServerPlayerMixin",
-		"TheEndGatewayBlockEntityMixin"
+		"TheEndGatewayBlockEntityMixin",
+		"ModifierBodyFoodDataMixin",
+		"ModifierBodyLivingEntityAccessor",
+		"ModifierBodyLivingEntityMixin",
+		"ModifierBodyMobMixin",
+		"ModifierBodyPlayerMixin",
+		"ModifierBodyProjectileMixin",
+		"ModifierBodyServerLevelMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

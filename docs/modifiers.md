@@ -67,10 +67,52 @@ Tags describe how each modifier affects difficulty:
 | `eternal_night` | Eternal Night | The daylight cycle is locked at midnight | Harder |
 | `swap` | Swap | All players swap positions every 5 minutes | Chaos |
 
+## Body, senses and survival
+
+| ID | Name | Effect | Tag |
+|---|---|---|---|
+| `extra_hearts` | Extra Hearts | Max health is 15 hearts | Helpful |
+| `vampire` | Vampire | No natural regeneration, but every kill heals 2 hearts | Chaos |
+| `sudden_death` | Sudden Death | After 30 minutes, max health drops 1 heart every 5 minutes | Harder |
+| `bleeding` | Bleeding | Any hit over 3 hearts also gives 3 seconds of Wither | Harder |
+| `fire_weakness` | Fire Weakness | Fire and lava deal double damage | Harder |
+| `fireproof` | Fireproof | Permanent Fire Resistance | Helpful |
+| `featherweight` | Featherweight | No fall damage | Helpful |
+| `blast_proof` | Blast Proof | Explosions deal no damage to players | Helpful |
+| `big_booms` | Big Booms | Every explosion is twice as strong | Harder |
+| `knockback_chaos` | Knockback Chaos | Players take triple knockback | Chaos |
+| `second_wind` | Second Wind | The first death of the run is forgiven and that player respawns at spawn | Helpful |
+| `last_one_standing` | Last One Standing | Dead players become spectators; the run fails only when everyone is dead | Helpful |
+| `totem_start` | Totem Start | Everyone starts with a Totem of Undying | Helpful |
+| `critical_only` | Critical Only | Only critical hits and critical arrows deal damage | Brutal |
+| `night_vision` | Night Vision | Permanent Night Vision | Helpful |
+| `haste` | Haste | Permanent Haste II | Helpful |
+| `weak_hands` | Weak Hands | Permanent Mining Fatigue I | Harder |
+| `gills` | Gills | Permanent Water Breathing | Helpful |
+| `short_breath` | Short Breath | Air runs out three times faster underwater | Harder |
+| `frost_walker` | Frost Walker | Water freezes under your feet | Helpful |
+| `long_arms` | Long Arms | Reach is 3 blocks longer | Helpful |
+| `short_arms` | Short Arms | Reach is 2 blocks | Harder |
+| `no_jumping` | No Jumping | Players cannot jump | Brutal |
+| `bouncy` | Bouncy | Falls bounce you back up instead of hurting | Chaos |
+| `pumpkin_head` | Pumpkin Head | Everyone wears a carved pumpkin that cannot be removed | Harder |
+| `darkness_pulse` | Darkness Pulse | Darkness falls on everyone every 30 seconds | Harder |
+| `undead` | Undead | Players burn in daylight without a helmet, healing potions hurt, undead mobs ignore you | Chaos |
+| `vertigo` | Vertigo | Nausea above Y 100 | Chaos |
+| `hydrophobic` | Hydrophobic | Touching water hurts | Brutal |
+| `venomous` | Venomous | Every mob hit poisons you for 3 seconds | Harder |
+| `shellshock` | Shellshock | After taking damage, sprinting gives no speed for 5 seconds | Harder |
+| `thorned_mobs` | Thorned Mobs | Hitting a mob reflects a quarter of the damage back to you | Harder |
+| `explosive_arrows` | Explosive Arrows | Skeleton arrows explode on impact | Brutal |
+| `hellfire_mobs` | Hellfire Mobs | Hostile mobs burn forever without dying and set you on fire when they hit | Brutal |
+
+Totems of Undying now work in every run. Vanilla only checks them after the death event, which runs always cancel, so the run manager checks the totem first.
+
 ## Rules
 
 - Modifiers apply when a run starts and are removed when it ends. Nothing carries over into the next run.
 - Every modifier is removable mid-run by a reset, so a bugged modifier never locks the server.
 - Timed modifiers (`shuffle`, `swap`) count real seconds of run time, so they fire at the same real interval at any tick rate and don't advance while a run is paused.
+- `sudden_death` and `darkness_pulse` also follow run time.
 - `swap` and `shared_inventory` do nothing with one player online.
 - `/speedrun modifiers force` overrides the pool for the next run only.

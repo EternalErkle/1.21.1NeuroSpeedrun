@@ -4,6 +4,7 @@ import com.eternalerkle.speedrun.SpeedrunCore;
 import com.eternalerkle.speedrun.config.Goal;
 import com.eternalerkle.speedrun.config.Settings;
 import com.eternalerkle.speedrun.hud.Hud;
+import com.eternalerkle.speedrun.modifier.BodyModifiers;
 import com.eternalerkle.speedrun.room.DeathRoom;
 import com.eternalerkle.speedrun.room.FaceCache;
 import com.eternalerkle.speedrun.room.Hub;
@@ -454,6 +455,9 @@ public final class RunManager {
 			return true;
 		}
 		boolean inRun = state == RunState.RUNNING && run != null && run.worlds.contains(player.serverLevel());
+		if (inRun && BodyModifiers.preventDeath(player, source)) {
+			return false;
+		}
 		player.setHealth(player.getMaxHealth());
 		if (!inRun) {
 			// The hub is never dangerous, and nobody dies outside a live run.
