@@ -790,6 +790,17 @@ public final class WorldModifiers implements RunFeature {
 
 	// ---- worldgen ----
 
+	/** Modifiers of the run whose worlds are generated next. Set by the selection code before {@code RunWorlds.prepareNext}. */
+	private static volatile List<String> nextRunModifiers = List.of();
+
+	public static void setNextRunModifiers(Collection<String> modifiers) {
+		nextRunModifiers = List.copyOf(modifiers);
+	}
+
+	public static List<String> nextRunModifiers() {
+		return nextRunModifiers;
+	}
+
 	/** The overworld generator for these modifiers, or null when none of them changes world generation. */
 	@Nullable
 	public static ChunkGenerator overworldGenerator(RegistryAccess registries, Collection<String> modifiers) {

@@ -17,7 +17,10 @@
 		"ServerPlayerMixin",
 		"TheEndGatewayBlockEntityMixin",
 		"ModifierWorldPlayerListMixin",
-		"ModifierWorldBlockItemMixin"
+		"ModifierWorldBlockItemMixin",
+		"ModifierWorldChunkGeneratorMixin",
+		"ModifierWorldLootTableMixin",
+		"ModifierWorldStrongholdMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

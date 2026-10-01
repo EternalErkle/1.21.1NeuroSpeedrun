@@ -52,7 +52,6 @@ public final class ModifierCatalog {
 	public static final String BLACKOUTS = "blackouts";
 	public static final String SPAWNER_SURPRISE = "spawner_surprise";
 	public static final String CAVE_INS = "cave_ins";
-	/** Implemented in later batches, not in ALL yet. */
 	public static final String TRAPPED_CHESTS = "trapped_chests";
 	public static final String CURSED_LOOT = "cursed_loot";
 	public static final String LARGE_BIOMES = "large_biomes";
@@ -104,7 +103,13 @@ public final class ModifierCatalog {
 		new ModifierInfo(FLOOR_IS_LAVA, "Floor Is Lava", "Every 10 minutes, standing on the ground hurts for 20 seconds", Tag.BRUTAL),
 		new ModifierInfo(BLACKOUTS, "Blackouts", "Every 2 to 4 minutes, everyone is blinded for 5 seconds", Tag.HARDER),
 		new ModifierInfo(SPAWNER_SURPRISE, "Spawner Surprise", "Every 10 minutes, a mob spawner appears near each player", Tag.BRUTAL),
-		new ModifierInfo(CAVE_INS, "Cave-ins", "Mining underground can bring the ceiling down as gravel", Tag.CHAOS)
+		new ModifierInfo(CAVE_INS, "Cave-ins", "Mining underground can bring the ceiling down as gravel", Tag.CHAOS),
+		new ModifierInfo(TRAPPED_CHESTS, "Trapped Chests", "Opening a loot chest can release mobs or lit TNT", Tag.CHAOS),
+		new ModifierInfo(CURSED_LOOT, "Cursed Loot", "Gear in loot chests carries Curse of Binding or Vanishing", Tag.HARDER),
+		new ModifierInfo(LARGE_BIOMES, "Large Biomes", "The world generates with large biomes", Tag.CHAOS),
+		new ModifierInfo(AMPLIFIED, "Amplified", "The world generates amplified", Tag.CHAOS),
+		new ModifierInfo(NO_VILLAGES, "No Villages", "No villages generate", Tag.HARDER),
+		new ModifierInfo(CLOSE_STRONGHOLD, "Close Stronghold", "The first stronghold ring sits a few hundred blocks from the world origin", Tag.HELPFUL)
 		// ---- end world ----
 	);
 
@@ -117,7 +122,8 @@ public final class ModifierCatalog {
 		List.of(ETERNAL_DAY, ETERNAL_NIGHT),
 		List.of(ETERNAL_DAY, FAST_DAYS),
 		List.of(ETERNAL_NIGHT, FAST_DAYS),
-		List.of(TIGHT_BORDER, SHRINKING_BORDER)
+		List.of(TIGHT_BORDER, SHRINKING_BORDER),
+		List.of(LARGE_BIOMES, AMPLIFIED)
 		// ---- end world ----
 	);
 

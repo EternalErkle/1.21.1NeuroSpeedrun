@@ -1,6 +1,7 @@
 package com.eternalerkle.speedrun.world;
 
 import com.eternalerkle.speedrun.SpeedrunCore;
+import com.eternalerkle.speedrun.modifier.WorldModifiers;
 import com.google.gson.JsonElement;
 import com.mojang.serialization.JsonOps;
 import net.minecraft.core.BlockPos;
@@ -37,6 +38,7 @@ import xyz.nucleoid.fantasy.RuntimeWorldHandle;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
@@ -85,7 +87,7 @@ public final class RunWorlds {
 		}
 		counter++;
 		String id = "run" + counter + "_" + Long.toHexString(System.nanoTime() & 0xFFFFFFL);
-		RunWorldSet set = open(id, seed, EndDragonFight.Data.DEFAULT);
+		RunWorldSet set = open(id, seed, EndDragonFight.Data.DEFAULT, WorldModifiers.nextRunModifiers());
 
 		ServerLevel level = set.overworld();
 		ChunkPos center = new ChunkPos(level.getChunkSource().randomState().sampler().findSpawnPosition());
@@ -95,9 +97,11 @@ public final class RunWorlds {
 		SpeedrunCore.LOGGER.info("Preparing run worlds {} with seed {}", id, seed);
 	}
 
-	private RunWorldSet open(String id, long seed, EndDragonFight.Data dragon) {
+	private RunWorldSet open(String id, long seed, EndDragonFight.Data dragon, Collection<String> modifiers) {
 		Fantasy fantasy = Fantasy.get(server);
-		RuntimeWorldHandle overworld = fantasy.getOrOpenPersistentWorld(key(id + "_overworld"), config(seed, BuiltinDimensionTypes.OVERWORLD, overworldGenerator(), true));
+		ChunkGenerator overworldGenerator = WorldModifiers.overworldGenerator(server.registryAccess(), modifiers);
+		RuntimeWorldHandle overworld = fantasy.getOrOpenPersistentWorld(key(id + "_overworld"),
+			config(seed, BuiltinDimensionTypes.OVERWORLD, overworldGenerator != null ? overworldGenerator : overworldGenerator(), true));
 		RuntimeWorldHandle nether = fantasy.getOrOpenPersistentWorld(key(id + "_nether"), config(seed, BuiltinDimensionTypes.NETHER, netherGenerator(), false));
 		RuntimeWorldHandle end = fantasy.getOrOpenPersistentWorld(key(id + "_end"), config(seed, BuiltinDimensionTypes.END, endGenerator(), false));
 		RunWorldSet set = new RunWorldSet(id, seed, overworld, nether, end);
@@ -116,10 +120,10 @@ public final class RunWorlds {
 	}
 
 	/** Reopens a saved run's worlds from disk as the current set. */
-	public RunWorldSet restore(String id, long seed, BlockPos spawn, @Nullable JsonElement dragon) {
+	public RunWorldSet restore(String id, long seed, BlockPos spawn, @Nullable JsonElement dragon, Collection<String> modifiers) {
 		EndDragonFight.Data data = dragon == null ? EndDragonFight.Data.DEFAULT
 			: EndDragonFight.Data.CODEC.parse(JsonOps.INSTANCE, dragon).result().orElse(EndDragonFight.Data.DEFAULT);
-		RunWorldSet set = open(id, seed, data);
+		RunWorldSet set = open(id, seed, data, modifiers);
 		set.spawn = spawn;
 		set.ready = true;
 		current = set;

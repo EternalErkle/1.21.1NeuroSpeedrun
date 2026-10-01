@@ -91,8 +91,16 @@ Tags describe how each modifier affects difficulty:
 | `blackouts` | Blackouts | Every 2 to 4 minutes, everyone is blinded for 5 seconds | Harder |
 | `spawner_surprise` | Spawner Surprise | Every 10 minutes, a mob spawner appears near each player | Brutal |
 | `cave_ins` | Cave-ins | Mining underground can bring the ceiling down as gravel | Chaos |
+| `trapped_chests` | Trapped Chests | Opening an unopened loot chest has a 1 in 4 chance to release 2 or 3 hostile mobs or lit TNT | Chaos |
+| `cursed_loot` | Cursed Loot | Armor in loot chests gets Curse of Binding or Vanishing; tools and weapons get Curse of Vanishing | Harder |
+| `large_biomes` | Large Biomes | The run's Overworld generates with large biomes | Chaos |
+| `amplified` | Amplified | The run's Overworld generates amplified | Chaos |
+| `no_villages` | No Villages | No villages generate in the run's Overworld | Harder |
+| `close_stronghold` | Close Stronghold | The first stronghold ring sits about 200 to 350 blocks from the world origin | Helpful |
 
-Conflicts: `eternal_day` with `eternal_night` and `fast_days`; `eternal_night` with `fast_days`; `tight_border` with `shrinking_border`.
+Conflicts: `eternal_day` with `eternal_night` and `fast_days`; `eternal_night` with `fast_days`; `tight_border` with `shrinking_border`; `large_biomes` with `amplified`.
+
+The four worldgen modifiers shape the Overworld when the next run's worlds are generated, so the next run's modifiers must be known before generation starts.
 
 ## Rules
 
