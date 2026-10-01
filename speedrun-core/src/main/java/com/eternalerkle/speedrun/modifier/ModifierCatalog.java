@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /** Every modifier id, its display name and which pairs can never be active together. Free of Minecraft classes. */
 public final class ModifierCatalog {
@@ -31,6 +32,7 @@ public final class ModifierCatalog {
 	public static final String SHUFFLE = "shuffle";
 	public static final String ETERNAL_NIGHT = "eternal_night";
 	public static final String SWAP = "swap";
+	public static final String MACHINE_GUN_SKELETONS = "machine_gun_skeletons";
 	// ---- mobs-a ----
 	public static final String SHARPSHOOTERS = "sharpshooters";
 	public static final String SHORT_FUSE = "short_fuse";
@@ -231,7 +233,7 @@ public final class ModifierCatalog {
 		new ModifierInfo(SHELLSHOCK, "Shellshock", "After taking damage, sprinting gives no speed for 5 seconds", Tag.HARDER),
 		new ModifierInfo(THORNED_MOBS, "Thorned Mobs", "Hitting a mob reflects a quarter of the damage back to you", Tag.HARDER),
 		new ModifierInfo(EXPLOSIVE_ARROWS, "Explosive Arrows", "Skeleton arrows explode on impact", Tag.BRUTAL),
-		new ModifierInfo(HELLFIRE_MOBS, "Hellfire Mobs", "Hostile mobs burn forever without dying and set you on fire when they hit", Tag.BRUTAL)
+		new ModifierInfo(HELLFIRE_MOBS, "Hellfire Mobs", "Hostile mobs burn forever without dying and set you on fire when they hit", Tag.BRUTAL),
 		// ---- mobs-a ----
 		new ModifierInfo(SHARPSHOOTERS, "Sharpshooters", "Skeletons fire twice as often", Tag.HARDER),
 		new ModifierInfo(SHORT_FUSE, "Short Fuse", "Creepers explode in half the time", Tag.HARDER),
@@ -253,7 +255,7 @@ public final class ModifierCatalog {
 		new ModifierInfo(PEARL_BONANZA, "Pearl Bonanza", "Endermen always drop at least 2 pearls", Tag.HELPFUL),
 		new ModifierInfo(BLAZE_SWARM, "Blaze Swarm", "Blazes spawn anywhere in the Nether", Tag.HELPFUL),
 		new ModifierInfo(ARMORED_DRAGON, "Armored Dragon", "The dragon has double health", Tag.HARDER),
-		new ModifierInfo(ARROW_DRAGON, "Arrow Dragon", "The dragon only takes damage from arrows", Tag.HARDER)
+		new ModifierInfo(ARROW_DRAGON, "Arrow Dragon", "The dragon only takes damage from arrows", Tag.HARDER),
 		// ---- end mobs-a ----
 		// ---- mobs-b ----
 		new ModifierInfo(CREEPER_RAIN, "Creeper Rain", "Every minute, creepers drop from the sky near each player under open sky", Tag.BRUTAL),
@@ -271,7 +273,7 @@ public final class ModifierCatalog {
 		new ModifierInfo(GHAST_AIR_FORCE, "Ghast Air Force", "Ghasts patrol the overworld sky", Tag.BRUTAL),
 		new ModifierInfo(ENDLESS_RAIDS, "Endless Raids", "Everyone has Bad Omen for the whole run", Tag.BRUTAL),
 		new ModifierInfo(MARKED, "Marked", "Every 5 minutes, one player is marked and all mobs hunt them for 60 seconds", Tag.BRUTAL),
-		new ModifierInfo(THIEVES, "Thieves", "Zombies and endermen steal a random item when they hit you", Tag.CHAOS)
+		new ModifierInfo(THIEVES, "Thieves", "Zombies and endermen steal a random item when they hit you", Tag.CHAOS),
 		// ---- world ----
 		new ModifierInfo(ETERNAL_DAY, "Eternal Day", "The daylight cycle is locked at noon", Tag.HELPFUL),
 		new ModifierInfo(FAST_DAYS, "Fast Days", "The day cycle runs 4x faster", Tag.CHAOS),
@@ -298,7 +300,7 @@ public final class ModifierCatalog {
 		new ModifierInfo(LARGE_BIOMES, "Large Biomes", "The world generates with large biomes", Tag.CHAOS),
 		new ModifierInfo(AMPLIFIED, "Amplified", "The world generates amplified", Tag.CHAOS),
 		new ModifierInfo(NO_VILLAGES, "No Villages", "No villages generate", Tag.HARDER),
-		new ModifierInfo(CLOSE_STRONGHOLD, "Close Stronghold", "The first stronghold ring sits a few hundred blocks from the world origin", Tag.HELPFUL)
+		new ModifierInfo(CLOSE_STRONGHOLD, "Close Stronghold", "The first stronghold ring sits a few hundred blocks from the world origin", Tag.HELPFUL),
 		// ---- end world ----
 		// ---- items ----
 		new ModifierInfo(NO_SHIELDS, "No Shields", "Shields cannot be crafted or kept", Tag.HARDER),
@@ -338,7 +340,7 @@ public final class ModifierCatalog {
 		new ModifierInfo(LOOT_CHAOS, "Loot Chaos", "Every block and mob drops a random item, fixed per seed", Tag.CHAOS),
 		new ModifierInfo(JACKPOT, "Jackpot", "Broken blocks drop up to 640 times their drop", Tag.CHAOS),
 		// ---- end items ----
-		new ModifierInfo(SWAP, "Swap", "All players swap positions every 5 minutes", Tag.CHAOS)
+		new ModifierInfo(MACHINE_GUN_SKELETONS, "Machine Gun Skeletons", "Skeletons fire an arrow every few ticks", Tag.BRUTAL)
 	);
 
 	/** Pairs that contradict each other. The picker never draws both halves of a pair. */
@@ -360,16 +362,16 @@ public final class ModifierCatalog {
 		List.of(LONG_ARMS, SHORT_ARMS),
 		List.of(SHORT_ARMS, GIANT),
 		List.of(UNDEAD, FIREPROOF),
-		List.of(UNDEAD, PUMPKIN_HEAD)
+		List.of(UNDEAD, PUMPKIN_HEAD),
 		// ---- mobs-a ----
-		List.of(INVISIBLE_MOBS, GLOWING_MOBS)
+		List.of(INVISIBLE_MOBS, GLOWING_MOBS),
 		// ---- end mobs-a ----
 		// ---- world ----
 		List.of(ETERNAL_DAY, ETERNAL_NIGHT),
 		List.of(ETERNAL_DAY, FAST_DAYS),
 		List.of(ETERNAL_NIGHT, FAST_DAYS),
 		List.of(TIGHT_BORDER, SHRINKING_BORDER),
-		List.of(LARGE_BIOMES, AMPLIFIED)
+		List.of(LARGE_BIOMES, AMPLIFIED),
 		// ---- end world ----
 		// ---- items ----
 		List.of(UNBREAKABLE, FRAGILE_TOOLS),
@@ -381,8 +383,12 @@ public final class ModifierCatalog {
 		List.of(INVENTORY_ROTATION, SHARED_INVENTORY),
 		List.of(LOOT_CHAOS, MOB_RANDOMIZER),
 		// ---- end items ----
-		List.of(MOON_GRAVITY, HEAVY_GRAVITY)
+		List.of(ANGRY_NEUTRALS, PIGLIN_FRIENDS),
+		List.of(MACHINE_GUN_SKELETONS, SHARPSHOOTERS)
 	);
+
+	/** Modifiers that change world generation. They only work when chosen before the run's worlds generate. */
+	public static final Set<String> WORLDGEN = Set.of(LARGE_BIOMES, AMPLIFIED, NO_VILLAGES, CLOSE_STRONGHOLD);
 
 	private static final Map<String, ModifierInfo> BY_ID = new LinkedHashMap<>();
 

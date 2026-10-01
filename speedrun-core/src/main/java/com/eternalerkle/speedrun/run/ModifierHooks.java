@@ -23,6 +23,14 @@ public interface ModifierHooks {
 
 	String displayName(String id);
 
+	/**
+	 * Called when the next run's worlds start generating. In random mode this secretly draws the next run's modifiers
+	 * now, so worldgen modifiers can be among them. Returns the modifiers the worlds should be generated with.
+	 */
+	default List<String> drawForNextWorlds(Settings settings) {
+		return List.of();
+	}
+
 	/** Called when the lobby or death room opens, so a vote can be offered. */
 	default void onWaitingStarted() {
 	}

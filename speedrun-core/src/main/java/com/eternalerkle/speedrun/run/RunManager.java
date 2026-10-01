@@ -16,6 +16,7 @@ import com.eternalerkle.speedrun.util.Scheduler;
 import com.eternalerkle.speedrun.util.Time;
 import com.eternalerkle.speedrun.util.Titles;
 import com.eternalerkle.speedrun.world.RunWorldSet;
+import com.eternalerkle.speedrun.modifier.WorldModifiers;
 import com.eternalerkle.speedrun.world.RunWorlds;
 import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.AdvancementHolder;
@@ -289,10 +290,15 @@ public final class RunManager {
 		}
 	}
 
+	private void prepareNextWorlds() {
+		WorldModifiers.setNextRunModifiers(modifiers.drawForNextWorlds(settings));
+		worlds.prepareNext(nextSeed(), this::onNextReady);
+	}
+
 	private void ensureNextPreparing() {
 		RunWorldSet next = worlds.next();
 		if (next == null || next.isDeleted()) {
-			worlds.prepareNext(nextSeed(), this::onNextReady);
+			prepareNextWorlds();
 		}
 	}
 
@@ -592,7 +598,7 @@ public final class RunManager {
 			// Reroll the prepared worlds. Cancel a running countdown; a pending /start begins once the new worlds are ready.
 			phase++;
 			countdownActive = false;
-			worlds.prepareNext(nextSeed(), this::onNextReady);
+			prepareNextWorlds();
 			broadcast(Component.literal(reason + " New seed is generating.").withStyle(ChatFormatting.YELLOW));
 			return;
 		}

@@ -127,6 +127,8 @@ public final class Modifiers implements ModifierHooks, RunFeature {
 
 	/** Opens a new vote when the mode is VOTE and nobody is in a run, or closes it otherwise. Call after settings change. */
 	public void refreshVote() {
+		Settings current = runs.settings();
+		selector.redrawKeepingWorldgen(current.modifierMode, knownPool(current), current.modifierCount, knownAlways(current));
 		if (runs.state() == RunState.RUNNING) {
 			selector.closeVote();
 			return;
@@ -202,6 +204,11 @@ public final class Modifiers implements ModifierHooks, RunFeature {
 			}
 		}
 		return known;
+	}
+
+	@Override
+	public List<String> drawForNextWorlds(Settings settings) {
+		return selector.predraw(settings.modifierMode, knownPool(settings), settings.modifierCount, knownAlways(settings));
 	}
 
 	private static Set<String> knownPool(Settings settings) {
