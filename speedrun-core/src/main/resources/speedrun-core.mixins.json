@@ -15,7 +15,17 @@
 		"ServerLevelMixin",
 		"ServerPlayerCameraAccessor",
 		"ServerPlayerMixin",
-		"TheEndGatewayBlockEntityMixin"
+		"TheEndGatewayBlockEntityMixin",
+		"ModifierMobsACreeperAccessor",
+		"ModifierMobsAEnderDragonMixin",
+		"ModifierMobsALivingEntityMixin",
+		"ModifierMobsAMobAccessor",
+		"ModifierMobsANaturalSpawnerMixin",
+		"ModifierMobsAPatrolSpawnerMixin",
+		"ModifierMobsAPhantomSpawnerMixin",
+		"ModifierMobsAPiglinAiMixin",
+		"ModifierMobsAPiglinBruteAiMixin",
+		"ModifierMobsASkeletonMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

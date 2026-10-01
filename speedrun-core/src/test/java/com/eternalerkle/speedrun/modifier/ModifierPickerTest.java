@@ -15,8 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class ModifierPickerTest {
 	@Test
 	void catalogHasEveryModifierOnce() {
-		assertEquals(22, ModifierCatalog.ALL.size());
-		assertEquals(22, new HashSet<>(ModifierCatalog.ids()).size());
+		assertEquals(ModifierCatalog.ALL.size(), new HashSet<>(ModifierCatalog.ids()).size());
 		assertEquals("One Heart", ModifierCatalog.displayName("one_heart"));
 		assertEquals("unknown_id", ModifierCatalog.displayName("unknown_id"));
 	}

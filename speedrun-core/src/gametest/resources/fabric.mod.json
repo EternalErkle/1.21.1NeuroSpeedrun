@@ -5,7 +5,7 @@
 	"name": "Speedrun Core GameTests",
 	"environment": "*",
 	"entrypoints": {
-		"fabric-gametest": ["com.eternalerkle.speedrun.gametest.RunLifecycleTests"]
+		"fabric-gametest": ["com.eternalerkle.speedrun.gametest.RunLifecycleTests", "com.eternalerkle.speedrun.gametest.MobsAModifierTests"]
 	},
 	"depends": {
 		"speedrun-core": "*",

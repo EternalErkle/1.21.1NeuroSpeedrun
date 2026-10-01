@@ -31,6 +31,29 @@ public final class ModifierCatalog {
 	public static final String SHUFFLE = "shuffle";
 	public static final String ETERNAL_NIGHT = "eternal_night";
 	public static final String SWAP = "swap";
+	// ---- mobs-a ----
+	public static final String SHARPSHOOTERS = "sharpshooters";
+	public static final String SHORT_FUSE = "short_fuse";
+	public static final String ENDERMAN_RAGE = "enderman_rage";
+	public static final String INVISIBLE_MOBS = "invisible_mobs";
+	public static final String GLOWING_MOBS = "glowing_mobs";
+	public static final String SILENT_MOBS = "silent_mobs";
+	public static final String BABY_ZOMBIES = "baby_zombies";
+	public static final String SPIDER_JOCKEYS = "spider_jockeys";
+	public static final String KAMIKAZE = "kamikaze";
+	public static final String SPAWN_RANDOMIZER = "spawn_randomizer";
+	public static final String NETHER_INVASION = "nether_invasion";
+	public static final String PHANTOM_MENACE = "phantom_menace";
+	public static final String PATROL_SEASON = "patrol_season";
+	public static final String REVENGE = "revenge";
+	public static final String AMBUSH = "ambush";
+	public static final String PET_WOLVES = "pet_wolves";
+	public static final String PIGLIN_FRIENDS = "piglin_friends";
+	public static final String PEARL_BONANZA = "pearl_bonanza";
+	public static final String BLAZE_SWARM = "blaze_swarm";
+	public static final String ARMORED_DRAGON = "armored_dragon";
+	public static final String ARROW_DRAGON = "arrow_dragon";
+	// ---- end mobs-a ----
 
 	public static final List<ModifierInfo> ALL = List.of(
 		new ModifierInfo(ONE_HEART, "One Heart", "Max health is 1 heart", Tag.BRUTAL),
@@ -54,14 +77,40 @@ public final class ModifierCatalog {
 		new ModifierInfo(SHARED_INVENTORY, "Shared Inventory", "All players share one inventory", Tag.CHAOS),
 		new ModifierInfo(SHUFFLE, "Shuffle", "Every inventory is shuffled every 5 minutes", Tag.CHAOS),
 		new ModifierInfo(ETERNAL_NIGHT, "Eternal Night", "The daylight cycle is locked at midnight", Tag.HARDER),
-		new ModifierInfo(SWAP, "Swap", "All players swap positions every 5 minutes", Tag.CHAOS)
+		new ModifierInfo(SWAP, "Swap", "All players swap positions every 5 minutes", Tag.CHAOS),
+		// ---- mobs-a ----
+		new ModifierInfo(SHARPSHOOTERS, "Sharpshooters", "Skeletons fire twice as often", Tag.HARDER),
+		new ModifierInfo(SHORT_FUSE, "Short Fuse", "Creepers explode in half the time", Tag.HARDER),
+		new ModifierInfo(ENDERMAN_RAGE, "Enderman Rage", "Endermen attack on sight", Tag.HARDER),
+		new ModifierInfo(INVISIBLE_MOBS, "Invisible Mobs", "Hostile mobs are invisible", Tag.BRUTAL),
+		new ModifierInfo(GLOWING_MOBS, "Glowing Mobs", "Hostile mobs glow through walls", Tag.HELPFUL),
+		new ModifierInfo(SILENT_MOBS, "Silent Mobs", "Hostile mobs make no sound", Tag.HARDER),
+		new ModifierInfo(BABY_ZOMBIES, "Baby Zombies", "Every zombie is a baby", Tag.HARDER),
+		new ModifierInfo(SPIDER_JOCKEYS, "Spider Jockeys", "Every spider carries a skeleton", Tag.HARDER),
+		new ModifierInfo(KAMIKAZE, "Kamikaze", "Hostile mobs explode when they die", Tag.CHAOS),
+		new ModifierInfo(SPAWN_RANDOMIZER, "Spawn Randomizer", "Natural spawns become random mobs of the same kind", Tag.CHAOS),
+		new ModifierInfo(NETHER_INVASION, "Nether Invasion", "Blazes, piglins and ghasts spawn in the overworld at night", Tag.CHAOS),
+		new ModifierInfo(PHANTOM_MENACE, "Phantom Menace", "Phantoms come every night, even after sleeping", Tag.HARDER),
+		new ModifierInfo(PATROL_SEASON, "Patrol Season", "Pillager patrols arrive every two minutes", Tag.HARDER),
+		new ModifierInfo(REVENGE, "Revenge", "Killing a passive mob spawns a zombie", Tag.CHAOS),
+		new ModifierInfo(AMBUSH, "Ambush", "Every 5 minutes a hostile mob spawns next to each player", Tag.CHAOS),
+		new ModifierInfo(PET_WOLVES, "Pet Wolves", "Everyone starts with a tamed wolf", Tag.HELPFUL),
+		new ModifierInfo(PIGLIN_FRIENDS, "Piglin Friends", "Piglins never attack players", Tag.HELPFUL),
+		new ModifierInfo(PEARL_BONANZA, "Pearl Bonanza", "Endermen always drop at least 2 pearls", Tag.HELPFUL),
+		new ModifierInfo(BLAZE_SWARM, "Blaze Swarm", "Blazes spawn anywhere in the Nether", Tag.HELPFUL),
+		new ModifierInfo(ARMORED_DRAGON, "Armored Dragon", "The dragon has double health", Tag.HARDER),
+		new ModifierInfo(ARROW_DRAGON, "Arrow Dragon", "The dragon only takes damage from arrows", Tag.HARDER)
+		// ---- end mobs-a ----
 	);
 
 	/** Pairs that contradict each other. The picker never draws both halves of a pair. */
 	public static final List<List<String>> CONFLICTS = List.of(
 		List.of(ONE_HEART, HALF_HEALTH),
 		List.of(TINY, GIANT),
-		List.of(MOON_GRAVITY, HEAVY_GRAVITY)
+		List.of(MOON_GRAVITY, HEAVY_GRAVITY),
+		// ---- mobs-a ----
+		List.of(INVISIBLE_MOBS, GLOWING_MOBS)
+		// ---- end mobs-a ----
 	);
 
 	private static final Map<String, ModifierInfo> BY_ID = new LinkedHashMap<>();
