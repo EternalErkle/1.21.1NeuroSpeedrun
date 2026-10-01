@@ -660,6 +660,11 @@ public final class RunManager {
 
 	public void onJoin(ServerPlayer player) {
 		faces.fetch(player.getGameProfile());
+		if (settings.autoTrust && !settings.isTrusted(player.getUUID())) {
+			settings.trusted.add(new Settings.TrustedPlayer(player.getUUID(), player.getGameProfile().getName()));
+			settings.save();
+			SpeedrunCore.LOGGER.info("Trusted {} automatically on join", player.getGameProfile().getName());
+		}
 		graceToken++;
 		if (state == RunState.RUNNING && run != null && run.isPaused()) {
 			unpause(run);

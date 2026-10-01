@@ -41,6 +41,8 @@ public final class Settings {
 	public boolean keepRunWhenEmpty = false;
 	/** Players who may use /speedrun admin commands without op. They get no vanilla op powers. */
 	public List<TrustedPlayer> trusted = new ArrayList<>();
+	/** When on, every player who joins is added to {@link #trusted}. */
+	public boolean autoTrust = true;
 
 	private transient Path file;
 

@@ -55,7 +55,7 @@ Permission node prefix: `speedrun.admin`.
 | `/speedrun stats reset deaths` | Clears the death sidebar |
 | `/speedrun trust add <player>` | Adds a player to the trusted list. Needs real op level 2 or the console. |
 | `/speedrun trust remove <player>` | Removes a player from the trusted list. Needs real op level 2 or the console. |
-| `/speedrun trust list` | Lists trusted players. Needs real op level 2 or the console. |
+| `/speedrun trust list`, `/speedrun trust auto on|off` (default on: everyone who joins is trusted) | Lists trusted players. Needs real op level 2 or the console. |
 | `/speedrun stats reset all` | Clears every stat. Asks for confirmation with a clickable message that runs `/speedrun stats reset all confirm`. |
 
 Settings changes take effect at the start of the next run, so a run's category never changes mid-run. `/speedrun tickrate` is the exception when used with `now` as a trailing argument. In that case the current run is marked unranked.

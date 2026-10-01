@@ -31,6 +31,9 @@ public final class TrustCommands {
 	public static void register(CommandRegistry registry) {
 		registry.dispatcher().register(literal("speedrun").requires(CommandRegistry.requires(CommandRegistry.ADMIN))
 			.then(literal("trust").requires(CommandRegistry.requires(CommandRegistry.OP))
+				.then(literal("auto")
+					.then(literal("on").executes(context -> setAuto(context, true)))
+					.then(literal("off").executes(context -> setAuto(context, false))))
 				.then(literal("add").then(argument("player", GameProfileArgument.gameProfile())
 					.executes(context -> add(context, GameProfileArgument.getGameProfiles(context, "player")))))
 				.then(literal("remove").then(argument("player", StringArgumentType.word())
@@ -96,5 +99,15 @@ public final class TrustCommands {
 		if (player != null) {
 			server.getCommands().sendCommands(player);
 		}
+	}
+
+	private static int setAuto(com.mojang.brigadier.context.CommandContext<net.minecraft.commands.CommandSourceStack> context, boolean on)
+		throws com.mojang.brigadier.exceptions.CommandSyntaxException {
+		var settings = CommandRegistry.runs(context).settings();
+		settings.autoTrust = on;
+		settings.save();
+		context.getSource().sendSuccess(() -> net.minecraft.network.chat.Component.literal(
+			"Auto trust " + (on ? "on: every player who joins is trusted." : "off: only /speedrun trust add trusts players.")), true);
+		return com.mojang.brigadier.Command.SINGLE_SUCCESS;
 	}
 }
