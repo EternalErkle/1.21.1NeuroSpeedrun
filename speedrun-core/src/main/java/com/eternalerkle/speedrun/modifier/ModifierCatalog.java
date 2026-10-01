@@ -31,6 +31,35 @@ public final class ModifierCatalog {
 	public static final String SHUFFLE = "shuffle";
 	public static final String ETERNAL_NIGHT = "eternal_night";
 	public static final String SWAP = "swap";
+	// ---- world ----
+	public static final String ETERNAL_DAY = "eternal_day";
+	public static final String FAST_DAYS = "fast_days";
+	public static final String TIGHT_BORDER = "tight_border";
+	public static final String SHRINKING_BORDER = "shrinking_border";
+	public static final String SHORT_SIGHT = "short_sight";
+	public static final String TIME_BOMB = "time_bomb";
+	public static final String INSTANT_PORTALS = "instant_portals";
+	public static final String EXPLOSIVE_BEDS = "explosive_beds";
+	public static final String NO_BED_BOMBS = "no_bed_bombs";
+	public static final String PIG_BOMB = "pig_bomb";
+	/** Implemented in later batches, not in ALL yet. */
+	public static final String SILVERFISH_STONE = "silverfish_stone";
+	public static final String EXPLOSIVE_ORES = "explosive_ores";
+	public static final String GRAVITY_BLOCKS = "gravity_blocks";
+	public static final String THUNDERSTRUCK = "thunderstruck";
+	public static final String METEOR_SHOWER = "meteor_shower";
+	public static final String ANVIL_RAIN = "anvil_rain";
+	public static final String FLOOR_IS_LAVA = "floor_is_lava";
+	public static final String BLACKOUTS = "blackouts";
+	public static final String SPAWNER_SURPRISE = "spawner_surprise";
+	public static final String CAVE_INS = "cave_ins";
+	public static final String TRAPPED_CHESTS = "trapped_chests";
+	public static final String CURSED_LOOT = "cursed_loot";
+	public static final String LARGE_BIOMES = "large_biomes";
+	public static final String AMPLIFIED = "amplified";
+	public static final String NO_VILLAGES = "no_villages";
+	public static final String CLOSE_STRONGHOLD = "close_stronghold";
+	// ---- end world ----
 
 	public static final List<ModifierInfo> ALL = List.of(
 		new ModifierInfo(ONE_HEART, "One Heart", "Max health is 1 heart", Tag.BRUTAL),
@@ -54,14 +83,32 @@ public final class ModifierCatalog {
 		new ModifierInfo(SHARED_INVENTORY, "Shared Inventory", "All players share one inventory", Tag.CHAOS),
 		new ModifierInfo(SHUFFLE, "Shuffle", "Every inventory is shuffled every 5 minutes", Tag.CHAOS),
 		new ModifierInfo(ETERNAL_NIGHT, "Eternal Night", "The daylight cycle is locked at midnight", Tag.HARDER),
-		new ModifierInfo(SWAP, "Swap", "All players swap positions every 5 minutes", Tag.CHAOS)
+		new ModifierInfo(SWAP, "Swap", "All players swap positions every 5 minutes", Tag.CHAOS),
+		// ---- world ----
+		new ModifierInfo(ETERNAL_DAY, "Eternal Day", "The daylight cycle is locked at noon", Tag.HELPFUL),
+		new ModifierInfo(FAST_DAYS, "Fast Days", "The day cycle runs 4x faster", Tag.CHAOS),
+		new ModifierInfo(TIGHT_BORDER, "Tight Border", "The world border sits 500 blocks from spawn", Tag.HARDER),
+		new ModifierInfo(SHRINKING_BORDER, "Shrinking Border", "The world border starts 2000 blocks from spawn and closes to 50 over 60 minutes", Tag.HARDER),
+		new ModifierInfo(SHORT_SIGHT, "Short Sight", "View distance is 4 chunks", Tag.HARDER),
+		new ModifierInfo(TIME_BOMB, "Time Bomb", "The run fails after 60 minutes", Tag.HARDER),
+		new ModifierInfo(INSTANT_PORTALS, "Instant Portals", "Nether portals teleport instantly", Tag.HELPFUL),
+		new ModifierInfo(EXPLOSIVE_BEDS, "Explosive Beds", "Beds explode in the Overworld too", Tag.HARDER),
+		new ModifierInfo(NO_BED_BOMBS, "No Bed Bombs", "Beds do not explode in the End", Tag.HARDER),
+		new ModifierInfo(PIG_BOMB, "Pig Bomb", "Every 30 seconds to 3 minutes, a pig carrying lit TNT chases a random player", Tag.BRUTAL)
+		// ---- end world ----
 	);
 
 	/** Pairs that contradict each other. The picker never draws both halves of a pair. */
 	public static final List<List<String>> CONFLICTS = List.of(
 		List.of(ONE_HEART, HALF_HEALTH),
 		List.of(TINY, GIANT),
-		List.of(MOON_GRAVITY, HEAVY_GRAVITY)
+		List.of(MOON_GRAVITY, HEAVY_GRAVITY),
+		// ---- world ----
+		List.of(ETERNAL_DAY, ETERNAL_NIGHT),
+		List.of(ETERNAL_DAY, FAST_DAYS),
+		List.of(ETERNAL_NIGHT, FAST_DAYS),
+		List.of(TIGHT_BORDER, SHRINKING_BORDER)
+		// ---- end world ----
 	);
 
 	private static final Map<String, ModifierInfo> BY_ID = new LinkedHashMap<>();

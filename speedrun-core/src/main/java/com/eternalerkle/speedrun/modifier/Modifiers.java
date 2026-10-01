@@ -62,6 +62,7 @@ public final class Modifiers implements ModifierHooks, RunFeature {
 		current = null;
 		runs.setModifierHooks(instance);
 		runs.addFeature(instance);
+		WorldModifiers.register(runs);
 		if (!eventsRegistered) {
 			eventsRegistered = true;
 			registerEvents();

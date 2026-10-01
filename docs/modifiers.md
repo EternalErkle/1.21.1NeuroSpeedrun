@@ -67,6 +67,23 @@ Tags describe how each modifier affects difficulty:
 | `eternal_night` | Eternal Night | The daylight cycle is locked at midnight | Harder |
 | `swap` | Swap | All players swap positions every 5 minutes | Chaos |
 
+## World and time
+
+| ID | Name | Effect | Tag |
+|---|---|---|---|
+| `pig_bomb` | Pig Bomb | Every 30 seconds to 3 minutes, a pig carrying lit TNT spawns near a random player and chases them. It flashes faster as the 4 second fuse runs down | Brutal |
+| `eternal_day` | Eternal Day | The daylight cycle is locked at noon | Helpful |
+| `fast_days` | Fast Days | The day cycle runs 4x faster | Chaos |
+| `tight_border` | Tight Border | The world border sits 500 blocks from spawn, in the Overworld and the Nether | Harder |
+| `shrinking_border` | Shrinking Border | The border starts 2000 blocks from spawn and closes to 50 over 60 minutes of run time | Harder |
+| `short_sight` | Short Sight | View distance is 4 chunks | Harder |
+| `time_bomb` | Time Bomb | The run fails after 60 minutes, with warnings as the end nears | Harder |
+| `instant_portals` | Instant Portals | Nether portals teleport instantly | Helpful |
+| `explosive_beds` | Explosive Beds | Beds explode in the Overworld too | Harder |
+| `no_bed_bombs` | No Bed Bombs | Beds do not explode in the End | Harder |
+
+Conflicts: `eternal_day` with `eternal_night` and `fast_days`; `eternal_night` with `fast_days`; `tight_border` with `shrinking_border`.
+
 ## Rules
 
 - Modifiers apply when a run starts and are removed when it ends. Nothing carries over into the next run.
