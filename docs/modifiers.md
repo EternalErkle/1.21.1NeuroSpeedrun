@@ -164,6 +164,38 @@ Details worth knowing:
 | `hellfire_mobs` | Hellfire Mobs | Hostile mobs burn forever without dying and set you on fire when they hit | Brutal |
 
 Totems of Undying now work in every run. Vanilla only checks them after the death event, which runs always cancel, so the run manager checks the totem first.
+## World and time
+
+| `pig_bomb` | Pig Bomb | Every 30 seconds to 3 minutes, a pig carrying lit TNT spawns near a random player and chases them. It flashes faster as the 4 second fuse runs down | Brutal |
+| `eternal_day` | Eternal Day | The daylight cycle is locked at noon | Helpful |
+| `fast_days` | Fast Days | The day cycle runs 4x faster | Chaos |
+| `tight_border` | Tight Border | The world border sits 500 blocks from spawn, in the Overworld and the Nether | Harder |
+| `shrinking_border` | Shrinking Border | The border starts 2000 blocks from spawn and closes to 50 over 60 minutes of run time | Harder |
+| `short_sight` | Short Sight | View distance is 4 chunks | Harder |
+| `time_bomb` | Time Bomb | The run fails after 60 minutes, with warnings as the end nears | Harder |
+| `instant_portals` | Instant Portals | Nether portals teleport instantly | Helpful |
+| `explosive_beds` | Explosive Beds | Beds explode in the Overworld too | Harder |
+| `no_bed_bombs` | No Bed Bombs | Beds do not explode in the End | Harder |
+| `silverfish_stone` | Silverfish Stone | Mining stone has a 2% chance to release a silverfish | Harder |
+| `explosive_ores` | Explosive Ores | Mining an ore has a 5% chance to leave lit TNT behind | Chaos |
+| `gravity_blocks` | Gravity Blocks | Every placed block falls like sand when nothing is under it | Chaos |
+| `thunderstruck` | Thunderstruck | Lightning strikes near a random player every 1 to 4 minutes | Brutal |
+| `meteor_shower` | Meteor Shower | Every 3 to 6 minutes, fireballs rain down around players | Brutal |
+| `anvil_rain` | Anvil Rain | Every 2 to 5 minutes, an anvil drops on a random player | Brutal |
+| `floor_is_lava` | Floor Is Lava | Every 10 minutes, standing on the ground hurts for 20 seconds, after a 3 second warning | Brutal |
+| `blackouts` | Blackouts | Every 2 to 4 minutes, everyone is blinded for 5 seconds | Harder |
+| `spawner_surprise` | Spawner Surprise | Every 10 minutes, a mob spawner appears near each player | Brutal |
+| `cave_ins` | Cave-ins | Mining underground can bring the ceiling down as gravel | Chaos |
+| `trapped_chests` | Trapped Chests | Opening an unopened loot chest has a 1 in 4 chance to release 2 or 3 hostile mobs or lit TNT | Chaos |
+| `cursed_loot` | Cursed Loot | Armor in loot chests gets Curse of Binding or Vanishing; tools and weapons get Curse of Vanishing | Harder |
+| `large_biomes` | Large Biomes | The run's Overworld generates with large biomes | Chaos |
+| `amplified` | Amplified | The run's Overworld generates amplified | Chaos |
+| `no_villages` | No Villages | No villages generate in the run's Overworld | Harder |
+| `close_stronghold` | Close Stronghold | The first stronghold ring sits about 200 to 350 blocks from the world origin | Helpful |
+
+Conflicts: `eternal_day` with `eternal_night` and `fast_days`; `eternal_night` with `fast_days`; `tight_border` with `shrinking_border`; `large_biomes` with `amplified`.
+
+The four worldgen modifiers shape the Overworld when the next run's worlds are generated, so the next run's modifiers must be known before generation starts.
 
 ## Rules
 

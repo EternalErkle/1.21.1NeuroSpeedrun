@@ -37,6 +37,11 @@
 		"ModifierMobsAPiglinAiMixin",
 		"ModifierMobsAPiglinBruteAiMixin",
 		"ModifierMobsASkeletonMixin"
+		"ModifierWorldPlayerListMixin",
+		"ModifierWorldBlockItemMixin",
+		"ModifierWorldChunkGeneratorMixin",
+		"ModifierWorldLootTableMixin",
+		"ModifierWorldStrongholdMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

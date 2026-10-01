@@ -769,7 +769,7 @@ public final class RunManager {
 
 	/** Reopens a run saved before the last shutdown. It stays paused until someone joins. */
 	private void restoreRun(SavedRun saved) {
-		RunWorldSet set = worlds.restore(saved.worldId, saved.seed, new BlockPos(saved.spawnX, saved.spawnY, saved.spawnZ), saved.dragon);
+		RunWorldSet set = worlds.restore(saved.worldId, saved.seed, new BlockPos(saved.spawnX, saved.spawnY, saved.spawnZ), saved.dragon, saved.modifiers);
 		phase++;
 		server.tickRateManager().setTickRate(saved.tickRate);
 		run = new ActiveRun(saved.attempt, set, saved.goal, saved.tickRate, saved.sharedHealth, saved.sharedHunger, saved.modifiers, saved.elapsedMillis);

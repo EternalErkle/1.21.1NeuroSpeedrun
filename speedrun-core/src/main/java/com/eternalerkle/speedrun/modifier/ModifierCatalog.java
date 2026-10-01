@@ -107,6 +107,34 @@ public final class ModifierCatalog {
 	public static final String ENDLESS_RAIDS = "endless_raids";
 	public static final String MARKED = "marked";
 	public static final String THIEVES = "thieves";
+	// ---- world ----
+	public static final String ETERNAL_DAY = "eternal_day";
+	public static final String FAST_DAYS = "fast_days";
+	public static final String TIGHT_BORDER = "tight_border";
+	public static final String SHRINKING_BORDER = "shrinking_border";
+	public static final String SHORT_SIGHT = "short_sight";
+	public static final String TIME_BOMB = "time_bomb";
+	public static final String INSTANT_PORTALS = "instant_portals";
+	public static final String EXPLOSIVE_BEDS = "explosive_beds";
+	public static final String NO_BED_BOMBS = "no_bed_bombs";
+	public static final String PIG_BOMB = "pig_bomb";
+	public static final String SILVERFISH_STONE = "silverfish_stone";
+	public static final String EXPLOSIVE_ORES = "explosive_ores";
+	public static final String GRAVITY_BLOCKS = "gravity_blocks";
+	public static final String THUNDERSTRUCK = "thunderstruck";
+	public static final String METEOR_SHOWER = "meteor_shower";
+	public static final String ANVIL_RAIN = "anvil_rain";
+	public static final String FLOOR_IS_LAVA = "floor_is_lava";
+	public static final String BLACKOUTS = "blackouts";
+	public static final String SPAWNER_SURPRISE = "spawner_surprise";
+	public static final String CAVE_INS = "cave_ins";
+	public static final String TRAPPED_CHESTS = "trapped_chests";
+	public static final String CURSED_LOOT = "cursed_loot";
+	public static final String LARGE_BIOMES = "large_biomes";
+	public static final String AMPLIFIED = "amplified";
+	public static final String NO_VILLAGES = "no_villages";
+	public static final String CLOSE_STRONGHOLD = "close_stronghold";
+	// ---- end world ----
 
 	public static final List<ModifierInfo> ALL = List.of(
 		new ModifierInfo(ONE_HEART, "One Heart", "Max health is 1 heart", Tag.BRUTAL),
@@ -206,6 +234,34 @@ public final class ModifierCatalog {
 		new ModifierInfo(ENDLESS_RAIDS, "Endless Raids", "Everyone has Bad Omen for the whole run", Tag.BRUTAL),
 		new ModifierInfo(MARKED, "Marked", "Every 5 minutes, one player is marked and all mobs hunt them for 60 seconds", Tag.BRUTAL),
 		new ModifierInfo(THIEVES, "Thieves", "Zombies and endermen steal a random item when they hit you", Tag.CHAOS)
+		// ---- world ----
+		new ModifierInfo(ETERNAL_DAY, "Eternal Day", "The daylight cycle is locked at noon", Tag.HELPFUL),
+		new ModifierInfo(FAST_DAYS, "Fast Days", "The day cycle runs 4x faster", Tag.CHAOS),
+		new ModifierInfo(TIGHT_BORDER, "Tight Border", "The world border sits 500 blocks from spawn", Tag.HARDER),
+		new ModifierInfo(SHRINKING_BORDER, "Shrinking Border", "The world border starts 2000 blocks from spawn and closes to 50 over 60 minutes", Tag.HARDER),
+		new ModifierInfo(SHORT_SIGHT, "Short Sight", "View distance is 4 chunks", Tag.HARDER),
+		new ModifierInfo(TIME_BOMB, "Time Bomb", "The run fails after 60 minutes", Tag.HARDER),
+		new ModifierInfo(INSTANT_PORTALS, "Instant Portals", "Nether portals teleport instantly", Tag.HELPFUL),
+		new ModifierInfo(EXPLOSIVE_BEDS, "Explosive Beds", "Beds explode in the Overworld too", Tag.HARDER),
+		new ModifierInfo(NO_BED_BOMBS, "No Bed Bombs", "Beds do not explode in the End", Tag.HARDER),
+		new ModifierInfo(PIG_BOMB, "Pig Bomb", "Every 30 seconds to 3 minutes, a pig carrying lit TNT chases a random player", Tag.BRUTAL),
+		new ModifierInfo(SILVERFISH_STONE, "Silverfish Stone", "Mining stone has a 2% chance to release a silverfish", Tag.HARDER),
+		new ModifierInfo(EXPLOSIVE_ORES, "Explosive Ores", "Mining an ore has a 5% chance to leave lit TNT behind", Tag.CHAOS),
+		new ModifierInfo(GRAVITY_BLOCKS, "Gravity Blocks", "Every placed block falls like sand", Tag.CHAOS),
+		new ModifierInfo(THUNDERSTRUCK, "Thunderstruck", "Lightning strikes near a random player every 1 to 4 minutes", Tag.BRUTAL),
+		new ModifierInfo(METEOR_SHOWER, "Meteor Shower", "Every 3 to 6 minutes, fireballs rain down around players", Tag.BRUTAL),
+		new ModifierInfo(ANVIL_RAIN, "Anvil Rain", "Every 2 to 5 minutes, an anvil drops on a random player", Tag.BRUTAL),
+		new ModifierInfo(FLOOR_IS_LAVA, "Floor Is Lava", "Every 10 minutes, standing on the ground hurts for 20 seconds", Tag.BRUTAL),
+		new ModifierInfo(BLACKOUTS, "Blackouts", "Every 2 to 4 minutes, everyone is blinded for 5 seconds", Tag.HARDER),
+		new ModifierInfo(SPAWNER_SURPRISE, "Spawner Surprise", "Every 10 minutes, a mob spawner appears near each player", Tag.BRUTAL),
+		new ModifierInfo(CAVE_INS, "Cave-ins", "Mining underground can bring the ceiling down as gravel", Tag.CHAOS),
+		new ModifierInfo(TRAPPED_CHESTS, "Trapped Chests", "Opening a loot chest can release mobs or lit TNT", Tag.CHAOS),
+		new ModifierInfo(CURSED_LOOT, "Cursed Loot", "Gear in loot chests carries Curse of Binding or Vanishing", Tag.HARDER),
+		new ModifierInfo(LARGE_BIOMES, "Large Biomes", "The world generates with large biomes", Tag.CHAOS),
+		new ModifierInfo(AMPLIFIED, "Amplified", "The world generates amplified", Tag.CHAOS),
+		new ModifierInfo(NO_VILLAGES, "No Villages", "No villages generate", Tag.HARDER),
+		new ModifierInfo(CLOSE_STRONGHOLD, "Close Stronghold", "The first stronghold ring sits a few hundred blocks from the world origin", Tag.HELPFUL)
+		// ---- end world ----
 	);
 
 	/** Pairs that contradict each other. The picker never draws both halves of a pair. */
@@ -231,6 +287,13 @@ public final class ModifierCatalog {
 		// ---- mobs-a ----
 		List.of(INVISIBLE_MOBS, GLOWING_MOBS)
 		// ---- end mobs-a ----
+		// ---- world ----
+		List.of(ETERNAL_DAY, ETERNAL_NIGHT),
+		List.of(ETERNAL_DAY, FAST_DAYS),
+		List.of(ETERNAL_NIGHT, FAST_DAYS),
+		List.of(TIGHT_BORDER, SHRINKING_BORDER),
+		List.of(LARGE_BIOMES, AMPLIFIED)
+		// ---- end world ----
 	);
 
 	private static final Map<String, ModifierInfo> BY_ID = new LinkedHashMap<>();
