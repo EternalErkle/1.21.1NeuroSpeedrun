@@ -50,6 +50,45 @@ Tags describe how each modifier affects difficulty:
 | `mob_randomizer` | Mob Randomizer | Each mob type drops one random item, fixed for the whole run | Chaos |
 | `blaze_boost` | Blaze Boost | Blazes drop twice as many rods | Helpful |
 
+## Mob behavior
+
+| ID | Name | Effect | Tag |
+|---|---|---|---|
+| `sharpshooters` | Sharpshooters | Skeletons fire twice as often | Harder |
+| `short_fuse` | Short Fuse | Creepers explode in half the time | Harder |
+| `enderman_rage` | Enderman Rage | Endermen attack on sight | Harder |
+| `invisible_mobs` | Invisible Mobs | Hostile mobs are invisible | Brutal |
+| `glowing_mobs` | Glowing Mobs | Hostile mobs glow through walls | Helpful |
+| `silent_mobs` | Silent Mobs | Hostile mobs make no sound | Harder |
+| `baby_zombies` | Baby Zombies | Every zombie is a baby | Harder |
+| `spider_jockeys` | Spider Jockeys | Every spider carries a skeleton | Harder |
+| `kamikaze` | Kamikaze | Hostile mobs explode when they die | Chaos |
+| `spawn_randomizer` | Spawn Randomizer | Natural spawns become random mobs of the same kind | Chaos |
+| `nether_invasion` | Nether Invasion | Blazes, piglins and ghasts spawn in the overworld at night | Chaos |
+| `phantom_menace` | Phantom Menace | Phantoms come every night, even after sleeping | Harder |
+| `patrol_season` | Patrol Season | Pillager patrols arrive every two minutes | Harder |
+| `revenge` | Revenge | Killing a passive mob spawns a zombie | Chaos |
+| `ambush` | Ambush | Every 5 minutes a hostile mob spawns next to each player | Chaos |
+| `pet_wolves` | Pet Wolves | Everyone starts with a tamed wolf | Helpful |
+| `piglin_friends` | Piglin Friends | Piglins never attack players | Helpful |
+| `pearl_bonanza` | Pearl Bonanza | Endermen always drop at least 2 pearls | Helpful |
+| `blaze_swarm` | Blaze Swarm | Blazes spawn anywhere in the Nether | Helpful |
+| `armored_dragon` | Armored Dragon | The dragon has double health | Harder |
+| `arrow_dragon` | Arrow Dragon | The dragon only takes damage from arrows | Harder |
+
+Details worth knowing:
+
+- `invisible_mobs` and `glowing_mobs` never appear together.
+- `kamikaze` explosions break blocks only while the `mobGriefing` gamerule is on. The dragon is exempt.
+- `spawn_randomizer` swaps each natural spawn for a random mob of the same category, so a monster becomes another monster and an animal another animal. Bosses, wardens, elder guardians, giants and illusioners are never picked. The replacement still has to pass its own spawn rules, so a fish rolled on dry land simply does not appear.
+- `nether_invasion` piglins never turn into zombified piglins.
+- `phantom_menace` treats every player as four days without sleep. Phantoms still need night and open sky.
+- `patrol_season` starts two minutes into the run. Patrols still avoid villages and the biomes vanilla excludes.
+- `revenge` counts animals, fish and villagers. The zombie targets the killer.
+- `pet_wolves` gives one wolf per player per run, including late joiners. Reconnecting does not hand out another.
+- `piglin_friends` also covers brutes. Hitting a piglin no longer makes it fight back.
+- `arrow_dragon` counts arrows and tridents. End crystal blasts no longer hurt the dragon.
+
 ## Items and inventory
 
 | ID | Name | Effect | Tag |
@@ -114,5 +153,6 @@ Totems of Undying now work in every run. Vanilla only checks them after the deat
 - Every modifier is removable mid-run by a reset, so a bugged modifier never locks the server.
 - Timed modifiers (`shuffle`, `swap`) count real seconds of run time, so they fire at the same real interval at any tick rate and don't advance while a run is paused.
 - `sudden_death` and `darkness_pulse` also follow run time.
+- Timed modifiers (`shuffle`, `swap`, `ambush`) count real seconds of run time, so they fire at the same real interval at any tick rate and don't advance while a run is paused.
 - `swap` and `shared_inventory` do nothing with one player online.
 - `/speedrun modifiers force` overrides the pool for the next run only.

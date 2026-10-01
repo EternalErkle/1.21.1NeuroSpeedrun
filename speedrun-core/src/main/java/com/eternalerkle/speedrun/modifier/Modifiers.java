@@ -63,6 +63,7 @@ public final class Modifiers implements ModifierHooks, RunFeature {
 		runs.setModifierHooks(instance);
 		runs.addFeature(instance);
 		BodyModifiers.register(runs);
+		runs.addFeature(new MobsAModifiers());
 		if (!eventsRegistered) {
 			eventsRegistered = true;
 			registerEvents();
