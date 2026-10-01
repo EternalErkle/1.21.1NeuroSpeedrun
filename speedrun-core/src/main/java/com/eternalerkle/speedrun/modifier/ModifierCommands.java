@@ -77,6 +77,12 @@ public final class ModifierCommands {
 				.then(literal("all").executes(context -> setAll(context, false)))
 				.then(argument("id", StringArgumentType.word()).suggests((context, builder) -> SharedSuggestionProvider.suggest(ModifierCatalog.ids(), builder))
 					.executes(context -> setEnabled(context, false))))
+			.then(literal("always")
+				.then(literal("add").then(argument("id", StringArgumentType.word()).suggests((context, builder) -> SharedSuggestionProvider.suggest(ModifierCatalog.ids(), builder))
+					.executes(context -> setAlways(context, true))))
+				.then(literal("remove").then(argument("id", StringArgumentType.word()).suggests((context, builder) -> SharedSuggestionProvider.suggest(CommandRegistry.runs(context).settings().alwaysModifiers, builder))
+					.executes(context -> setAlways(context, false))))
+				.then(literal("clear").executes(ModifierCommands::clearAlways)))
 			.then(literal("force").then(argument("ids", StringArgumentType.greedyString()).suggests((context, builder) -> {
 				// Suggest ids for the word being typed after the last space.
 				String typed = builder.getRemaining();
@@ -103,6 +109,11 @@ public final class ModifierCommands {
 		registry.document(new CommandDoc("speedrun modifiers disable", CATEGORY, "<id|all>", "Removes a modifier, or every modifier, from the pool",
 			List.of("<id>: one modifier. Use /speedrun modifiers pool to see every id.", "all: empties the pool."),
 			List.of("speedrun modifiers disable all", "speedrun modifiers disable one_heart"), CommandRegistry.ADMIN));
+		registry.document(new CommandDoc("speedrun modifiers always", CATEGORY, "<add|remove> <id> | clear", "Sets modifiers that are on in every run",
+			List.of("Always-on modifiers apply to every run, even with the mode off.",
+				"The mode then adds its random or voted modifiers on top, never repeating or contradicting these.",
+				"A modifier can be always-on without being in the pool. Takes effect on the next run."),
+			List.of("speedrun modifiers always add one_heart", "speedrun modifiers always remove one_heart", "speedrun modifiers always clear"), CommandRegistry.ADMIN));
 		registry.document(new CommandDoc("speedrun modifiers force", CATEGORY, "<id...>", "Forces specific modifiers for the next run only",
 			List.of("Takes one or more ids separated by spaces. Overrides the mode and pool once, then normal selection resumes.",
 				"Conflicting pairs such as tiny and giant are refused."),
@@ -124,8 +135,9 @@ public final class ModifierCommands {
 		ActiveRun run = runs.run();
 		String active = run == null ? "no run in progress" : run.modifiers.isEmpty() ? "none"
 			: String.join(", ", run.modifiers.stream().map(ModifierCatalog::displayName).toList());
-		String next = switch (settings.modifierMode) {
-			case OFF -> "none (modifiers are off)";
+		String always = settings.alwaysModifiers.isEmpty() ? "" : "always " + String.join(", ", settings.alwaysModifiers.stream().map(ModifierCatalog::displayName).toList()) + "; plus ";
+		String next = always + switch (settings.modifierMode) {
+			case OFF -> always.isEmpty() ? "none (modifiers are off)" : "nothing random (mode is off)";
 			case RANDOM -> settings.modifierCount + " drawn at random from the " + settings.modifierPool.size() + " in the pool";
 			case VOTE -> settings.modifierCount + " chosen by /vote from the " + settings.modifierPool.size() + " in the pool";
 		};
@@ -139,12 +151,13 @@ public final class ModifierCommands {
 		for (ModifierInfo info : ModifierCatalog.ALL) {
 			boolean inPool = settings.modifierPool.contains(info.id());
 			Component hover = Component.literal(info.effect() + "\nTag: " + info.tag().label + "\nID: " + info.id());
-			message.append(Component.literal("\n " + (inPool ? "● " : "○ ")).withStyle(inPool ? ChatFormatting.GREEN : ChatFormatting.DARK_GRAY))
+			boolean isAlways = settings.alwaysModifiers.contains(info.id());
+			message.append(Component.literal("\n " + (isAlways ? "★ " : inPool ? "● " : "○ ")).withStyle(isAlways ? ChatFormatting.GOLD : inPool ? ChatFormatting.GREEN : ChatFormatting.DARK_GRAY))
 				.append(Component.literal(info.name()).withStyle(Style.EMPTY.withColor(ChatFormatting.WHITE)
 					.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hover))))
 				.append(Component.literal(" - " + info.effect()).withStyle(ChatFormatting.GRAY));
 		}
-		message.append(Component.literal("\n● in the pool   ○ not in the pool").withStyle(ChatFormatting.DARK_GRAY));
+		message.append(Component.literal("\n● in the pool   ○ not in the pool   ★ always on").withStyle(ChatFormatting.DARK_GRAY));
 		context.getSource().sendSystemMessage(message);
 		return Command.SINGLE_SUCCESS;
 	}
@@ -222,6 +235,41 @@ public final class ModifierCommands {
 				.withStyle(ChatFormatting.LIGHT_PURPLE));
 		}
 		context.getSource().sendSystemMessage(message);
+		return Command.SINGLE_SUCCESS;
+	}
+
+	private static int setAlways(CommandContext<CommandSourceStack> context, boolean add) throws CommandSyntaxException {
+		Settings settings = CommandRegistry.runs(context).settings();
+		String id = StringArgumentType.getString(context, "id").toLowerCase(Locale.ROOT);
+		if (!ModifierCatalog.isKnown(id)) {
+			context.getSource().sendFailure(Component.literal("Unknown modifier: " + id + ". See /speedrun modifiers pool."));
+			return 0;
+		}
+		if (add) {
+			for (String other : settings.alwaysModifiers) {
+				if (ModifierCatalog.conflicts(id, other)) {
+					context.getSource().sendFailure(Component.literal(id + " conflicts with always-on " + other + "."));
+					return 0;
+				}
+			}
+		}
+		boolean changed = add ? settings.alwaysModifiers.add(id) : settings.alwaysModifiers.remove(id);
+		if (!changed) {
+			context.getSource().sendFailure(Component.literal(id + " is already " + (add ? "always on." : "not always on.")));
+			return 0;
+		}
+		settings.save();
+		modifiers(context).refreshVote();
+		context.getSource().sendSuccess(() -> Component.literal(ModifierCatalog.displayName(id) + (add ? " is now on in every run." : " is no longer always on.") + " Takes effect on the next run."), true);
+		return Command.SINGLE_SUCCESS;
+	}
+
+	private static int clearAlways(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
+		Settings settings = CommandRegistry.runs(context).settings();
+		settings.alwaysModifiers.clear();
+		settings.save();
+		modifiers(context).refreshVote();
+		context.getSource().sendSuccess(() -> Component.literal("No modifiers are always on now. Takes effect on the next run."), true);
 		return Command.SINGLE_SUCCESS;
 	}
 

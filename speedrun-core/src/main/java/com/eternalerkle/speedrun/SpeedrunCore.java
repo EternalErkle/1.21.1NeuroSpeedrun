@@ -52,6 +52,8 @@ public class SpeedrunCore implements ModInitializer {
 				runs.afterDeath(entity, source);
 			}
 		});
+		// Player chat is blocked while the loading screen is up, so nothing spoils it or gets lost in the held summary.
+		ServerMessageEvents.ALLOW_CHAT_MESSAGE.register((message, sender, params) -> runs == null || !runs.isChatHeld());
 		ServerMessageEvents.CHAT_MESSAGE.register((message, sender, params) -> {
 			if (runs != null) {
 				runs.onChat(sender, message.signedContent());

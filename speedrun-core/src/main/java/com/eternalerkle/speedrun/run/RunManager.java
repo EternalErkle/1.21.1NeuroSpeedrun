@@ -78,6 +78,11 @@ public final class RunManager {
 	private final Scheduler scheduler = new Scheduler();
 	private final List<RunFeature> features = new ArrayList<>();
 	private final Map<UUID, String> lastChat = new HashMap<>();
+	/** Lines a full client chat window shows; sending this many blanks scrolls everything out of view. */
+	private static final int CHAT_CLEAR_LINES = 100;
+	/** Broadcasts held while the loading screen is up, or null when chat flows normally. */
+	@Nullable
+	private List<Component> heldChat;
 	private final Random random = new Random();
 	/** Every run uses this seed when set with -Dspeedrun.fixedSeed. For benchmarks only: records stay per seed. */
 	@Nullable
@@ -200,6 +205,7 @@ public final class RunManager {
 			}
 		}
 		deathRoom.close();
+		releaseChat();
 		hud.shutdown();
 		stats.save();
 		settings.save();
@@ -330,6 +336,7 @@ public final class RunManager {
 		set.overworld().setDayTime(RUN_START_DAY_TIME);
 		set.overworld().setWeatherParameters(0, 0, false, false);
 		deathRoom.close();
+		releaseChat();
 		server.tickRateManager().setTickRate(settings.tickRate);
 		stats.attempts++;
 		List<String> chosen = modifiers.pickForNextRun(settings);
@@ -459,8 +466,26 @@ public final class RunManager {
 			// The hub is never dangerous, and nobody dies outside a live run.
 			return false;
 		}
+		if (!settings.resetOnDeath) {
+			// The run goes on: count the death and let vanilla kill and respawn the player at the run spawn.
+			countDeath(player, source);
+			return true;
+		}
 		fail(player, source);
 		return false;
+	}
+
+	/** Lifetime and since-win death counts, cause stats and the sidebar. */
+	private void countDeath(ServerPlayer dead, DamageSource source) {
+		String causeKey = source.typeHolder().unwrapKey().map(key -> key.location().getPath()).orElse("unknown");
+		if (source.getEntity() != null && source.getEntity() != dead) {
+			causeKey += ":" + net.minecraft.world.entity.EntityType.getKey(source.getEntity().getType()).getPath();
+		}
+		PlayerStats deadStats = stats.player(dead.getUUID(), dead.getGameProfile().getName());
+		deadStats.lifetimeDeaths++;
+		deadStats.deathsSinceWin++;
+		deadStats.deathCauses.merge(causeKey, 1, Integer::sum);
+		hud.setDeaths(dead.getScoreboardName(), deadStats.deathsSinceWin);
 	}
 
 	/** Called after any living entity died. Used for boss tracking. */
@@ -499,15 +524,8 @@ public final class RunManager {
 	private void fail(ServerPlayer dead, DamageSource source) {
 		ActiveRun ended = run;
 		Component deathMessage = source.getLocalizedDeathMessage(dead);
-		String causeKey = source.typeHolder().unwrapKey().map(key -> key.location().getPath()).orElse("unknown");
-		if (source.getEntity() != null && source.getEntity() != dead) {
-			causeKey += ":" + net.minecraft.world.entity.EntityType.getKey(source.getEntity().getType()).getPath();
-		}
-		PlayerStats deadStats = stats.player(dead.getUUID(), dead.getGameProfile().getName());
-		deadStats.lifetimeDeaths++;
-		deadStats.deathsSinceWin++;
-		deadStats.deathCauses.merge(causeKey, 1, Integer::sum);
-		hud.setDeaths(dead.getScoreboardName(), deadStats.deathsSinceWin);
+		countDeath(dead, source);
+		holdChat();
 
 		BlockPos pos = dead.blockPosition();
 		String dimension = dead.serverLevel() == ended.worlds.nether() ? "Nether" : dead.serverLevel() == ended.worlds.end() ? "End" : "Overworld";
@@ -515,8 +533,8 @@ public final class RunManager {
 		state = RunState.RESETTING;
 
 		MutableComponent summary = Component.empty()
-			.append(Component.literal("☠ ").withStyle(ChatFormatting.DARK_RED))
-			.append(deathMessage.copy().withStyle(ChatFormatting.RED))
+			// The loading screen already shows who died, so the summary leaves the death message out.
+			.append(Component.literal("☠ Run lost").withStyle(ChatFormatting.DARK_RED))
 			.append(Component.literal("\n  Run time: ").withStyle(ChatFormatting.GRAY))
 			.append(Component.literal(Time.format(record.realMillis)).withStyle(ChatFormatting.WHITE))
 			.append(Component.literal("  at ").withStyle(ChatFormatting.GRAY))
@@ -535,6 +553,7 @@ public final class RunManager {
 	private void win(@Nullable ServerPlayer killer) {
 		ActiveRun ended = run;
 		RunRecord record = finishRun(RunRecord.Result.WON, "Won", killer);
+		holdChat();
 		state = RunState.VICTORY;
 		stats.wins++;
 		for (ServerPlayer player : server.getPlayerList().getPlayers()) {
@@ -578,6 +597,7 @@ public final class RunManager {
 		}
 		RunRecord record = finishRun(result, reason, null);
 		state = RunState.RESETTING;
+		holdChat();
 		broadcast(Component.literal(reason).withStyle(ChatFormatting.YELLOW));
 		broadcast(seedMessage(record.seed));
 		openRoom(faceOwner != null ? faceOwner : randomPlayerId());
@@ -606,6 +626,7 @@ public final class RunManager {
 		startRequested = false;
 		countdownActive = false;
 		deathRoom.close();
+		releaseChat();
 		for (ServerPlayer player : server.getPlayerList().getPlayers()) {
 			sendToLobby(player);
 		}
@@ -901,7 +922,43 @@ public final class RunManager {
 	}
 
 	public void broadcast(Component message) {
+		if (heldChat != null) {
+			heldChat.add(message);
+			return;
+		}
 		server.getPlayerList().broadcastSystemMessage(message, false);
+	}
+
+	/**
+	 * Clears everyone's chat and holds every broadcast until the loading screen ends, so the end-of-run summary does
+	 * not spoil the screen and is read afterwards. Player chat is blocked meanwhile. Released by {@link #releaseChat}.
+	 */
+	private void holdChat() {
+		if (heldChat != null) {
+			return;
+		}
+		heldChat = new ArrayList<>();
+		Component blank = Component.literal(" ");
+		for (ServerPlayer player : server.getPlayerList().getPlayers()) {
+			for (int i = 0; i < CHAT_CLEAR_LINES; i++) {
+				player.sendSystemMessage(blank);
+			}
+		}
+	}
+
+	private void releaseChat() {
+		List<Component> held = heldChat;
+		heldChat = null;
+		if (held != null) {
+			for (Component message : held) {
+				broadcast(message);
+			}
+		}
+	}
+
+	/** Whether player chat is blocked because the loading screen is up. */
+	public boolean isChatHeld() {
+		return heldChat != null;
 	}
 
 	private void playToAll(net.minecraft.sounds.SoundEvent sound, float pitch) {

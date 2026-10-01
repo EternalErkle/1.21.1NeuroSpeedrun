@@ -84,6 +84,13 @@ public final class RunCommands {
 			List.of("on: every player shares one hunger bar, including saturation. off: normal hunger.", "Takes effect on the next run."),
 			List.of("speedrun sharedhunger on", "speedrun sharedhunger off"), CommandRegistry.ADMIN));
 
+		root.then(toggle("resetondeath", (settings, on) -> settings.resetOnDeath = on, "Reset on death"));
+		registry.document(new CommandDoc("speedrun resetondeath", "Settings", "<on|off>", "Toggles whether a death ends the run",
+			List.of("on: the default. Any death ends the run and everyone moves to a new seed.",
+				"off: the dead player respawns at the run's spawn and the run goes on. Deaths still count in stats.",
+				"Applies to the next death, including in the current run."),
+			List.of("speedrun resetondeath off", "speedrun resetondeath on"), CommandRegistry.ADMIN));
+
 		LiteralArgumentBuilder<CommandSourceStack> keepRun = literal("keeprun");
 		for (boolean on : new boolean[] {true, false}) {
 			keepRun.then(literal(on ? "on" : "off").executes(context -> setKeepRun(context, on)));
@@ -240,7 +247,8 @@ public final class RunCommands {
 		line(message, "Shared health", settings.sharedHealth ? "on" : "off");
 		line(message, "Shared hunger", settings.sharedHunger ? "on" : "off");
 		line(message, "Modifiers", settings.modifierMode.name().toLowerCase(java.util.Locale.ROOT) + ", " + settings.modifierCount + " per run, "
-			+ settings.modifierPool.size() + " in pool");
+			+ settings.modifierPool.size() + " in pool" + (settings.alwaysModifiers.isEmpty() ? "" : ", always on: " + String.join(", ", settings.alwaysModifiers)));
+		line(message, "Reset on death", settings.resetOnDeath ? "on" : "off");
 		line(message, "Death room minimum", Category.formatRate((float) settings.deathRoomMinSeconds) + "s");
 		line(message, "Keep run when empty", settings.keepRunWhenEmpty ? "on" : "off");
 		line(message, "Next run category", runs.pendingCategory());

@@ -58,7 +58,7 @@ class ModifierPickerTest {
 	void voteOptionsDifferWhenPossible() {
 		Random random = new Random(4);
 		for (int i = 0; i < 100; i++) {
-			List<List<String>> options = ModifierPicker.voteOptions(Set.of("uhc", "horde", "swap"), 1, random);
+			List<List<String>> options = ModifierPicker.voteOptions(Set.of("uhc", "horde", "swap"), 1, Set.of(), random);
 			assertEquals(2, options.size());
 			assertNotEquals(options.get(0), options.get(1));
 		}

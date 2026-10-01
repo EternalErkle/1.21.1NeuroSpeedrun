@@ -62,27 +62,27 @@ class ModifierVoteTest {
 	@Test
 	void selectorOffModeAndEmptyPoolGiveNothing() {
 		ModifierSelector selector = new ModifierSelector(new Random(6));
-		assertEquals(List.of(), selector.pickForNextRun(ModifierMode.OFF, Set.of("uhc"), 1));
-		assertEquals(List.of(), selector.pickForNextRun(ModifierMode.RANDOM, Set.of(), 1));
-		assertNull(selector.openVote(ModifierMode.VOTE, Set.of(), 1));
+		assertEquals(List.of(), selector.pickForNextRun(ModifierMode.OFF, Set.of("uhc"), 1, Set.of()));
+		assertEquals(List.of(), selector.pickForNextRun(ModifierMode.RANDOM, Set.of(), 1, Set.of()));
+		assertNull(selector.openVote(ModifierMode.VOTE, Set.of(), 1, Set.of()));
 	}
 
 	@Test
 	void forceAppliesToOneRunOnly() {
 		ModifierSelector selector = new ModifierSelector(new Random(7));
 		selector.force(List.of("swap"));
-		assertEquals(List.of("swap"), selector.pickForNextRun(ModifierMode.OFF, Set.of(), 1));
-		assertEquals(List.of(), selector.pickForNextRun(ModifierMode.OFF, Set.of(), 1));
+		assertEquals(List.of("swap"), selector.pickForNextRun(ModifierMode.OFF, Set.of(), 1, Set.of()));
+		assertEquals(List.of(), selector.pickForNextRun(ModifierMode.OFF, Set.of(), 1, Set.of()));
 	}
 
 	@Test
 	void selectorUsesVoteResultThenClearsIt() {
 		ModifierSelector selector = new ModifierSelector(new Random(8));
-		ModifierVote vote = selector.openVote(ModifierMode.VOTE, Set.of("uhc", "horde"), 1);
+		ModifierVote vote = selector.openVote(ModifierMode.VOTE, Set.of("uhc", "horde"), 1, Set.of());
 		assertNotNull(vote);
 		vote.cast(UUID.randomUUID(), 2);
 		List<String> expected = vote.options().get(1);
-		assertEquals(expected, selector.pickForNextRun(ModifierMode.VOTE, Set.of("uhc", "horde"), 1));
+		assertEquals(expected, selector.pickForNextRun(ModifierMode.VOTE, Set.of("uhc", "horde"), 1, Set.of()));
 		assertNull(selector.vote());
 	}
 }

@@ -22,9 +22,14 @@ public final class ModifierPicker {
 	 * Returns fewer when the pool is too small. The result is in catalog order.
 	 */
 	public static List<String> pick(Collection<String> pool, int count, Random random) {
+		return pick(pool, count, List.of(), random);
+	}
+
+	/** Like {@link #pick(Collection, int, Random)}, but never draws an id in {@code taken} or one conflicting with it. */
+	public static List<String> pick(Collection<String> pool, int count, Collection<String> taken, Random random) {
 		List<String> candidates = new ArrayList<>();
 		for (String id : ModifierCatalog.ids()) {
-			if (pool.contains(id)) {
+			if (pool.contains(id) && !taken.contains(id) && !ModifierCatalog.conflictsWithAny(id, taken)) {
 				candidates.add(id);
 			}
 		}
@@ -42,11 +47,11 @@ public final class ModifierPicker {
 	}
 
 	/** Two vote options drawn from the pool, made different from each other when the pool allows it. */
-	public static List<List<String>> voteOptions(Collection<String> pool, int count, Random random) {
-		List<String> first = pick(pool, count, random);
-		List<String> second = pick(pool, count, random);
+	public static List<List<String>> voteOptions(Collection<String> pool, int count, Collection<String> taken, Random random) {
+		List<String> first = pick(pool, count, taken, random);
+		List<String> second = pick(pool, count, taken, random);
 		for (int i = 0; i < DISTINCT_OPTION_ATTEMPTS && second.equals(first); i++) {
-			second = pick(pool, count, random);
+			second = pick(pool, count, taken, random);
 		}
 		return List.of(first, second);
 	}

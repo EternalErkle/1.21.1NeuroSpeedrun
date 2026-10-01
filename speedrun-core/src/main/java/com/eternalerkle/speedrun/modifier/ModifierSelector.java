@@ -34,12 +34,12 @@ public final class ModifierSelector {
 	}
 
 	/** Opens a fresh vote when the mode is VOTE and the pool has something to offer. Returns the vote or null. */
-	public ModifierVote openVote(ModifierMode mode, Collection<String> pool, int count) {
+	public ModifierVote openVote(ModifierMode mode, Collection<String> pool, int count, Collection<String> always) {
 		vote = null;
 		if (mode != ModifierMode.VOTE || forced != null) {
 			return null;
 		}
-		List<List<String>> options = ModifierPicker.voteOptions(pool, count, random);
+		List<List<String>> options = ModifierPicker.voteOptions(pool, count, always, random);
 		if (options.get(0).isEmpty()) {
 			return null;
 		}
@@ -51,21 +51,33 @@ public final class ModifierSelector {
 		vote = null;
 	}
 
-	/** Chooses the next run's modifiers and consumes the forced set and the vote. */
-	public List<String> pickForNextRun(ModifierMode mode, Collection<String> pool, int count) {
-		List<String> result;
+	/**
+	 * Chooses the next run's modifiers and consumes the forced set and the vote. The always-on set is added to every
+	 * run, except that a one-off forced set replaces everything. Random and voted picks never repeat or contradict it.
+	 */
+	public List<String> pickForNextRun(ModifierMode mode, Collection<String> pool, int count, Collection<String> always) {
+		List<String> drawn;
 		if (forced != null) {
-			result = forced;
+			drawn = forced;
 		} else if (mode == ModifierMode.RANDOM) {
-			result = ModifierPicker.pick(pool, count, random);
+			drawn = ModifierPicker.pick(pool, count, always, random);
 		} else if (mode == ModifierMode.VOTE) {
 			// With no vote open (for example voting started before the mode was switched), fall back to a random draw.
-			result = vote != null ? vote.winner(random) : ModifierPicker.pick(pool, count, random);
+			drawn = vote != null ? vote.winner(random) : ModifierPicker.pick(pool, count, always, random);
 		} else {
-			result = List.of();
+			drawn = List.of();
+		}
+		java.util.Set<String> result = new java.util.LinkedHashSet<>();
+		if (forced == null) {
+			result.addAll(always);
+		}
+		for (String id : drawn) {
+			if (!ModifierCatalog.conflictsWithAny(id, result)) {
+				result.add(id);
+			}
 		}
 		forced = null;
 		vote = null;
-		return result;
+		return ModifierPicker.sortByCatalog(result);
 	}
 }

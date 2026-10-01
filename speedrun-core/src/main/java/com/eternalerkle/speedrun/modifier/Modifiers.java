@@ -105,7 +105,7 @@ public final class Modifiers implements ModifierHooks, RunFeature {
 
 	@Override
 	public List<String> pickForNextRun(Settings settings) {
-		return selector.pickForNextRun(settings.modifierMode, knownPool(settings), settings.modifierCount);
+		return selector.pickForNextRun(settings.modifierMode, knownPool(settings), settings.modifierCount, knownAlways(settings));
 	}
 
 	@Override
@@ -131,7 +131,7 @@ public final class Modifiers implements ModifierHooks, RunFeature {
 
 	private void offerVote() {
 		Settings settings = runs.settings();
-		ModifierVote vote = selector.openVote(settings.modifierMode, knownPool(settings), settings.modifierCount);
+		ModifierVote vote = selector.openVote(settings.modifierMode, knownPool(settings), settings.modifierCount, knownAlways(settings));
 		if (vote != null) {
 			runs.broadcast(voteMessage(vote));
 		}
@@ -187,6 +187,16 @@ public final class Modifiers implements ModifierHooks, RunFeature {
 					.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hover))));
 		}
 		return message;
+	}
+
+	private static Set<String> knownAlways(Settings settings) {
+		Set<String> known = new java.util.LinkedHashSet<>();
+		for (String id : settings.alwaysModifiers) {
+			if (ModifierCatalog.isKnown(id)) {
+				known.add(id);
+			}
+		}
+		return known;
 	}
 
 	private static Set<String> knownPool(Settings settings) {
