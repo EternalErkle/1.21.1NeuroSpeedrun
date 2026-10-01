@@ -1,5 +1,6 @@
 package com.eternalerkle.speedrun.mixin;
 
+import com.eternalerkle.speedrun.modifier.DamageScaling;
 import com.eternalerkle.speedrun.modifier.ModifierCatalog;
 import com.eternalerkle.speedrun.modifier.MobModifiers;
 import com.eternalerkle.speedrun.modifier.Modifiers;
@@ -9,6 +10,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
@@ -20,6 +22,10 @@ import java.util.function.Consumer;
 /** glass_cannon damage scaling, plus mob_randomizer and blaze_boost loot changes. */
 @Mixin(LivingEntity.class)
 public class ModifierLivingEntityMixin {
+	/** Vanilla's own cutoff for "this is a kill, not damage" in its damage stats. */
+	@Unique
+	private static final float LETHAL_LIMIT = 3.4028235E37F;
+
 	/** Players take double damage and deal double damage, including through their projectiles. */
 	@ModifyVariable(method = "hurt", at = @At("HEAD"), argsOnly = true)
 	private float speedrun$glassCannon(float amount, @Local(argsOnly = true) DamageSource source) {
@@ -28,10 +34,10 @@ public class ModifierLivingEntityMixin {
 			return amount;
 		}
 		if (self instanceof ServerPlayer) {
-			amount *= 2.0F;
+			amount = DamageScaling.scale(amount, 2.0F, LETHAL_LIMIT);
 		}
 		if (source.getEntity() instanceof ServerPlayer attacker && attacker != self) {
-			amount *= 2.0F;
+			amount = DamageScaling.scale(amount, 2.0F, LETHAL_LIMIT);
 		}
 		return amount;
 	}

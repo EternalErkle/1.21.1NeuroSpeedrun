@@ -40,7 +40,8 @@ public final class SharedValue {
 	 */
 	public float observe(UUID player, float current, float cap) {
 		Float last = written.get(player);
-		if (last == null) {
+		if (last == null || !Float.isFinite(current)) {
+			// A NaN would poison the shared value for every player, permanently.
 			return 0;
 		}
 		float delta = current - Math.min(last, cap);
@@ -50,7 +51,8 @@ public final class SharedValue {
 
 	/** Applies every observed change to the shared value, clamps it, and returns it. */
 	public float apply(float min, float max) {
-		value = clamp(value + pending, min, max);
+		float next = value + pending;
+		value = Float.isFinite(next) ? clamp(next, min, max) : clamp(value, min, max);
 		pending = 0;
 		return value;
 	}

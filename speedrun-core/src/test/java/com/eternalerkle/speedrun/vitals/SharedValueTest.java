@@ -136,4 +136,12 @@ class SharedValueTest {
 		assertEquals(20, SharedValue.clamp(30, 0, 20));
 		assertEquals(7.5F, SharedValue.clamp(7.5F, 0, 20));
 	}
+
+	@Test
+	void nonFiniteObservationIsIgnored() {
+		value.set(10);
+		value.writeFor(a, MAX);
+		value.observe(a, Float.NaN, MAX);
+		assertEquals(10, value.apply(0, MAX));
+	}
 }

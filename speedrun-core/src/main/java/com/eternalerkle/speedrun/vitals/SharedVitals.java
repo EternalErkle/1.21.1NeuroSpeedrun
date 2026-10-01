@@ -48,6 +48,8 @@ import org.jetbrains.annotations.Nullable;
 public final class SharedVitals implements RunFeature {
 	private static final float MAX_FOOD = 20.0F;
 	private static final float MAX_EXHAUSTION = 40.0F;
+	/** Hits at or above this are kills, not damage worth announcing. */
+	static final float ANNOUNCE_LIMIT = 1000.0F;
 
 	private final RunManager runs;
 	private final SharedValue health = new SharedValue();
@@ -85,7 +87,8 @@ public final class SharedVitals implements RunFeature {
 	/** Announces a hit while shared health is on. Uses the damage after armor, before it is pooled. */
 	private void onDamage(ServerPlayer player, DamageSource source, float amount) {
 		ActiveRun run = runs.run();
-		if (run != null && run.sharedHealth && isLive(run) && takesPart(run, player)) {
+		// Kills (/kill, the void, the shared-health kill) use huge amounts; the death summary covers those.
+		if (run != null && run.sharedHealth && isLive(run) && takesPart(run, player) && amount < ANNOUNCE_LIMIT) {
 			announceDamage(player, amount);
 		}
 	}
@@ -172,6 +175,7 @@ public final class SharedVitals implements RunFeature {
 		ServerPlayer hardestHit = players.get(0);
 		float biggestLoss = 0;
 		for (ServerPlayer player : players) {
+			repairNonFinite(player);
 			float max = player.getMaxHealth();
 			highestMax = Math.max(highestMax, max);
 			float delta = health.observe(player.getUUID(), player.getHealth(), max);
@@ -258,10 +262,27 @@ public final class SharedVitals implements RunFeature {
 		SpeedrunCore.LOGGER.warn("Shared health reached 0 but no player could be killed; retrying next tick");
 	}
 
+	/**
+	 * A NaN or infinite health or absorption makes a player unkillable: health never reaches 0, so they flash hurt
+	 * forever with grey hearts, and shared health would copy the NaN to everyone. Treat it as the kill it came from.
+	 */
+	private static void repairNonFinite(ServerPlayer player) {
+		if (!Float.isFinite(player.getAbsorptionAmount())) {
+			player.setAbsorptionAmount(0);
+		}
+		if (!Float.isFinite(player.getHealth())) {
+			// Only a kill-sized hit produces this, so finish it as a kill. Health must be finite first or the kill is NaN too.
+			SpeedrunCore.LOGGER.warn("{} had non-finite health {}; killing them", player.getScoreboardName(), player.getHealth());
+			player.setHealth(1);
+			player.hurt(player.damageSources().genericKill(), Float.MAX_VALUE);
+		}
+	}
+
 	private void adopt(ActiveRun run, ServerPlayer player) {
 		members.add(player.getUUID());
 		if (run.sharedHealth) {
 			if (!health.isInitialized()) {
+				repairNonFinite(player);
 				health.set(player.getHealth());
 			}
 			writeHealth(player);
