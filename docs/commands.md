@@ -2,7 +2,13 @@
 
 Every command is registered together with its description, usage line, examples and required permission. `/help` is generated from those registrations, so documentation cannot drift from the code.
 
-Permissions come from fabric-permissions-api. With no permissions mod installed, admin commands fall back to op level 2.
+Player commands need no op. Admin commands (`/speedrun ...`) pass for any of these:
+
+- op level 2 or higher, or the server console
+- a player on the trusted list, managed with `/speedrun trust`
+- the `speedrun.admin` node from a permissions mod using fabric-permissions-api
+
+Trusted players get no vanilla op powers. `/gamemode`, `/give` and other vanilla op commands stay locked for them. `/help` lists admin commands for them as it does for ops.
 
 ## Player commands
 
@@ -47,6 +53,9 @@ Permission node prefix: `speedrun.admin`.
 | `/speedrun stats reset runcount` | Resets the attempt counter |
 | `/speedrun stats reset best [category]` | Clears one category's record, or all of them |
 | `/speedrun stats reset deaths` | Clears the death sidebar |
+| `/speedrun trust add <player>` | Adds a player to the trusted list. Needs real op level 2 or the console. |
+| `/speedrun trust remove <player>` | Removes a player from the trusted list. Needs real op level 2 or the console. |
+| `/speedrun trust list` | Lists trusted players. Needs real op level 2 or the console. |
 | `/speedrun stats reset all` | Clears every stat. Asks for confirmation with a clickable message that runs `/speedrun stats reset all confirm`. |
 
 Settings changes take effect at the start of the next run, so a run's category never changes mid-run. `/speedrun tickrate` is the exception when used with `now` as a trailing argument. In that case the current run is marked unranked.

@@ -47,13 +47,17 @@ When the console prints `Done`, join at `localhost`. Players arrive in the lobby
 
 ### Admins
 
-Admin commands need op level 2. Give it from the server console:
+Player commands such as `/help`, `/start`, `/vote` and `/stats` need no op.
+
+Admin commands (`/speedrun ...`) need op level 2 or a place on the trusted list. Trusted players get every `/speedrun` command but none of op's vanilla powers, so they cannot use `/gamemode` or `/give`. Manage the list from the server console or as an op:
 
 ```
-op <name>
+speedrun trust add <name>
+speedrun trust remove <name>
+speedrun trust list
 ```
 
-With a permissions mod such as LuckPerms installed, grant `speedrun.admin` instead.
+The list is saved in `run/config/speedrun-core/settings.json`. Trusted players cannot change it. With a permissions mod such as LuckPerms installed, granting `speedrun.admin` works too.
 
 Type `/help` in game for every command. The ones admins use most:
 
