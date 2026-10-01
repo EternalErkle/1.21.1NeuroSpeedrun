@@ -15,7 +15,15 @@
 		"ServerLevelMixin",
 		"ServerPlayerCameraAccessor",
 		"ServerPlayerMixin",
-		"TheEndGatewayBlockEntityMixin"
+		"TheEndGatewayBlockEntityMixin",
+		"ModifierItemsBlockStateMixin",
+		"ModifierItemsCraftingMenuMixin",
+		"ModifierItemsEyeOfEnderAccessor",
+		"ModifierItemsFurnaceMixin",
+		"ModifierItemsItemStackMixin",
+		"ModifierItemsLivingEntityMixin",
+		"ModifierItemsLootTableMixin",
+		"ModifierItemsPiglinAiMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
