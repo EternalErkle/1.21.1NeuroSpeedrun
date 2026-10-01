@@ -16,6 +16,7 @@ class ModifierPickerTest {
 	@Test
 	void catalogHasEveryModifierOnce() {
 		// Counts change as modifiers are added; what matters is that no id appears twice.
+		assertEquals(ModifierCatalog.ALL.size(), new HashSet<>(ModifierCatalog.ALL).size());
 		assertEquals(ModifierCatalog.ALL.size(), new HashSet<>(ModifierCatalog.ids()).size());
 		assertEquals("One Heart", ModifierCatalog.displayName("one_heart"));
 		assertEquals("unknown_id", ModifierCatalog.displayName("unknown_id"));

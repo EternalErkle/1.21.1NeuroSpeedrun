@@ -90,6 +90,23 @@ public final class ModifierCatalog {
 	public static final String THORNED_MOBS = "thorned_mobs";
 	public static final String EXPLOSIVE_ARROWS = "explosive_arrows";
 	public static final String HELLFIRE_MOBS = "hellfire_mobs";
+	// ---- mobs-b ----
+	public static final String CREEPER_RAIN = "creeper_rain";
+	public static final String SNIPER_SKELETONS = "sniper_skeletons";
+	public static final String STALKER = "stalker";
+	public static final String ANGRY_NEUTRALS = "angry_neutrals";
+	public static final String JUICED_MOBS = "juiced_mobs";
+	public static final String ARMORED_HORDE = "armored_horde";
+	public static final String SPLITTERS = "splitters";
+	public static final String ELITES = "elites";
+	public static final String SWARM = "swarm";
+	public static final String RELENTLESS = "relentless";
+	public static final String VEX_CURSE = "vex_curse";
+	public static final String WARDEN_ALARM = "warden_alarm";
+	public static final String GHAST_AIR_FORCE = "ghast_air_force";
+	public static final String ENDLESS_RAIDS = "endless_raids";
+	public static final String MARKED = "marked";
+	public static final String THIEVES = "thieves";
 
 	public static final List<ModifierInfo> ALL = List.of(
 		new ModifierInfo(ONE_HEART, "One Heart", "Max health is 1 heart", Tag.BRUTAL),
@@ -172,6 +189,23 @@ public final class ModifierCatalog {
 		new ModifierInfo(ARMORED_DRAGON, "Armored Dragon", "The dragon has double health", Tag.HARDER),
 		new ModifierInfo(ARROW_DRAGON, "Arrow Dragon", "The dragon only takes damage from arrows", Tag.HARDER)
 		// ---- end mobs-a ----
+		// ---- mobs-b ----
+		new ModifierInfo(CREEPER_RAIN, "Creeper Rain", "Every minute, creepers drop from the sky near each player under open sky", Tag.BRUTAL),
+		new ModifierInfo(SNIPER_SKELETONS, "Sniper Skeletons", "Skeletons shoot from twice as far, with perfect aim", Tag.HARDER),
+		new ModifierInfo(STALKER, "Stalker", "Every 2 minutes, a fast zombie spawns behind a random player and hunts only them", Tag.HARDER),
+		new ModifierInfo(ANGRY_NEUTRALS, "Angry Neutrals", "Wolves, bees, endermen, piglins, iron golems and polar bears always attack", Tag.BRUTAL),
+		new ModifierInfo(JUICED_MOBS, "Juiced Mobs", "Hostile mobs have permanent Strength and Speed", Tag.HARDER),
+		new ModifierInfo(ARMORED_HORDE, "Armored Horde", "Zombies and skeletons spawn in full iron or diamond armor", Tag.HARDER),
+		new ModifierInfo(SPLITTERS, "Splitters", "A killed hostile mob splits into two smaller, weaker copies", Tag.BRUTAL),
+		new ModifierInfo(ELITES, "Elites", "One in ten hostile mobs is a named elite with triple health", Tag.HARDER),
+		new ModifierInfo(SWARM, "Swarm", "Hostile mobs spawn in groups three times larger", Tag.HARDER),
+		new ModifierInfo(RELENTLESS, "Relentless", "Hostile mobs notice you from 64 blocks and never lose track of you", Tag.HARDER),
+		new ModifierInfo(VEX_CURSE, "Vex Curse", "A hit from a mob can summon a vex", Tag.BRUTAL),
+		new ModifierInfo(WARDEN_ALARM, "Warden Alarm", "Once per run, at a random time, a warden emerges near a player", Tag.BRUTAL),
+		new ModifierInfo(GHAST_AIR_FORCE, "Ghast Air Force", "Ghasts patrol the overworld sky", Tag.BRUTAL),
+		new ModifierInfo(ENDLESS_RAIDS, "Endless Raids", "Everyone has Bad Omen for the whole run", Tag.BRUTAL),
+		new ModifierInfo(MARKED, "Marked", "Every 5 minutes, one player is marked and all mobs hunt them for 60 seconds", Tag.BRUTAL),
+		new ModifierInfo(THIEVES, "Thieves", "Zombies and endermen steal a random item when they hit you", Tag.CHAOS)
 	);
 
 	/** Pairs that contradict each other. The picker never draws both halves of a pair. */

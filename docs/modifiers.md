@@ -88,6 +88,24 @@ Details worth knowing:
 - `pet_wolves` gives one wolf per player per run, including late joiners. Reconnecting does not hand out another.
 - `piglin_friends` also covers brutes. Hitting a piglin no longer makes it fight back.
 - `arrow_dragon` counts arrows and tridents. End crystal blasts no longer hurt the dragon.
+## Mob threats
+
+| `creeper_rain` | Creeper Rain | Every minute, three creepers drop from 15 blocks up near each player who stands under open sky | Brutal |
+| `sniper_skeletons` | Sniper Skeletons | Skeletons, strays and bogged shoot from twice as far and aim along the true arrow arc with no spread | Harder |
+| `stalker` | Stalker | Every 2 minutes, a fast, fireproof zombie spawns behind a random player and targets only that player | Harder |
+| `angry_neutrals` | Angry Neutrals | Wolves, bees, endermen, piglins, zombified piglins, iron golems and polar bears within 20 blocks attack. Tamed wolves and player-built golems are spared | Brutal |
+| `juiced_mobs` | Juiced Mobs | Hostile mobs have permanent Strength and Speed | Harder |
+| `armored_horde` | Armored Horde | Zombies and skeletons spawn in full armor, each piece iron or (1 in 4) diamond. The armor never drops | Harder |
+| `splitters` | Splitters | A killed hostile mob splits into two smaller copies with half health and no loot. Copies never split again. Slimes, magma cubes, vexes and bosses don't split | Brutal |
+| `elites` | Elites | One in ten hostile mobs is a named elite with triple health | Harder |
+| `swarm` | Swarm | Every naturally spawned hostile mob brings two more of its kind | Harder |
+| `relentless` | Relentless | Hostile mobs notice you from 64 blocks and keep chasing after losing sight of you | Harder |
+| `vex_curse` | Vex Curse | Each hit from a mob has a 1 in 5 chance to summon a vex that lives 30 to 45 seconds | Brutal |
+| `warden_alarm` | Warden Alarm | Once per run, between minute 10 and 50, an angry warden emerges near a random player | Brutal |
+| `ghast_air_force` | Ghast Air Force | Every 30 seconds, ghasts spawn in the sky around overworld players, up to two per player | Brutal |
+| `endless_raids` | Endless Raids | Everyone has Bad Omen for the whole run. It comes back after each raid starts | Brutal |
+| `marked` | Marked | Every 5 minutes, a random player glows and every hostile mob within 48 blocks targets them for 60 seconds | Brutal |
+| `thieves` | Thieves | A zombie or enderman that hits you takes a random item into its offhand. Kill it to get the item back | Chaos |
 
 ## Items and inventory
 
@@ -155,4 +173,5 @@ Totems of Undying now work in every run. Vanilla only checks them after the deat
 - `sudden_death` and `darkness_pulse` also follow run time.
 - Timed modifiers (`shuffle`, `swap`, `ambush`) count real seconds of run time, so they fire at the same real interval at any tick rate and don't advance while a run is paused.
 - `swap` and `shared_inventory` do nothing with one player online.
+- `creeper_rain`, `stalker`, `ghast_air_force`, `warden_alarm` and `marked` also run on real run time. A restored run keeps the warden's time and the current mark.
 - `/speedrun modifiers force` overrides the pool for the next run only.
