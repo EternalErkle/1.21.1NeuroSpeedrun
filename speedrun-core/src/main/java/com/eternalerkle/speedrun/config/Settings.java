@@ -3,12 +3,26 @@ package com.eternalerkle.speedrun.config;
 import com.eternalerkle.speedrun.util.JsonStore;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 /** Persistent server settings. Changes apply when the next run starts. */
 public final class Settings {
 	public enum ModifierMode { OFF, RANDOM, VOTE }
+
+	/** A player allowed to use /speedrun admin commands without being op. */
+	public static final class TrustedPlayer {
+		public String uuid;
+		public String name;
+
+		public TrustedPlayer(UUID uuid, String name) {
+			this.uuid = uuid.toString();
+			this.name = name;
+		}
+	}
 
 	public Goal goal = Goal.DRAGON;
 	public float tickRate = 20.0F;
@@ -25,6 +39,8 @@ public final class Settings {
 	public double deathRoomMinSeconds = 5.0;
 	/** When on, a run survives an empty server: it pauses until someone rejoins instead of being abandoned. */
 	public boolean keepRunWhenEmpty = false;
+	/** Players who may use /speedrun admin commands without op. They get no vanilla op powers. */
+	public List<TrustedPlayer> trusted = new ArrayList<>();
 
 	private transient Path file;
 
@@ -45,7 +61,16 @@ public final class Settings {
 		if (settings.modifierPool == null) {
 			settings.modifierPool = new LinkedHashSet<>();
 		}
+		if (settings.trusted == null) {
+			settings.trusted = new ArrayList<>();
+		}
+		settings.trusted.removeIf(player -> player == null || player.uuid == null);
 		return settings;
+	}
+
+	public boolean isTrusted(UUID uuid) {
+		String id = uuid.toString();
+		return trusted.stream().anyMatch(player -> player.uuid.equalsIgnoreCase(id));
 	}
 
 	public void save() {

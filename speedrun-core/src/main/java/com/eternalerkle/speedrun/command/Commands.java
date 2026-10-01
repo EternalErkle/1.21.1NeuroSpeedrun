@@ -14,6 +14,7 @@ public final class Commands {
 		RunCommands.register(registry);
 		StatsCommands.register(registry);
 		ModifierCommands.register(registry);
+		TrustCommands.register(registry);
 		HelpCommand.register(registry);
 	}
 }
