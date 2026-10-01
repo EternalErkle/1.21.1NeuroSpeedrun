@@ -30,7 +30,7 @@ import static net.minecraft.commands.Commands.literal;
 /** /start, /voteskip and the /speedrun admin tree for run control and settings. */
 public final class RunCommands {
 	public static final float MIN_TICK_RATE = 1.0F;
-	public static final float MAX_TICK_RATE = 1000.0F;
+	public static final float MAX_TICK_RATE = 100.0F;
 
 	private RunCommands() {
 	}

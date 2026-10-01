@@ -29,7 +29,7 @@ Permission node prefix: `speedrun.admin`.
 | Command | What it does |
 |---|---|
 | `/speedrun reset` | Ends the current run and starts a new one. Counts as an attempt, not a death. In the lobby it rerolls the prepared seed. |
-| `/speedrun tickrate <rate>` | Sets the game tick rate for future runs. Default 20. Accepts 1 to 1000. |
+| `/speedrun tickrate <rate>` | Sets the game tick rate for future runs. Default 20. Accepts 1 to 100 (5x). |
 | `/speedrun tickrate <rate> now` | Same, and also applies the rate immediately. The live run becomes unranked. |
 | `/speedrun tickrate` | Shows the configured rate, the active rate and the actual measured TPS |
 | `/speedrun sharedhealth <on\|off>` | Toggles shared health. Takes effect on the next run. |

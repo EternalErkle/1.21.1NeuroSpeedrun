@@ -37,6 +37,8 @@ public final class Settings {
 		if (settings.modifierMode == null) {
 			settings.modifierMode = ModifierMode.OFF;
 		}
+		// The server cannot keep up above 5x; older settings files may hold more.
+		settings.tickRate = Math.max(1.0F, Math.min(100.0F, settings.tickRate));
 		if (settings.alwaysModifiers == null) {
 			settings.alwaysModifiers = new LinkedHashSet<>();
 		}
