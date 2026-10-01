@@ -16,7 +16,8 @@
 		"ServerPlayerCameraAccessor",
 		"ServerPlayerMixin",
 		"TheEndGatewayBlockEntityMixin",
-		"ModifierWorldPlayerListMixin"
+		"ModifierWorldPlayerListMixin",
+		"ModifierWorldBlockItemMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

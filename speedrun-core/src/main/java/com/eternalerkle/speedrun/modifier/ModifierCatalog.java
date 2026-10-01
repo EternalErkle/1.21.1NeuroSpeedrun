@@ -42,7 +42,6 @@ public final class ModifierCatalog {
 	public static final String EXPLOSIVE_BEDS = "explosive_beds";
 	public static final String NO_BED_BOMBS = "no_bed_bombs";
 	public static final String PIG_BOMB = "pig_bomb";
-	/** Implemented in later batches, not in ALL yet. */
 	public static final String SILVERFISH_STONE = "silverfish_stone";
 	public static final String EXPLOSIVE_ORES = "explosive_ores";
 	public static final String GRAVITY_BLOCKS = "gravity_blocks";
@@ -53,6 +52,7 @@ public final class ModifierCatalog {
 	public static final String BLACKOUTS = "blackouts";
 	public static final String SPAWNER_SURPRISE = "spawner_surprise";
 	public static final String CAVE_INS = "cave_ins";
+	/** Implemented in later batches, not in ALL yet. */
 	public static final String TRAPPED_CHESTS = "trapped_chests";
 	public static final String CURSED_LOOT = "cursed_loot";
 	public static final String LARGE_BIOMES = "large_biomes";
@@ -94,7 +94,17 @@ public final class ModifierCatalog {
 		new ModifierInfo(INSTANT_PORTALS, "Instant Portals", "Nether portals teleport instantly", Tag.HELPFUL),
 		new ModifierInfo(EXPLOSIVE_BEDS, "Explosive Beds", "Beds explode in the Overworld too", Tag.HARDER),
 		new ModifierInfo(NO_BED_BOMBS, "No Bed Bombs", "Beds do not explode in the End", Tag.HARDER),
-		new ModifierInfo(PIG_BOMB, "Pig Bomb", "Every 30 seconds to 3 minutes, a pig carrying lit TNT chases a random player", Tag.BRUTAL)
+		new ModifierInfo(PIG_BOMB, "Pig Bomb", "Every 30 seconds to 3 minutes, a pig carrying lit TNT chases a random player", Tag.BRUTAL),
+		new ModifierInfo(SILVERFISH_STONE, "Silverfish Stone", "Mining stone has a 2% chance to release a silverfish", Tag.HARDER),
+		new ModifierInfo(EXPLOSIVE_ORES, "Explosive Ores", "Mining an ore has a 5% chance to leave lit TNT behind", Tag.CHAOS),
+		new ModifierInfo(GRAVITY_BLOCKS, "Gravity Blocks", "Every placed block falls like sand", Tag.CHAOS),
+		new ModifierInfo(THUNDERSTRUCK, "Thunderstruck", "Lightning strikes near a random player every 1 to 4 minutes", Tag.BRUTAL),
+		new ModifierInfo(METEOR_SHOWER, "Meteor Shower", "Every 3 to 6 minutes, fireballs rain down around players", Tag.BRUTAL),
+		new ModifierInfo(ANVIL_RAIN, "Anvil Rain", "Every 2 to 5 minutes, an anvil drops on a random player", Tag.BRUTAL),
+		new ModifierInfo(FLOOR_IS_LAVA, "Floor Is Lava", "Every 10 minutes, standing on the ground hurts for 20 seconds", Tag.BRUTAL),
+		new ModifierInfo(BLACKOUTS, "Blackouts", "Every 2 to 4 minutes, everyone is blinded for 5 seconds", Tag.HARDER),
+		new ModifierInfo(SPAWNER_SURPRISE, "Spawner Surprise", "Every 10 minutes, a mob spawner appears near each player", Tag.BRUTAL),
+		new ModifierInfo(CAVE_INS, "Cave-ins", "Mining underground can bring the ceiling down as gravel", Tag.CHAOS)
 		// ---- end world ----
 	);
 

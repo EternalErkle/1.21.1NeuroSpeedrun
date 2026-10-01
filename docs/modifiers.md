@@ -81,6 +81,16 @@ Tags describe how each modifier affects difficulty:
 | `instant_portals` | Instant Portals | Nether portals teleport instantly | Helpful |
 | `explosive_beds` | Explosive Beds | Beds explode in the Overworld too | Harder |
 | `no_bed_bombs` | No Bed Bombs | Beds do not explode in the End | Harder |
+| `silverfish_stone` | Silverfish Stone | Mining stone has a 2% chance to release a silverfish | Harder |
+| `explosive_ores` | Explosive Ores | Mining an ore has a 5% chance to leave lit TNT behind | Chaos |
+| `gravity_blocks` | Gravity Blocks | Every placed block falls like sand when nothing is under it | Chaos |
+| `thunderstruck` | Thunderstruck | Lightning strikes near a random player every 1 to 4 minutes | Brutal |
+| `meteor_shower` | Meteor Shower | Every 3 to 6 minutes, fireballs rain down around players | Brutal |
+| `anvil_rain` | Anvil Rain | Every 2 to 5 minutes, an anvil drops on a random player | Brutal |
+| `floor_is_lava` | Floor Is Lava | Every 10 minutes, standing on the ground hurts for 20 seconds, after a 3 second warning | Brutal |
+| `blackouts` | Blackouts | Every 2 to 4 minutes, everyone is blinded for 5 seconds | Harder |
+| `spawner_surprise` | Spawner Surprise | Every 10 minutes, a mob spawner appears near each player | Brutal |
+| `cave_ins` | Cave-ins | Mining underground can bring the ceiling down as gravel | Chaos |
 
 Conflicts: `eternal_day` with `eternal_night` and `fast_days`; `eternal_night` with `fast_days`; `tight_border` with `shrinking_border`.
 
