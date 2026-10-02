@@ -32,7 +32,7 @@ Setup builds the mod, downloads the Fabric server and Fabric API into `run/`, an
 
 Windows: double-click `scripts\start.bat`. Linux or macOS: `scripts/start.sh`.
 
-The server uses 4 GB by default. Set `MEMORY`, for example `MEMORY=6G`, to change it.
+The server uses 5.5 GB (`5632M`) by default. Set `MEMORY`, for example `MEMORY=6G`, to change it.
 
 When the console prints `Done`, join at `localhost`. Players arrive in the lobby. Anyone there can type `/start`.
 

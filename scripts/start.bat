@@ -5,7 +5,7 @@ if not exist "%~dp0..\run\fabric-server.jar" (
 	pause
 	exit /b 1
 )
-if "%MEMORY%"=="" set MEMORY=4G
+if "%MEMORY%"=="" set MEMORY=5632M
 cd /d "%~dp0..\run"
 rem Aikar's flags: G1 tuned for Minecraft's short-lived allocations, to keep GC pauses short. Min and max heap are
 rem equal so the heap never resizes mid-game.

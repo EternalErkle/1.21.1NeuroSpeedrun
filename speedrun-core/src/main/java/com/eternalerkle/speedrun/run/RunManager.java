@@ -361,8 +361,10 @@ public final class RunManager {
 			}
 		}
 		MutableComponent subtitle = Component.literal("Attempt #" + run.attempt);
+		String names = String.join(", ", chosen.stream().map(modifiers::displayName).toList());
 		if (!chosen.isEmpty()) {
-			subtitle.append(" · ").append(String.join(", ", chosen.stream().map(modifiers::displayName).toList()));
+			// Titles never wrap either. A long list is summarized; the HUD shows every name.
+			subtitle.append(" · ").append(names.length() <= HUD_LINE_CHARS ? names : chosen.size() + " modifiers");
 		}
 		Titles.show(server, Component.literal("GO!").withStyle(ChatFormatting.GREEN, ChatFormatting.BOLD), subtitle, 0, 1.5, 0.5);
 		stats.save();
@@ -853,14 +855,14 @@ public final class RunManager {
 					.append(bestSuffix(pendingCategory())));
 				RunWorldSet next = worlds.next();
 				boolean ready = next != null && next.isReady();
-				hud.setLine2(Component.literal(!ready ? "Generating..." : startRequested ? "Starting..." : "/start to begin").withStyle(ChatFormatting.GRAY));
+				hud.setLowerLines(List.of(Component.literal(!ready ? "Generating..." : startRequested ? "Starting..." : "/start to begin").withStyle(ChatFormatting.GRAY)));
 			}
 			case RUNNING -> {
 				ActiveRun current = run;
 				hud.setLine1(Component.literal("Attempt #" + current.attempt + " · ").withStyle(ChatFormatting.WHITE)
 					.append(Component.literal(Time.format(current.realMillis())).withStyle(splits.paceColor(current)))
 					.append(bestSuffix(current.category)));
-				hud.setLine2(runLine2(current));
+				hud.setLowerLines(runLowerLines(current));
 			}
 			case RESETTING, VICTORY -> {
 				ActiveRun ended = lastRun;
@@ -868,14 +870,16 @@ public final class RunManager {
 				hud.setLine1(line);
 				RunWorldSet next = worlds.next();
 				boolean ready = next != null && next.isReady();
-				hud.setLine2(Component.literal(ready ? "Next run starting..." : "Generating next world...").withStyle(ChatFormatting.GRAY));
+				hud.setLowerLines(List.of(Component.literal(ready ? "Next run starting..." : "Generating next world...").withStyle(ChatFormatting.GRAY)));
 			}
 		}
 	}
 
-	@Nullable
-	private Component runLine2(ActiveRun current) {
-		List<Component> parts = new ArrayList<>();
+	/** Characters per HUD line before the modifier list wraps. Fits the screen at GUI scale 4 on 1080p. */
+	private static final int HUD_LINE_CHARS = 70;
+
+	private List<Component> runLowerLines(ActiveRun current) {
+		List<Component> lines = new ArrayList<>();
 		if (current.goal == Goal.ALLBOSSES) {
 			MutableComponent checklist = Component.empty();
 			ActiveRun.Boss[] bosses = ActiveRun.Boss.values();
@@ -886,25 +890,24 @@ public final class RunManager {
 				}
 				checklist.append(Component.literal(bossName(bosses[i]) + (done ? " ✔" : " ✘")).withStyle(done ? ChatFormatting.GREEN : ChatFormatting.GRAY));
 			}
-			parts.add(checklist);
+			lines.add(checklist);
 		}
-		if (!current.modifiers.isEmpty()) {
-			parts.add(Component.literal(String.join(", ", current.modifiers.stream().map(modifiers::displayName).toList())).withStyle(ChatFormatting.LIGHT_PURPLE));
+		StringBuilder line = new StringBuilder();
+		for (String id : current.modifiers) {
+			String name = modifiers.displayName(id);
+			if (!line.isEmpty() && line.length() + 2 + name.length() > HUD_LINE_CHARS) {
+				lines.add(Component.literal(line + ",").withStyle(ChatFormatting.LIGHT_PURPLE));
+				line.setLength(0);
+			}
+			line.append(line.isEmpty() ? "" : ", ").append(name);
+		}
+		if (!line.isEmpty()) {
+			lines.add(Component.literal(line.toString()).withStyle(ChatFormatting.LIGHT_PURPLE));
 		}
 		if (current.unranked) {
-			parts.add(Component.literal("Unranked").withStyle(ChatFormatting.RED));
+			lines.add(Component.literal("Unranked").withStyle(ChatFormatting.RED));
 		}
-		if (parts.isEmpty()) {
-			return null;
-		}
-		MutableComponent line = Component.empty();
-		for (int i = 0; i < parts.size(); i++) {
-			if (i > 0) {
-				line.append(Component.literal("  |  ").withStyle(ChatFormatting.DARK_GRAY));
-			}
-			line.append(parts.get(i));
-		}
-		return line;
+		return lines;
 	}
 
 	private Component bestSuffix(String category) {
