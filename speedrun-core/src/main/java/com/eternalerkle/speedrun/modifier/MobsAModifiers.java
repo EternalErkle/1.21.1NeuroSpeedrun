@@ -318,9 +318,12 @@ public final class MobsAModifiers implements RunFeature {
 
 	// ---- called from mixins ----
 
-	/** sharpshooters halves the skeleton bow cooldown. */
+	/** RangedBowAttackGoal always draws the bow this many ticks before its cooldown starts. */
+	private static final int BOW_DRAW_TICKS = 20;
+
+	/** sharpshooters halves the whole shot cycle, draw plus cooldown, so skeletons fire twice as often. */
 	public static int bowInterval(Mob skeleton, int interval) {
-		return Modifiers.isActive(ModifierCatalog.SHARPSHOOTERS, skeleton.level()) ? Math.max(1, interval / 2) : interval;
+		return Modifiers.isActive(ModifierCatalog.SHARPSHOOTERS, skeleton.level()) ? Math.max(0, (interval - BOW_DRAW_TICKS) / 2) : interval;
 	}
 
 	/** spawn_randomizer swaps a natural spawn for a random mob of the same category, so spawn caps still hold. */

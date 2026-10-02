@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
-/** sharpshooters: halves the bow cooldown every time the skeleton picks its weapon goal. */
+/** sharpshooters: shortens the bow cooldown every time the skeleton picks its weapon goal. */
 @Mixin(AbstractSkeleton.class)
 public class ModifierMobsASkeletonMixin {
 	@ModifyArg(method = "reassessWeaponGoal", at = @At(value = "INVOKE",
