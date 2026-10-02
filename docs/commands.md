@@ -25,6 +25,7 @@ Trusted players get no vanilla op powers. `/gamemode`, `/give` and other vanilla
 | `/stats server` | Run count, win count, total deaths, most common death causes |
 | `/splits` | Current run's splits against the best run |
 | `/modifiers [page]` | Explains modifiers, shows the ones active in this run and how the next run's are chosen, and lists every modifier with its effect, 20 per page. |
+| `/modifiers active` | Lists each modifier active in the current run with what it does. |
 | `/voteskip` | Votes to abandon the current seed. Passes when more than half of the online players have voted, instantly with one player online, and triggers a reset without counting a death. Works only during a live run. Votes clear when a run starts or ends, and a player who leaves loses their vote. |
 | `/vote <number>` | Votes for a modifier while the lobby or death room offers a choice |
 

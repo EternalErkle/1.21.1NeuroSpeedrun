@@ -51,6 +51,7 @@ public final class ModifierCommands {
 			List.of("vote 1", "vote 2"), null));
 
 		registry.dispatcher().register(literal("modifiers").executes(context -> showModifiers(context, 1))
+			.then(literal("active").executes(ModifierCommands::showActive))
 			.then(argument("page", IntegerArgumentType.integer(1)).executes(context -> showModifiers(context, IntegerArgumentType.getInteger(context, "page")))));
 		registry.document(new CommandDoc("modifiers", CATEGORY, "[page]", "Explains modifiers and lists every one",
 			List.of("Modifiers change the rules of one run, such as one heart, moon gravity or a doubled mob cap.",
@@ -59,6 +60,9 @@ public final class ModifierCommands {
 				"Active modifiers also show under the GO! title and under the timer at the top of the screen.",
 				"Each combination of modifiers keeps its own records."),
 			List.of("modifiers"), null));
+		registry.document(new CommandDoc("modifiers active", CATEGORY, "", "Explains what each modifier in the current run does",
+			List.of("Lists every modifier active in this run with its full effect."),
+			List.of("modifiers active"), null));
 
 		LiteralArgumentBuilder<CommandSourceStack> mode = literal("mode");
 		for (ModifierMode value : ModifierMode.values()) {
@@ -160,6 +164,23 @@ public final class ModifierCommands {
 		return Component.literal(label).withStyle(Style.EMPTY.withColor(ChatFormatting.AQUA)
 			.withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, command + " " + page))
 			.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal(command + " " + page))));
+	}
+
+	private static int showActive(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
+		ActiveRun run = CommandRegistry.runs(context).run();
+		MutableComponent message = Component.literal("Active modifiers").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD);
+		if (run == null) {
+			message.append(Component.literal("\nNo run in progress.").withStyle(ChatFormatting.GRAY));
+		} else if (run.modifiers.isEmpty()) {
+			message.append(Component.literal("\nThis run has no modifiers.").withStyle(ChatFormatting.GRAY));
+		}
+		for (String id : run == null ? List.<String>of() : run.modifiers) {
+			ModifierInfo info = ModifierCatalog.get(id);
+			message.append(Component.literal("\n " + ModifierCatalog.displayName(id)).withStyle(ChatFormatting.LIGHT_PURPLE))
+				.append(Component.literal(" - " + (info == null ? "unknown modifier" : info.effect())).withStyle(ChatFormatting.GRAY));
+		}
+		context.getSource().sendSystemMessage(message);
+		return Command.SINGLE_SUCCESS;
 	}
 
 	private static int showModifiers(CommandContext<CommandSourceStack> context, int page) throws CommandSyntaxException {
