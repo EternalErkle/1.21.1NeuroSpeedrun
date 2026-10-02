@@ -91,6 +91,22 @@ public final class RunCommands {
 				"Applies to the next death, including in the current run."),
 			List.of("speedrun resetondeath off", "speedrun resetondeath on"), CommandRegistry.ADMIN));
 
+		root.then(toggle("village", (settings, on) -> settings.guaranteedVillage = on, "Guaranteed village"));
+		registry.document(new CommandDoc("speedrun village", "Settings", "<on|off>", "Toggles a guaranteed village near spawn",
+			List.of("on: the default. Every run world gets a village 100 to 500 blocks from spawn, matching the biome there.",
+				"It is only skipped when there is no dry land in range, such as a spawn on a small ocean island.",
+				"off: only the villages the seed generates naturally.",
+				"Applies to worlds generated after the change. The next world may already be generated."),
+			List.of("speedrun village on", "speedrun village off"), CommandRegistry.ADMIN));
+
+		root.then(toggle("compass", (settings, on) -> settings.trackerCompass = on, "Player tracker compass"));
+		registry.document(new CommandDoc("speedrun compass", "Settings", "<on|off>", "Toggles the player tracker compass",
+			List.of("on: the default. Every player gets a Player Tracker compass at the start of each run, in the last hotbar slot.",
+				"Right-click it to switch to the next player. It then points at that player.",
+				"It spins when nobody is picked, or when the tracked player is in another dimension.",
+				"off: no compass is given."),
+			List.of("speedrun compass on", "speedrun compass off"), CommandRegistry.ADMIN));
+
 		LiteralArgumentBuilder<CommandSourceStack> keepRun = literal("keeprun");
 		for (boolean on : new boolean[] {true, false}) {
 			keepRun.then(literal(on ? "on" : "off").executes(context -> setKeepRun(context, on)));
@@ -251,6 +267,8 @@ public final class RunCommands {
 		line(message, "Reset on death", settings.resetOnDeath ? "on" : "off");
 		line(message, "Death room minimum", Category.formatRate((float) settings.deathRoomMinSeconds) + "s");
 		line(message, "Keep run when empty", settings.keepRunWhenEmpty ? "on" : "off");
+		line(message, "Guaranteed village", settings.guaranteedVillage ? "on" : "off");
+		line(message, "Player tracker compass", settings.trackerCompass ? "on" : "off");
 		line(message, "Next run category", runs.pendingCategory());
 		ActiveRun run = runs.run();
 		if (run != null) {

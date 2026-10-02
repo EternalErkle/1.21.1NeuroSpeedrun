@@ -39,6 +39,10 @@ public final class Settings {
 	public double deathRoomMinSeconds = 5.0;
 	/** When on, a run survives an empty server: it pauses until someone rejoins instead of being abandoned. */
 	public boolean keepRunWhenEmpty = false;
+	/** When on, every run world gets a village placed 100 to 500 blocks from spawn, unless there is no dry land in range. */
+	public boolean guaranteedVillage = true;
+	/** When on, every player gets a player tracker compass at the start of each run. */
+	public boolean trackerCompass = true;
 	/** Players who may use /speedrun admin commands without op. They get no vanilla op powers. */
 	public List<TrustedPlayer> trusted = new ArrayList<>();
 	/** When on, every player who joins is added to {@link #trusted}. */

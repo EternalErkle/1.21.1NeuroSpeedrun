@@ -69,6 +69,8 @@ Type `/help` in game for every command. The ones admins use most:
 | `/speedrun sharedhealth on\|off` | Share one health bar between everyone |
 | `/speedrun modifiers mode off\|random\|vote` | Turn run modifiers on (see [Modifiers](#modifiers)) |
 | `/speedrun keeprun on\|off` | Keep the run when everyone leaves or the server restarts |
+| `/speedrun village on\|off` | Place a village 100 to 500 blocks from spawn in every run world (on by default) |
+| `/speedrun compass on\|off` | Give every player a compass that tracks a chosen player (on by default) |
 | `/speedrun reset` | End the current run and start a new seed |
 
 Settings and stats are saved in `run/config/speedrun-core/`.

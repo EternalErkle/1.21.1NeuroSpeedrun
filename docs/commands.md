@@ -49,6 +49,8 @@ Permission node prefix: `speedrun.admin`.
 | `/speedrun modifiers disable <id\|all>` | Removes a modifier from the pool, or empties it with `all` |
 | `/speedrun modifiers force <id...>` | Forces specific modifiers for the next run only |
 | `/speedrun keeprun <on\|off>` | Keeps the run when everyone leaves or the server restarts. On: the run pauses, freezing the timer and the world, until someone joins, and is saved to disk to survive restarts. Off (default): the run ends 60 seconds after everyone leaves, or when the server stops. Applies immediately. |
+| `/speedrun village <on\|off>` | Guarantees a village 100 to 500 blocks from spawn in every run world, matching the biome there. Skipped only when there is no dry land in range. On by default. Applies to worlds generated after the change. |
+| `/speedrun compass <on\|off>` | Gives every player a Player Tracker compass at the start of each run. Right-click it to switch to the next player; it points at that player. On by default. |
 | `/speedrun deathroom mintime <seconds>` | Minimum time the death room stays up. Default 5. Accepts 0 to 600. |
 | `/speedrun stats reset runcount` | Resets the attempt counter |
 | `/speedrun stats reset best [category]` | Clears one category's record, or all of them |

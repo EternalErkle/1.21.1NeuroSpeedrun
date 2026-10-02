@@ -29,6 +29,7 @@ import net.minecraft.world.level.dimension.end.EndDragonFight;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
+import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.minecraft.world.level.storage.LevelResource;
 import org.jetbrains.annotations.Nullable;
 import xyz.nucleoid.fantasy.Fantasy;
@@ -63,7 +64,24 @@ public final class RunWorlds {
 	private RunWorldSet next;
 	private Preparation preparation;
 
-	private record Preparation(RunWorldSet set, ChunkPos center, Consumer<RunWorldSet> onReady) {
+	private static final TicketType<ChunkPos> VILLAGE_TICKET = TicketType.create("speedrun_village", Comparator.comparingLong(ChunkPos::toLong));
+
+	private static final class Preparation {
+		final RunWorldSet set;
+		final ChunkPos center;
+		final boolean village;
+		final Consumer<RunWorldSet> onReady;
+		/** Set once the spawn is found and a village is planned; preparation then waits for its chunks. */
+		StructureStart villageStart;
+		ChunkPos villageCenter;
+		int villageRadius;
+
+		Preparation(RunWorldSet set, ChunkPos center, boolean village, Consumer<RunWorldSet> onReady) {
+			this.set = set;
+			this.center = center;
+			this.village = village;
+			this.onReady = onReady;
+		}
 	}
 
 	public RunWorlds(MinecraftServer server) {
@@ -80,8 +98,11 @@ public final class RunWorlds {
 		return next;
 	}
 
-	/** Starts creating the next run's worlds. {@code onReady} runs on the server thread once the spawn area is generated. */
-	public void prepareNext(long seed, Consumer<RunWorldSet> onReady) {
+	/**
+	 * Starts creating the next run's worlds. {@code onReady} runs on the server thread once the spawn area is generated
+	 * and, with {@code village}, a village has been placed 100 to 500 blocks from spawn.
+	 */
+	public void prepareNext(long seed, boolean village, Consumer<RunWorldSet> onReady) {
 		if (next != null) {
 			delete(next);
 		}
@@ -93,7 +114,7 @@ public final class RunWorlds {
 		ChunkPos center = new ChunkPos(level.getChunkSource().randomState().sampler().findSpawnPosition());
 		level.getChunkSource().addRegionTicket(PREPARE_TICKET, center, PREPARE_RADIUS, center);
 		next = set;
-		preparation = new Preparation(set, center, onReady);
+		preparation = new Preparation(set, center, village, onReady);
 		SpeedrunCore.LOGGER.info("Preparing run worlds {} with seed {}", id, seed);
 	}
 
@@ -191,6 +212,10 @@ public final class RunWorlds {
 			return;
 		}
 		ServerLevel level = prep.set.overworld();
+		if (prep.villageStart != null) {
+			tickVillage(level, prep);
+			return;
+		}
 		int r = PREPARE_RADIUS;
 		for (int x = -r; x <= r; x++) {
 			for (int z = -r; z <= r; z++) {
@@ -200,6 +225,36 @@ public final class RunWorlds {
 			}
 		}
 		prep.set.spawn = findSpawn(level, prep.center);
+		if (prep.village) {
+			StructureStart start = VillagePlacer.plan(level, prep.set.spawn, prep.set.seed);
+			if (start != null) {
+				ChunkPos min = VillagePlacer.minChunk(start);
+				ChunkPos max = VillagePlacer.maxChunk(start);
+				prep.villageStart = start;
+				prep.villageCenter = new ChunkPos((min.x + max.x) / 2, (min.z + max.z) / 2);
+				prep.villageRadius = Math.max(max.x - min.x, max.z - min.z) / 2 + 1;
+				level.getChunkSource().addRegionTicket(VILLAGE_TICKET, prep.villageCenter, prep.villageRadius, prep.villageCenter);
+				return;
+			}
+			SpeedrunCore.LOGGER.info("No dry land within 500 blocks of spawn {}, so no village was placed", prep.set.spawn);
+		}
+		finishPreparation(prep);
+	}
+
+	/** Places the planned village once all its chunks are loaded. */
+	private void tickVillage(ServerLevel level, Preparation prep) {
+		for (ChunkPos chunk : ChunkPos.rangeClosed(VillagePlacer.minChunk(prep.villageStart), VillagePlacer.maxChunk(prep.villageStart)).toList()) {
+			if (level.getChunkSource().getChunkNow(chunk.x, chunk.z) == null) {
+				return;
+			}
+		}
+		VillagePlacer.place(level, prep.villageStart);
+		level.getChunkSource().removeRegionTicket(VILLAGE_TICKET, prep.villageCenter, prep.villageRadius, prep.villageCenter);
+		SpeedrunCore.LOGGER.info("Placed a village at {}", prep.villageStart.getBoundingBox().getCenter());
+		finishPreparation(prep);
+	}
+
+	private void finishPreparation(Preparation prep) {
 		prep.set.ready = true;
 		preparation = null;
 		SpeedrunCore.LOGGER.info("Run worlds ready, spawn at {}", prep.set.spawn);

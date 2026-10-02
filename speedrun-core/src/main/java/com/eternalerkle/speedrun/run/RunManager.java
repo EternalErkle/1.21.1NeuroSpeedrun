@@ -292,7 +292,7 @@ public final class RunManager {
 
 	private void prepareNextWorlds() {
 		WorldModifiers.setNextRunModifiers(modifiers.drawForNextWorlds(settings));
-		worlds.prepareNext(nextSeed(), this::onNextReady);
+		worlds.prepareNext(nextSeed(), settings.guaranteedVillage, this::onNextReady);
 	}
 
 	private void ensureNextPreparing() {

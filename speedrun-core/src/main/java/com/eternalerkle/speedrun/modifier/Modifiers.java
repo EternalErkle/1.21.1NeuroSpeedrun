@@ -296,7 +296,7 @@ public final class Modifiers implements ModifierHooks, RunFeature {
 	}
 
 	/** Online players standing in one of the run's worlds. */
-	static List<ServerPlayer> playersIn(ActiveRun run) {
+	public static List<ServerPlayer> playersIn(ActiveRun run) {
 		List<ServerPlayer> players = new ArrayList<>();
 		for (ServerPlayer player : run.worlds.overworld().getServer().getPlayerList().getPlayers()) {
 			if (run.worlds.contains(player.serverLevel()) && !player.isSpectator()) {
