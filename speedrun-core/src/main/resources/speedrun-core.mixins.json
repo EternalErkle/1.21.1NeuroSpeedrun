@@ -39,6 +39,7 @@
 		"ModifierMobsBMobAccessor",
 		"ModifierMobsBMobMixin",
 		"ModifierMobsBSkeletonMixin",
+		"ModifierMobsBTargetGoalAccessor",
 		"ModifierNaturalSpawnerMixin",
 		"ModifierWorldBlockItemMixin",
 		"ModifierWorldChunkGeneratorMixin",

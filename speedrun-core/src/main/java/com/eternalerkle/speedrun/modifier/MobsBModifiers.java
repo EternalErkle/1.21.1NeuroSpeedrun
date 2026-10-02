@@ -1,6 +1,7 @@
 package com.eternalerkle.speedrun.modifier;
 
 import com.eternalerkle.speedrun.mixin.ModifierMobsBMobAccessor;
+import com.eternalerkle.speedrun.mixin.ModifierMobsBTargetGoalAccessor;
 import com.eternalerkle.speedrun.run.ActiveRun;
 import com.eternalerkle.speedrun.run.RunFeature;
 import com.eternalerkle.speedrun.run.RunManager;
@@ -88,7 +89,7 @@ public final class MobsBModifiers implements RunFeature {
 
 	/** Marks a mob already handled by the spawn-time modifiers (armored_horde, elites), so reloading a chunk does not roll again. */
 	static final String SEEN_TAG = "speedrun.mobs_b";
-	/** Marks a splitters copy: it never splits again and drops no loot. */
+	/** Marks a splitters copy: it never splits again, drops no loot and never rolls armored_horde or elites. */
 	public static final String SPLIT_TAG = "speedrun.split";
 	/** A stalker carries this prefix followed by its target's UUID. */
 	private static final String STALKER_TAG = "speedrun.stalker.";
@@ -290,6 +291,7 @@ public final class MobsBModifiers implements RunFeature {
 		if (mob instanceof AbstractSkeleton && Modifiers.isActive(ModifierCatalog.SNIPER_SKELETONS, level)) {
 			// Base follow range is 16; the doubled bow range is handled in ModifierMobsBBowGoalMixin.
 			addModifier(mob, Attributes.FOLLOW_RANGE, SNIPER_RANGE, 16.0, AttributeModifier.Operation.ADD_VALUE);
+			refreshTargetRange(mob);
 		}
 		if (hostile && Modifiers.isActive(ModifierCatalog.RELENTLESS, level)) {
 			double base = mob.getAttributeBaseValue(Attributes.FOLLOW_RANGE);
@@ -301,11 +303,22 @@ public final class MobsBModifiers implements RunFeature {
 					target.setUnseenMemoryTicks(Integer.MAX_VALUE / 4);
 				}
 			}
+			refreshTargetRange(mob);
 		}
 		UUID stalked = stalkerTarget(mob);
 		if (stalked != null) {
 			targetSelector(mob).removeAllGoals(goal -> true);
 			targetSelector(mob).addGoal(1, new NearestAttackableTargetGoal<>(mob, Player.class, 10, false, false, target -> target.getUUID().equals(stalked)));
+		}
+	}
+
+	/** Target goals copy the follow range when they are built, so a later follow range bonus never reaches them on its own. */
+	private static void refreshTargetRange(Mob mob) {
+		double range = mob.getAttributeValue(Attributes.FOLLOW_RANGE);
+		for (WrappedGoal goal : targetSelector(mob).getAvailableGoals()) {
+			if (goal.getGoal() instanceof NearestAttackableTargetGoal<?> target) {
+				((ModifierMobsBTargetGoalAccessor) target).speedrun$targetConditions().range(range);
+			}
 		}
 	}
 
@@ -386,7 +399,10 @@ public final class MobsBModifiers implements RunFeature {
 			return;
 		}
 		for (int i = 0; i < 2; i++) {
-			Entity created = mob.getType().create(level, copy -> copy.addTag(SPLIT_TAG), mob.blockPosition(), MobSpawnType.MOB_SUMMONED, false, false);
+			Entity created = mob.getType().create(level, copy -> {
+				copy.addTag(SPLIT_TAG);
+				copy.addTag(SEEN_TAG);
+			}, mob.blockPosition(), MobSpawnType.MOB_SUMMONED, false, false);
 			if (created instanceof Mob copy) {
 				copy.moveTo(mob.getX() + (i == 0 ? -0.3 : 0.3), mob.getY(), mob.getZ(), mob.getYRot(), 0.0F);
 				addModifier(copy, Attributes.MAX_HEALTH, SPLIT_HEALTH, -0.5, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
