@@ -24,7 +24,7 @@ Trusted players get no vanilla op powers. `/gamemode`, `/give` and other vanilla
 | `/stats <player>` | Same, for another player |
 | `/stats server` | Run count, win count, total deaths, most common death causes |
 | `/splits` | Current run's splits against the best run |
-| `/modifiers` | Explains modifiers, shows the ones active in this run and how the next run's are chosen, and lists every modifier with its effect. |
+| `/modifiers [page]` | Explains modifiers, shows the ones active in this run and how the next run's are chosen, and lists every modifier with its effect, 20 per page. |
 | `/voteskip` | Votes to abandon the current seed. Passes when more than half of the online players have voted, instantly with one player online, and triggers a reset without counting a death. Works only during a live run. Votes clear when a run starts or ends, and a player who leaves loses their vote. |
 | `/vote <number>` | Votes for a modifier while the lobby or death room offers a choice |
 
@@ -44,7 +44,7 @@ Permission node prefix: `speedrun.admin`.
 | `/speedrun settings` | Shows every current setting and the record category it produces |
 | `/speedrun modifiers mode <off\|random\|vote>` | How modifiers are chosen each run |
 | `/speedrun modifiers count <n>` | How many modifiers are active per run |
-| `/speedrun modifiers pool` | Lists every modifier and whether it is in the pool |
+| `/speedrun modifiers pool [page]` | Lists every modifier and whether it is in the pool, 20 per page |
 | `/speedrun modifiers enable <id\|all>` | Adds a modifier to the pool, or every modifier with `all` |
 | `/speedrun modifiers disable <id\|all>` | Removes a modifier from the pool, or empties it with `all` |
 | `/speedrun modifiers force <id...>` | Forces specific modifiers for the next run only |

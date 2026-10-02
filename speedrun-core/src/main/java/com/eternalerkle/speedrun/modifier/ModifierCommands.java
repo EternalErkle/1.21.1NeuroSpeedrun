@@ -50,11 +50,12 @@ public final class ModifierCommands {
 				"You get one vote and can change it until voting closes. Ties are broken at random."),
 			List.of("vote 1", "vote 2"), null));
 
-		registry.dispatcher().register(literal("modifiers").executes(ModifierCommands::showModifiers));
-		registry.document(new CommandDoc("modifiers", CATEGORY, "", "Explains modifiers and lists every one",
+		registry.dispatcher().register(literal("modifiers").executes(context -> showModifiers(context, 1))
+			.then(argument("page", IntegerArgumentType.integer(1)).executes(context -> showModifiers(context, IntegerArgumentType.getInteger(context, "page")))));
+		registry.document(new CommandDoc("modifiers", CATEGORY, "[page]", "Explains modifiers and lists every one",
 			List.of("Modifiers change the rules of one run, such as one heart, moon gravity or a doubled mob cap.",
 				"Shows the modifiers active in the current run, how the next run's are chosen, and every modifier",
-				"with its effect. Hover a modifier for details.",
+				"with its effect, " + PAGE_SIZE + " per page. Click Next or run /modifiers <page>. Hover a modifier for details.",
 				"Active modifiers also show under the GO! title and under the timer at the top of the screen.",
 				"Each combination of modifiers keeps its own records."),
 			List.of("modifiers"), null));
@@ -68,7 +69,8 @@ public final class ModifierCommands {
 			.requires(CommandRegistry.requires(CommandRegistry.ADMIN))
 			.then(mode)
 			.then(literal("count").then(argument("n", IntegerArgumentType.integer(1, ModifierCatalog.ALL.size())).executes(ModifierCommands::setCount)))
-			.then(literal("pool").executes(ModifierCommands::showPool))
+			.then(literal("pool").executes(context -> showPool(context, 1))
+				.then(argument("page", IntegerArgumentType.integer(1)).executes(context -> showPool(context, IntegerArgumentType.getInteger(context, "page")))))
 			.then(literal("enable")
 				.then(literal("all").executes(context -> setAll(context, true)))
 				.then(argument("id", StringArgumentType.word()).suggests((context, builder) -> SharedSuggestionProvider.suggest(ModifierCatalog.ids(), builder))
@@ -100,8 +102,8 @@ public final class ModifierCommands {
 		registry.document(new CommandDoc("speedrun modifiers count", CATEGORY, "<n>", "Sets how many modifiers are active per run",
 			List.of("Fewer are used when the pool is too small or its modifiers conflict."),
 			List.of("speedrun modifiers count 2"), CommandRegistry.ADMIN));
-		registry.document(new CommandDoc("speedrun modifiers pool", CATEGORY, "", "Lists every modifier and whether it is in the pool",
-			List.of("Click a modifier in the list to add it to or remove it from the pool."),
+		registry.document(new CommandDoc("speedrun modifiers pool", CATEGORY, "[page]", "Lists every modifier and whether it is in the pool",
+			List.of("Click a modifier in the list to add it to or remove it from the pool.", PAGE_SIZE + " modifiers per page. Click Next or add a page number."),
 			List.of("speedrun modifiers pool"), CommandRegistry.ADMIN));
 		registry.document(new CommandDoc("speedrun modifiers enable", CATEGORY, "<id|all>", "Adds a modifier, or every modifier, to the pool",
 			List.of("<id>: one modifier. Use /speedrun modifiers pool to see every id.", "all: adds all " + ModifierCatalog.ALL.size() + " modifiers at once."),
@@ -129,7 +131,39 @@ public final class ModifierCommands {
 		return modifiers;
 	}
 
-	private static int showModifiers(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
+	/** Modifiers per page. The client keeps only 100 chat lines, so the full catalog cannot fit in one message. */
+	private static final int PAGE_SIZE = 20;
+
+	private static int pageCount() {
+		return (ModifierCatalog.ALL.size() + PAGE_SIZE - 1) / PAGE_SIZE;
+	}
+
+	private static List<ModifierInfo> page(int page) {
+		int from = (page - 1) * PAGE_SIZE;
+		return ModifierCatalog.ALL.subList(from, Math.min(from + PAGE_SIZE, ModifierCatalog.ALL.size()));
+	}
+
+	/** "< Prev  Page 2/8  Next >", with the arrows running the same command for the neighbouring page. */
+	private static Component pageFooter(String command, int page) {
+		int pages = pageCount();
+		MutableComponent footer = Component.literal("\n");
+		footer.append(pageLink("< Prev", command, page - 1, page > 1));
+		footer.append(Component.literal("  Page " + page + "/" + pages + "  ").withStyle(ChatFormatting.YELLOW));
+		footer.append(pageLink("Next >", command, page + 1, page < pages));
+		return footer;
+	}
+
+	private static Component pageLink(String label, String command, int page, boolean available) {
+		if (!available) {
+			return Component.literal(label).withStyle(ChatFormatting.DARK_GRAY);
+		}
+		return Component.literal(label).withStyle(Style.EMPTY.withColor(ChatFormatting.AQUA)
+			.withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, command + " " + page))
+			.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal(command + " " + page))));
+	}
+
+	private static int showModifiers(CommandContext<CommandSourceStack> context, int page) throws CommandSyntaxException {
+		page = Math.min(page, pageCount());
 		RunManager runs = CommandRegistry.runs(context);
 		Settings settings = runs.settings();
 		ActiveRun run = runs.run();
@@ -148,7 +182,7 @@ public final class ModifierCommands {
 			.append(Component.literal(active).withStyle(ChatFormatting.LIGHT_PURPLE))
 			.append(Component.literal("\nNext run: ").withStyle(ChatFormatting.YELLOW))
 			.append(Component.literal(next).withStyle(ChatFormatting.WHITE));
-		for (ModifierInfo info : ModifierCatalog.ALL) {
+		for (ModifierInfo info : page(page)) {
 			boolean inPool = settings.modifierPool.contains(info.id());
 			Component hover = Component.literal(info.effect() + "\nTag: " + info.tag().label + "\nID: " + info.id());
 			boolean isAlways = settings.alwaysModifiers.contains(info.id());
@@ -158,6 +192,7 @@ public final class ModifierCommands {
 				.append(Component.literal(" - " + info.effect()).withStyle(ChatFormatting.GRAY));
 		}
 		message.append(Component.literal("\n● in the pool   ○ not in the pool   ★ always on").withStyle(ChatFormatting.DARK_GRAY));
+		message.append(pageFooter("/modifiers", page));
 		context.getSource().sendSystemMessage(message);
 		return Command.SINGLE_SUCCESS;
 	}
@@ -215,11 +250,12 @@ public final class ModifierCommands {
 		return Command.SINGLE_SUCCESS;
 	}
 
-	private static int showPool(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
+	private static int showPool(CommandContext<CommandSourceStack> context, int page) throws CommandSyntaxException {
+		page = Math.min(page, pageCount());
 		Settings settings = CommandRegistry.runs(context).settings();
 		MutableComponent message = Component.literal("Modifiers (mode " + settings.modifierMode.name().toLowerCase(Locale.ROOT) + ", " + settings.modifierCount + " per run):")
 			.withStyle(ChatFormatting.GOLD);
-		for (ModifierInfo info : ModifierCatalog.ALL) {
+		for (ModifierInfo info : page(page)) {
 			boolean enabled = settings.modifierPool.contains(info.id());
 			String command = "/speedrun modifiers " + (enabled ? "disable " : "enable ") + info.id();
 			message.append(Component.literal("\n " + (enabled ? "[on] " : "[off] ")).withStyle(Style.EMPTY.withColor(enabled ? ChatFormatting.GREEN : ChatFormatting.DARK_GRAY)
@@ -234,6 +270,7 @@ public final class ModifierCommands {
 			message.append(Component.literal("\nForced for the next run: " + String.join(", ", forced.stream().map(ModifierCatalog::displayName).toList()))
 				.withStyle(ChatFormatting.LIGHT_PURPLE));
 		}
+		message.append(pageFooter("/speedrun modifiers pool", page));
 		context.getSource().sendSystemMessage(message);
 		return Command.SINGLE_SUCCESS;
 	}
