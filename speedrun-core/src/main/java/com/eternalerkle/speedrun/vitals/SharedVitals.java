@@ -249,17 +249,32 @@ public final class SharedVitals implements RunFeature {
 		for (ServerPlayer player : order) {
 			DamageSource last = player.getLastDamageSource();
 			if (last != null) {
-				player.hurt(last, Float.MAX_VALUE);
-				if (runs.state() != RunState.RUNNING) {
+				boolean landed = player.hurt(last, Float.MAX_VALUE);
+				if (runs.state() != RunState.RUNNING || landed && forgiven(players, player)) {
 					return;
 				}
 			}
-			player.hurt(player.damageSources().genericKill(), Float.MAX_VALUE);
-			if (runs.state() != RunState.RUNNING) {
+			boolean landed = player.hurt(player.damageSources().genericKill(), Float.MAX_VALUE);
+			if (runs.state() != RunState.RUNNING || landed && forgiven(players, player)) {
 				return;
 			}
 		}
 		SpeedrunCore.LOGGER.warn("Shared health reached 0 but no player could be killed; retrying next tick");
+	}
+
+	/**
+	 * Whether the lethal hit landed but the player lived: a totem, second_wind or last_one_standing saved them.
+	 * The shared bar restarts from the saved player's health, or the next tick would find it at 0 and kill again.
+	 */
+	private boolean forgiven(List<ServerPlayer> players, ServerPlayer saved) {
+		if (saved.isDeadOrDying()) {
+			return false;
+		}
+		health.set(saved.getHealth());
+		for (ServerPlayer player : players) {
+			writeHealth(player);
+		}
+		return true;
 	}
 
 	/**
